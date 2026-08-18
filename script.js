@@ -1321,13 +1321,15 @@ document.addEventListener('DOMContentLoaded', () => {
     endgameScreen.classList.remove('hidden');
   }
 
-  // Restart Handlers for Victory/Defeat Screen
+  // Restart Handlers for Victory/Defeat Screen & Credits
   window.restartGameSetup = function() {
     try { playClickSound(); } catch (e) {}
+    const movieCreditsOverlay = document.getElementById('movieCreditsOverlay');
     const endgameScreen = document.getElementById('endgameScreen');
     const gameStageScreen = document.getElementById('gameStageScreen');
     const playerSetupScreen = document.getElementById('playerSetupScreen');
 
+    if (movieCreditsOverlay) movieCreditsOverlay.classList.add('hidden');
     if (endgameScreen) endgameScreen.classList.add('hidden');
     if (gameStageScreen) gameStageScreen.classList.add('hidden');
     if (playerSetupScreen) playerSetupScreen.classList.remove('hidden');
@@ -1335,19 +1337,30 @@ document.addEventListener('DOMContentLoaded', () => {
     try { renderPlayerSlots(); } catch (e) {}
   };
 
-  window.replayIntroNewsreel = function() {
+  // Movie Credits Handlers (Estilo Rolagem de Cinema)
+  window.showMovieCredits = function() {
     try { playClickSound(); } catch (e) {}
-    const endgameScreen = document.getElementById('endgameScreen');
-    const gameStageScreen = document.getElementById('gameStageScreen');
-    const playerSetupScreen = document.getElementById('playerSetupScreen');
-    const retroIntroScreen = document.getElementById('retroIntroScreen');
+    const movieCreditsOverlay = document.getElementById('movieCreditsOverlay');
+    const movieCreditsRoll = document.getElementById('movieCreditsRoll');
 
-    if (endgameScreen) endgameScreen.classList.add('hidden');
-    if (gameStageScreen) gameStageScreen.classList.add('hidden');
-    if (playerSetupScreen) playerSetupScreen.classList.add('hidden');
-    if (retroIntroScreen) retroIntroScreen.classList.remove('hidden');
+    if (movieCreditsOverlay) {
+      movieCreditsOverlay.classList.remove('hidden');
+    }
 
-    try { showScene(0); } catch (e) {}
+    if (movieCreditsRoll) {
+      // Reset animation to trigger seamless roll down/up from beginning with ZERO delay
+      movieCreditsRoll.style.animation = 'none';
+      void movieCreditsRoll.offsetHeight; // trigger reflow
+      movieCreditsRoll.style.animation = 'rollUpMovieCredits 22s linear forwards';
+    }
+  };
+
+  window.hideMovieCredits = function() {
+    try { playClickSound(); } catch (e) {}
+    const movieCreditsOverlay = document.getElementById('movieCreditsOverlay');
+    if (movieCreditsOverlay) {
+      movieCreditsOverlay.classList.add('hidden');
+    }
   };
 
   // Confirm Setup Action -> Triggers Main Game Engine Entry

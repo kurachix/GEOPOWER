@@ -442,20 +442,92 @@
 
       </div>
 
-      <!-- Action Footer -->
+      <!-- Action Footer: Créditos de Desenvolvimento & Reiniciar Jogo -->
       <footer class="endgame-footer">
+        <button class="btn-endgame-action primary" id="btnCredits" onclick="window.showMovieCredits && window.showMovieCredits()">
+          <span class="btn-icon">🎬</span>
+          <span class="btn-text">CRÉDITOS DE DESENVOLVIMENTO</span>
+        </button>
         <button class="btn-endgame-action secondary" id="btnRestartSetup" onclick="window.restartGameSetup && window.restartGameSetup()">
           <span class="btn-icon">🔄</span>
-          <span class="btn-text">NOVA CÚPULA ENERGÉTICA</span>
-        </button>
-        <button class="btn-endgame-action primary" id="btnReplayIntro" onclick="window.replayIntroNewsreel && window.replayIntroNewsreel()">
-          <span class="btn-icon">📽️</span>
-          <span class="btn-text">ASSISTIR CINEJORNAL NOVAMENTE</span>
+          <span class="btn-text">REINICIAR CÚPULA ENERGÉTICA</span>
         </button>
       </footer>
 
     </div>
 
+  </div>
+
+  <!-- Movie Credits Scrolling Overlay (Estilo Filme de Cinema 1970) -->
+  <div class="movie-credits-overlay hidden" id="movieCreditsOverlay">
+    
+    <div class="film-vignette"></div>
+    <div class="film-scratches"></div>
+    <div class="film-grain-overlay"></div>
+
+    <div class="credits-toolbar">
+      <button class="btn-credits-action secondary" id="btnRestartFromCredits" onclick="window.restartGameSetup && window.restartGameSetup()">
+        🔄 REINICIAR JOGO
+      </button>
+      <button class="btn-credits-action primary" id="btnCloseCredits" onclick="window.hideMovieCredits && window.hideMovieCredits()">
+        ✖ FECHAR CRÉDITOS
+      </button>
+    </div>
+
+    <div class="movie-credits-stage">
+      <div class="movie-credits-roll" id="movieCreditsRoll">
+        
+        <div class="credits-logo">GEOPOWER</div>
+        <div class="credits-subtitle">CÚPULA INTERNACIONAL DE ENERGIA (1970 – 2020)</div>
+        <div class="credits-divider">✦ ✦ ✦</div>
+
+        <div class="credits-section">
+          <h2 class="credits-section-title">EQUIPE DE DESENVOLVIMENTO</h2>
+          <ul class="credits-names-list">
+            <li class="credits-name-item">
+              <span class="credits-name">Ana Clara Pantaleao Tirola</span>
+              <span class="credits-number">Nº 02</span>
+            </li>
+            <li class="credits-name-item">
+              <span class="credits-name">Ana Laura Pessotto Camargo</span>
+              <span class="credits-number">Nº 03</span>
+            </li>
+            <li class="credits-name-item">
+              <span class="credits-name">Lorena Santos Leme</span>
+              <span class="credits-number">Nº 23</span>
+            </li>
+            <li class="credits-name-item">
+              <span class="credits-name">Maria Clara De Núncio Oliveira</span>
+              <span class="credits-number">Nº 25</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="credits-divider">✦ ✦ ✦</div>
+
+        <div class="credits-section">
+          <h2 class="credits-section-title">DISCIPLINA & PROJETO</h2>
+          <p class="credits-text">Projeto de Física Aplicada & Geopolítica Energética</p>
+          <p class="credits-text">Matriz Elétrica, Estabilidade Social e Desenvolvimento Sustentável</p>
+        </div>
+
+        <div class="credits-divider">✦ ✦ ✦</div>
+
+        <div class="credits-section">
+          <h2 class="credits-section-title">TECNOLOGIAS & ESTÉTICA</h2>
+          <p class="credits-text">1970s Rubber Hose Cartoon Aesthetic</p>
+          <p class="credits-text">Cinejornal Vintage & Síntese de Áudio Analógico</p>
+        </div>
+
+        <div class="credits-divider">✦ ✦ ✦</div>
+
+        <div class="credits-footer-end">
+          <div class="credits-the-end">FIM DA CÚPULA</div>
+          <div class="credits-copyright">© 2026 GEOPOWER • TODOS OS DIREITOS RESERVADOS</div>
+        </div>
+
+      </div>
+    </div>
   </div>
 
   <script src="script.js"></script>

@@ -2155,3 +2155,193 @@ html, body {
   border-top: 1px dashed var(--border-sepia);
   padding-top: 16px;
 }
+
+/* ==========================================================================
+   Movie Credits Roll Overlay (Estilo Filme de Cinema 1970)
+   ========================================================================== */
+.movie-credits-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 200;
+  background: #000000;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.credits-toolbar {
+  position: absolute;
+  top: 24px;
+  right: 32px;
+  z-index: 210;
+  display: flex;
+  gap: 12px;
+}
+
+.btn-credits-action {
+  font-family: var(--font-title);
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  padding: 10px 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+}
+
+.btn-credits-action.primary {
+  background: var(--text-light);
+  color: #000;
+  border: 1px solid var(--text-light);
+  font-weight: bold;
+}
+
+.btn-credits-action.primary:hover {
+  background: #ffffff;
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 #000;
+}
+
+.btn-credits-action.secondary {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--text-light);
+  border: 1px solid var(--text-light);
+}
+
+.btn-credits-action.secondary:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 #000;
+}
+
+.movie-credits-stage {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  height: 100%;
+  overflow: hidden;
+  text-align: center;
+}
+
+.movie-credits-roll {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: 40px 20px;
+  animation: rollUpMovieCredits 22s linear forwards;
+}
+
+@keyframes rollUpMovieCredits {
+  0% { transform: translateY(75vh); }
+  100% { transform: translateY(-135%); }
+}
+
+.credits-logo {
+  font-family: var(--font-title);
+  font-size: 3.5rem;
+  font-weight: 900;
+  letter-spacing: 8px;
+  color: var(--text-light);
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+.credits-subtitle {
+  font-family: var(--font-title);
+  font-size: 1.05rem;
+  letter-spacing: 4px;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+}
+
+.credits-divider {
+  font-size: 1.2rem;
+  color: var(--border-sepia);
+  letter-spacing: 8px;
+}
+
+.credits-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.credits-section-title {
+  font-family: var(--font-title);
+  font-size: 1.15rem;
+  letter-spacing: 4px;
+  color: var(--accent-gold);
+  border-bottom: 1px solid var(--border-sepia);
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+}
+
+.credits-names-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.credits-name-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
+  padding-bottom: 8px;
+  font-size: 1.2rem;
+}
+
+.credits-name {
+  font-family: var(--font-newsreel);
+  color: var(--text-light);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.credits-number {
+  font-family: var(--font-title);
+  color: var(--accent-gold);
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.credits-text {
+  font-family: var(--font-newsreel);
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.credits-footer-end {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.credits-the-end {
+  font-family: var(--font-title);
+  font-size: 2.2rem;
+  letter-spacing: 6px;
+  color: var(--text-light);
+}
+
+.credits-copyright {
+  font-family: var(--font-title);
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+}
