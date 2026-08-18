@@ -630,16 +630,398 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Confirm Setup Action
-  if (btnConfirmSetup) {
-    btnConfirmSetup.addEventListener('click', () => {
-      playClickSound();
-      const activePlayers = playersState.slice(0, selectedPlayerCount);
-      const summaryText = activePlayers.map(p => `- ${p.name} (${p.type.toUpperCase()}): ${NATIONS_DATA[p.nationId].flag} ${NATIONS_DATA[p.nationId].name}`).join('\n');
-      alert(`⚡ CONFERÊNCIA INTERNACIONAL DE 1970 INICIADA!\n\nDelegados Credenciados:\n${summaryText}\n\nInicializando motor de simulação (Turno 1 / 50)...`);
+  // ==========================================================================
+  // Single Screen Plenary Stage Engine (Motor Acelerado de 50 Turnos: 1970–2020)
+  // ==========================================================================
+  const gameStageScreen = document.getElementById('gameStageScreen');
+  const hudYearBadge = document.getElementById('hudYearBadge');
+  const hudPhaseBadge = document.getElementById('hudPhaseBadge');
+  const hudFootprintFill = document.getElementById('hudFootprintFill');
+  const hudFootprintVal = document.getElementById('hudFootprintVal');
+  const councilSeatsGrid = document.getElementById('councilSeatsGrid');
+  const decisionPanelBox = document.getElementById('decisionPanelBox');
+  const decisionBadge = document.getElementById('decisionBadge');
+  const activeLeaderTag = document.getElementById('activeLeaderTag');
+  const decisionTitle = document.getElementById('decisionTitle');
+  const decisionDescription = document.getElementById('decisionDescription');
+  const actionOptionsContainer = document.getElementById('actionOptionsContainer');
+  const activeNationStatsBar = document.getElementById('activeNationStatsBar');
+  const btnConfirmTurn = document.getElementById('btnConfirmTurn');
+  const btnConfirmTurnText = document.getElementById('btnConfirmTurnText');
+  const newsTickerText = document.getElementById('newsTickerText');
+
+  // Game Engine State
+  let currentYear = 1970;
+  let currentTurnNumber = 1; // Exactly 1 to 50 turns
+  let activeLeaderIndex = 0;
+  let globalFootprint = 25; // 0 to 1500 pts
+  let activeGamePlayers = [];
+
+  // Question Dataset Generator for 50 Annual Turn Dilemmas (1970 to 2020)
+  function getTurnQuestionData(year, turnNum, nation) {
+    // Key Historical Milestones
+    if (year === 1970) {
+      return {
+        title: "1970: A EXPLOSÃO DO CONSUMO INDUSTRIAL",
+        desc: "As indústrias mundiais operam a pleno vapor na abertura da Cúpula de Genebra. Qual a prioridade inicial de arranque da matriz de " + nation.name + "?",
+        ticker: "1970 • Abertura Oficial da Cúpula Mundial de Energia em Genebra. Líderes buscam suficiência industrial.",
+        options: [
+          { text: "💧 Expandir Grandes Hidrelétricas (+35 MW | -$30M)", effect: p => { p.capacity.hydro += 35; p.capital -= 30; } },
+          { text: "⛏️ Construir Térmicas a Carvão (+45 MW | -$20M)", effect: p => { p.capacity.thermal += 45; p.capital -= 20; globalFootprint += 15; } },
+          { text: "🔬 Subsidiar P&D de Eficiência Energética (+2 Patentes | -$25M)", effect: p => { p.patents += 2; p.capital -= 25; } }
+        ]
+      };
+    }
+
+    if (year === 1973) {
+      return {
+        title: "1973: PRIMEIRO CHOQUE GLOBAL DO PETRÓLEO",
+        desc: "Embargos internacionais elevam o barril de petróleo em 300%. Nações dependentes de combustíveis fósseis sofrem surto inflacionário.",
+        ticker: "1973 • Crise do Petróleo! Embargos internacionais geram racionamento e disparada nos transportes.",
+        options: [
+          { text: "🌿 Programa de Biocombustíveis & Biomassa (+30 MW | -$25M)", effect: p => { p.capacity.biofuels += 30; p.capital -= 25; } },
+          { text: "⛏️ Extração Carvoeira de Emergência (+40 MW | -$20M)", effect: p => { p.capacity.thermal += 40; p.capital -= 20; globalFootprint += 20; } },
+          { text: "🛡️ Subsídio Estatal à População (-$15M Capital | +5% Estabilidade)", effect: p => { p.capital -= 15; p.stability = Math.min(100, p.stability + 5); } }
+        ]
+      };
+    }
+
+    if (year === 1979) {
+      return {
+        title: "1979: SECA SEVERA & RISCO HIDROLÓGICO",
+        desc: "Uma seca prolongada atinge grandes bacias hidrográficas mundiais. A vazão das hidrelétricas sofre queda temporária.",
+        ticker: "1979 • Alerta Hidrológico Mundial! Secas históricas reduzem capacidade geradora de barragens.",
+        options: [
+          { text: "🌋 Investir em Geotérmica / Térmica Emergencial (+35 MW | -$30M)", effect: p => { p.capacity.geothermal += 35; p.capital -= 30; } },
+          { text: "🛢️ Importação Emergencial de Fósseis (+30 MW | -$25M)", effect: p => { p.capacity.thermal += 30; p.capital -= 25; globalFootprint += 10; } },
+          { text: "⚡ Manutenção em Linhas HVDC de Alta Tensão (+15 MW | -$15M)", effect: p => { p.capacity.hydro += 15; p.capital -= 15; } }
+        ]
+      };
+    }
+
+    if (year === 1986) {
+      return {
+        title: "1986: ALERTA INDUSTRIAL & PROTOCOLO DE SEGURANÇA",
+        desc: "Acidentes em plantas industriais pesadas exigem inspeções rigorosas e modernização de infraestrutura.",
+        ticker: "1986 • Revisão de Segurança Internacional! Inspeções rigorosas aplicadas a reatores e geradores.",
+        options: [
+          { text: "⚛️ Modernizar Reatores Nucleares / Instalações (+40 MW | -$40M)", effect: p => { p.capacity.nuclear += 40; p.capital -= 40; } },
+          { text: "🌬️ Migrar Investimentos para Matriz Eólica (+25 MW | -$30M)", effect: p => { p.capacity.wind += 25; p.capital -= 30; } },
+          { text: "📋 Manutenção Preventiva Padronizada (-$15M | +10% Estabilidade)", effect: p => { p.capital -= 15; p.stability = Math.min(100, p.stability + 10); } }
+        ]
+      };
+    }
+
+    if (year === 1997) {
+      return {
+        title: "1997: PROTOCOLO DE QUIOTO E METAS DE CARBONO",
+        desc: "O primeiro tratado internacional com metas de redução de emissões de carbono entra em vigor na Cúpula.",
+        ticker: "1997 • Assinado o Protocolo de Quioto! Nações estabelecem metas de redução da pegada ecológica.",
+        options: [
+          { text: "🌱 Subsidiar Parques Eólicos/Solares (+35 MW | -$35M)", effect: p => { p.capacity.wind += 35; p.capital -= 35; globalFootprint = Math.max(0, globalFootprint - 15); } },
+          { text: "📜 Licenciar Patentes de Inovação Limpa (+3 Patentes | -$30M)", effect: p => { p.patents += 3; p.capital -= 30; } },
+          { text: "🏭 Manter Produção Fóssil Existente (+40 MW Térmica | -$15M)", effect: p => { p.capacity.thermal += 40; p.capital -= 15; globalFootprint += 25; } }
+        ]
+      };
+    }
+
+    if (year === 2008) {
+      return {
+        title: "2008: CRISE FINANCEIRA E ESCASSEZ DE CRÉDITO",
+        desc: "O choque financeiro global restringe o crédito internacional para grande infraestrutura. Aloque recursos com cautela.",
+        ticker: "2008 • Crise de Crédito Global! Investimentos energéticos desaceleram em todo o mundo.",
+        options: [
+          { text: "⚡ Otimizar Eficiência da Redes Elétricas (+20 MW | -$15M)", effect: p => { p.capacity.hydro += 20; p.capital -= 15; } },
+          { text: "🏛️ Injeção de Capital Estatal na Economia (+$40M Capital | -5% PIB)", effect: p => { p.capital += 40; p.gdp *= 0.95; } },
+          { text: "🌿 Projetos Renováveis Descentralizados (+20 MW | -$20M)", effect: p => { p.capacity.wind += 20; p.capital -= 20; } }
+        ]
+      };
+    }
+
+    if (year === 2015) {
+      return {
+        title: "2015: ACORDO DE PARIS E TRANSIÇÃO VERDE",
+        desc: "Compromisso histórico para acelerar a descarbonização da economia mundial até 2050.",
+        ticker: "2015 • Histórico Acordo de Paris! Países unem forças para acelerar a transição limpa.",
+        options: [
+          { text: "🌞 Megaprojeto Solar & Eólico Offshore (+50 MW | -$45M)", effect: p => { p.capacity.wind += 50; p.capital -= 45; globalFootprint = Math.max(0, globalFootprint - 20); } },
+          { text: "🌿 Expansão de Biocombustíveis Avançados (+40 MW | -$35M)", effect: p => { p.capacity.biofuels += 40; p.capital -= 35; } },
+          { text: "⚛️ Reatores de Próxima Geração (+45 MW | -$40M)", effect: p => { p.capacity.nuclear += 45; p.capital -= 40; } }
+        ]
+      };
+    }
+
+    if (year === 2020) {
+      return {
+        title: "2020: A RODADA FINAL PELA RESILIÊNCIA",
+        desc: "Último ano da corrida energética de 50 anos! Tome a decisão final para consolidar o score de resiliência de " + nation.name + ".",
+        ticker: "2020 • Rodada Final da Cúpula Internacional! Apuração da Nação Vencedora.",
+        options: [
+          { text: "🏆 Pacote Final de Sustentabilidade (+10% Estabilidade | -$20M)", effect: p => { p.stability = Math.min(100, p.stability + 10); p.capital -= 20; } },
+          { text: "⚡ Expansão de Geração Emergencial (+40 MW | -$25M)", effect: p => { p.capacity.hydro += 40; p.capital -= 25; } },
+          { text: "📜 Registro Final de Patentes (+2 Patentes | -$20M)", effect: p => { p.patents += 2; p.capital -= 20; } }
+        ]
+      };
+    }
+
+    // Dynamic Procedural Questions for Intermediate Years
+    const cycle = turnNum % 4;
+    if (cycle === 1) {
+      return {
+        title: `${year}: EXPANSÃO DE INFRAESTRUTURA`,
+        desc: `A economia de ${nation.name} expande no ano de ${year}. Defina como ampliar a capacidade geradora.`,
+        ticker: `${year} • Cúpula de Genebra processa demandas de infraestrutura elétrica nacional.`,
+        options: [
+          { text: `💧 Expandir Usinas Hidroelétricas (+30 MW | -$30M)`, effect: p => { p.capacity.hydro += 30; p.capital -= 30; } },
+          { text: `⛏️ Adicionar Térmica a Carvão (+40 MW | -$20M)`, effect: p => { p.capacity.thermal += 40; p.capital -= 20; globalFootprint += 12; } },
+          { text: `🔬 Fundo Nacional de P&D (+2 Patentes | -$20M)`, effect: p => { p.patents += 2; p.capital -= 20; } }
+        ]
+      };
+    } else if (cycle === 2) {
+      return {
+        title: `${year}: MERCADO & COMÉRCIO DE RECURSOS`,
+        desc: `Cotações mundiais flutuam em ${year}. Como ${nation.name} otimizará seus recursos econômicos?`,
+        ticker: `${year} • Mercado de commodities elétricas em negociação internacional.`,
+        options: [
+          { text: `🛢️ Comprar Fósseis Importados (+35 MW | -$25M)`, effect: p => { p.capacity.thermal += 35; p.capital -= 25; globalFootprint += 10; } },
+          { text: `🌬️ Subsidiar Matriz Renováveis (+25 MW | -$25M)`, effect: p => { p.capacity.wind += 25; p.capital -= 25; } },
+          { text: `💰 Arrecadação Fiscal & Fundo de Reserva (+$35M Capital)`, effect: p => { p.capital += 35; } }
+        ]
+      };
+    } else if (cycle === 3) {
+      return {
+        title: `${year}: GESTÃO DE ESTABILIDADE & REDE ELÉTRICA`,
+        desc: `A rede elétrica de ${nation.name} requer calibração no ano de ${year} para manter a estabilidade social.`,
+        ticker: `${year} • Relatório de estabilidade elétrica e eficiência em malhas de transmissão.`,
+        options: [
+          { text: `⚡ Linhas de Transmissão de Alta Tensão (+25 MW | -$20M)`, effect: p => { p.capacity.hydro += 25; p.capital -= 20; } },
+          { text: `🛡️ Programa de Emprego & Apoio (+8% Estabilidade | -$15M)`, effect: p => { p.stability = Math.min(100, p.stability + 8); p.capital -= 15; } },
+          { text: `🌋 Expandir Geotérmica / Biomassa (+30 MW | -$25M)`, effect: p => { p.capacity.geothermal += 30; p.capital -= 25; } }
+        ]
+      };
+    } else {
+      return {
+        title: `${year}: INOVAÇÃO TECNOLÓGICA & TRANSIÇÃO`,
+        desc: `Avanços científicos surgem em ${year}. Qual tecnologia trará maior resiliência a ${nation.name}?`,
+        ticker: `${year} • Pesquisa em física aplicada e automação elétrica avançada.`,
+        options: [
+          { text: `⚛️ Investir em Tecnologia Nuclear (+35 MW | -$35M)`, effect: p => { p.capacity.nuclear += 35; p.capital -= 35; } },
+          { text: `🌿 Expansão de Fontes Verdes (+30 MW | -$30M)`, effect: p => { p.capacity.wind += 30; p.capital -= 30; globalFootprint = Math.max(0, globalFootprint - 5); } },
+          { text: `📜 Adquirir Patentes Internacionais (+3 Patentes | -$25M)`, effect: p => { p.patents += 3; p.capital -= 25; } }
+        ]
+      };
+    }
+  }
+
+  function initMainGame() {
+    currentYear = 1970;
+    currentTurnNumber = 1;
+    activeLeaderIndex = 0;
+    globalFootprint = 25;
+
+    // Initialize runtime state for each active player
+    activeGamePlayers = playersState.slice(0, selectedPlayerCount).map(p => {
+      const nat = NATIONS_DATA[p.nationId];
+      let hydroCap = 0, thermalCap = 0, geoCap = 0, nucCap = 0, bioCap = 0, windCap = 0;
+
+      nat.matrix.forEach(m => {
+        if (m.label.includes('HIDRELÉTRICA')) hydroCap = m.pct * 1.5;
+        if (m.label.includes('PETRÓLEO') || m.label.includes('CARVÃO')) thermalCap = m.pct * 1.4;
+        if (m.label.includes('GEOTÉRMICA')) geoCap = m.pct * 1.5;
+        if (m.label.includes('NUCLEAR')) nucCap = m.pct * 1.5;
+        if (m.label.includes('BIOCOMBUSTÍVEIS')) bioCap = m.pct * 1.5;
+        if (m.label.includes('EÓLICA')) windCap = m.pct * 1.5;
+      });
+
+      return {
+        id: p.id,
+        name: p.name,
+        type: p.type,
+        nationId: p.nationId,
+        nation: nat,
+        capital: 100, // $100 Million
+        gdp: 500, // $500 Billion
+        stability: 100, // 100%
+        baseDemand: 110, // 110 MW
+        capacity: {
+          hydro: hydroCap || 10,
+          thermal: thermalCap || 10,
+          geothermal: geoCap || 0,
+          nuclear: nucCap || 0,
+          biofuels: bioCap || 0,
+          wind: windCap || 0
+        },
+        patents: 0,
+        cumulativeEmissions: 5
+      };
+    });
+
+    if (playerSetupScreen) playerSetupScreen.classList.add('hidden');
+    if (gameStageScreen) gameStageScreen.classList.remove('hidden');
+
+    renderTurnQuestion();
+  }
+
+  // Visual State Machine: Render Seats around table with Spotlight vs Penumbra
+  function updatePlenarySeats() {
+    if (!councilSeatsGrid) return;
+    councilSeatsGrid.innerHTML = '';
+
+    activeGamePlayers.forEach((player, idx) => {
+      const isActive = (idx === activeLeaderIndex);
+      const seat = document.createElement('div');
+      seat.className = `leader-seat ${isActive ? 'active' : 'dimmed'}`;
+      seat.setAttribute('data-seat-index', idx);
+
+      const totalGen = Math.round(Object.values(player.capacity).reduce((a, b) => a + b, 0));
+      const demand = Math.round(player.baseDemand * Math.pow(1.02, currentTurnNumber - 1));
+      const netMW = totalGen - demand;
+      const isSurplus = netMW >= 0;
+
+      let avatarIcon = '👨‍💼';
+      if (player.nationId === 'norway') avatarIcon = '🧔🏻‍♂️';
+      if (player.nationId === 'brazil') avatarIcon = '👨🏽‍💼';
+      if (player.nationId === 'iceland') avatarIcon = '👨🏼‍💼';
+      if (player.nationId === 'uk') avatarIcon = '🤵🏼‍♂️';
+      if (player.nationId === 'usa') avatarIcon = '🇺🇸🏼';
+
+      seat.innerHTML = `
+        <div class="spotlight-beam"></div>
+        <div class="leader-avatar-box">
+          <span class="leader-avatar-icon">${avatarIcon}</span>
+        </div>
+        <div class="leader-nameplate">
+          <div class="nameplate-title"><span class="nameplate-flag">${player.nation.flag}</span> ${player.name.toUpperCase()}</div>
+          <div class="nameplate-balance ${isSurplus ? 'surplus' : 'deficit'}">
+            ${isSurplus ? '⚡ +' + netMW + ' MW' : '⚠️ ' + netMW + ' MW'}
+          </div>
+        </div>
+      `;
+
+      seat.addEventListener('click', () => {
+        playClickSound();
+        activeLeaderIndex = idx;
+        renderTurnQuestion();
+      });
+
+      councilSeatsGrid.appendChild(seat);
     });
   }
 
+  // Render Fast Turn Question (1 Question per Turn for 50 Turns)
+  function renderTurnQuestion() {
+    // Determine active leader for current turn (rotates turns evenly)
+    activeLeaderIndex = (currentTurnNumber - 1) % activeGamePlayers.length;
+    const player = activeGamePlayers[activeLeaderIndex];
+
+    updatePlenarySeats();
+
+    // Calculate current demand and generation
+    const totalGen = Math.round(Object.values(player.capacity).reduce((a, b) => a + b, 0));
+    const currentDemand = Math.round(player.baseDemand * Math.pow(1.022, currentTurnNumber - 1));
+
+    // Update HUD
+    if (hudYearBadge) hudYearBadge.innerHTML = `${currentYear} (TURNO ${currentTurnNumber}/50)`;
+    if (hudPhaseBadge) hudPhaseBadge.innerHTML = `ANO ${currentYear} • DILEMA DE ENERGIA`;
+    if (activeLeaderTag) activeLeaderTag.innerHTML = `LÍDER DA RODADA: ${player.nation.flag} ${player.name.toUpperCase()}`;
+
+    // Footprint Bar Update
+    const pctFootprint = Math.min(100, (globalFootprint / 1500) * 100);
+    if (hudFootprintFill) hudFootprintFill.style.width = `${pctFootprint}%`;
+    if (hudFootprintVal) hudFootprintVal.innerHTML = `${globalFootprint} / 1500 PTS`;
+
+    // Active Stats Footer Bar
+    if (activeNationStatsBar) {
+      activeNationStatsBar.innerHTML = `
+        <span class="stat-pill">💰 Capital: <strong>$${player.capital}M</strong></span>
+        <span class="stat-pill">⚡ Ger.: <strong>${totalGen} MW</strong></span>
+        <span class="stat-pill">📈 Demanda: <strong>${currentDemand} MW</strong></span>
+        <span class="stat-pill">🛡️ Estabilidade: <strong>${Math.round(player.stability)}%</strong></span>
+        <span class="stat-pill">🏛️ PIB: <strong>$${Math.round(player.gdp)}B</strong></span>
+      `;
+    }
+
+    // Fetch Question Data
+    const qData = getTurnQuestionData(currentYear, currentTurnNumber, player);
+
+    if (newsTickerText) newsTickerText.innerHTML = qData.ticker;
+    if (decisionBadge) decisionBadge.innerHTML = `TURNO ${currentTurnNumber} DE 50 • DILEMA GEOPOLÍTICO (${currentYear})`;
+    if (decisionTitle) decisionTitle.innerHTML = qData.title;
+    if (decisionDescription) decisionDescription.innerHTML = qData.desc;
+
+    // Render Choice Buttons
+    if (actionOptionsContainer) {
+      actionOptionsContainer.innerHTML = '';
+
+      qData.options.forEach((opt, oIdx) => {
+        const btn = document.createElement('button');
+        btn.className = 'btn-action-option';
+        btn.innerHTML = opt.text;
+        btn.onclick = () => {
+          playClickSound();
+
+          // Apply Option Effect to active player
+          opt.effect(player);
+
+          // Resolve Turn Math for all nations
+          activeGamePlayers.forEach(p => {
+            const pGen = Math.round(Object.values(p.capacity).reduce((a, b) => a + b, 0));
+            const pDem = Math.round(p.baseDemand * Math.pow(1.022, currentTurnNumber - 1));
+            const pNet = pGen - pDem;
+
+            if (pNet >= 0) {
+              p.capital += 25;
+              p.gdp *= 1.02;
+              p.stability = Math.min(100, p.stability + 1);
+            } else {
+              const defRatio = Math.abs(pNet) / pDem;
+              p.stability = Math.max(10, p.stability - (defRatio * 25));
+              p.gdp *= Math.max(0.85, 1 - (defRatio * 0.10));
+            }
+          });
+
+          // Advance to next turn
+          currentTurnNumber++;
+          currentYear++;
+
+          if (currentTurnNumber <= 50) {
+            renderTurnQuestion();
+          } else {
+            triggerVictoryResolution();
+          }
+        };
+
+        actionOptionsContainer.appendChild(btn);
+      });
+    }
+
+    if (btnConfirmTurnText) {
+      btnConfirmTurnText.innerHTML = `AVANÇAR PARA ${currentYear + 1} ⏭`;
+    }
+  }
+
+  // Victory Resolution (Turn 50 / 2020)
+  function triggerVictoryResolution() {
+    const scoredPlayers = activeGamePlayers.map(p => {
+      const score = (0.35 * (p.gdp / 1000)) + (0.30 * (p.stability / 100)) + (0.20 * (p.patents / 10)) - (0.15 * (p.cumulativeEmissions / 100));
+      return { ...p, resilienceScore: (score * 100).toFixed(1) };
+    }).sort((a, b) => b.resilienceScore - a.resilienceScore);
+
+    const winner = scoredPlayers[0];
+    const rankingText = scoredPlayers.map((p, idx) => `${idx + 1}º - ${p.nation.flag} ${p.name} (${p.nation.name}): Score ${p.resilienceScore} pts`).join('\n');
+
+    alert(`🏆 CÚPULA DE 2020 CONCLUÍDA - VITÓRIA ENERGÉTICA!\n\nCampeão Global:\n${winner.nation.flag} ${winner.name} (${winner.nation.name})\n\nClassificação de Resiliência (50 Turnos):\n${rankingText}\n\nParabéns pela liderança na transição energética mundial!`);
+  }
+
+  // Confirm Setup Action -> Triggers Main Game Engine Entry
+  if (btnConfirmSetup) {
+    btnConfirmSetup.addEventListener('click', () => {
+      playClickSound();
+      initMainGame();
+    });
+  }
+
+  // Keyboard Shortcuts (Arrow keys, Spacebar, Enter, M, V)
   // Keyboard Shortcuts (Arrow keys, Spacebar, Enter, M, V)
   document.addEventListener('keydown', (e) => {
     if (!isStarted) {

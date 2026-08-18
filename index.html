@@ -220,6 +220,92 @@
 
   </div>
 
+  <!-- Main Game Stage Screen (Plenário do Conselho Internacional de Energia 1970-2020) -->
+  <div class="game-stage-screen hidden" id="gameStageScreen">
+    
+    <!-- Vintage Film Overlays for Main Stage -->
+    <div class="film-vignette"></div>
+    <div class="film-grain-overlay"></div>
+
+    <!-- Main Game Top Header Bar -->
+    <header class="game-header-bar">
+      <div class="header-left">
+        <div class="year-badge" id="hudYearBadge">1970 (TURNO 1/50)</div>
+        <div class="phase-badge" id="hudPhaseBadge">FASE 1: REVELAÇÃO DE EVENTOS</div>
+      </div>
+      
+      <div class="header-center">
+        <h2 class="game-title-sm">GEOPOWER • CÚPULA MUNDIAL</h2>
+      </div>
+
+      <div class="header-right">
+        <!-- Global Ecological Footprint Meter -->
+        <div class="global-footprint-box" title="Pegada Ecológica Global (Emissões de Carbono Acc. de todas as nações)">
+          <span class="footprint-label">🌱 PEGADA GLOBAL:</span>
+          <div class="footprint-bar"><div class="footprint-fill" id="hudFootprintFill" style="width: 5%;"></div></div>
+          <span class="footprint-value" id="hudFootprintVal">25 / 1500 PTS</span>
+        </div>
+
+        <button class="btn-control toggle-active" id="btnStageSoundToggle" title="Alternar Som">🔊</button>
+      </div>
+    </header>
+
+    <!-- Main Plenary Council Stage Container -->
+    <main class="council-plenary-viewport">
+      
+      <!-- Plenary Stage Backdrop Image Container -->
+      <div class="plenary-backdrop-wrapper">
+        <img src="assets/game_stage.jpg" alt="Plenário do Conselho Internacional de Energia" class="plenary-bg-img">
+        <div class="backdrop-noir-overlay"></div>
+      </div>
+
+      <!-- Leaders Seated Around Council Table -->
+      <div class="council-seats-grid" id="councilSeatsGrid">
+        <!-- 2 a 5 lideres renderizados e posicionados dinamicamente via JS -->
+      </div>
+
+      <!-- Decision Typewriter Panel / Speech Bubble overlay for active leader -->
+      <aside class="decision-panel-box" id="decisionPanelBox">
+        <header class="decision-panel-header">
+          <span class="decision-badge" id="decisionBadge">PAINEL DE DECISÃO GEOPOLÍTICA</span>
+          <span class="active-leader-tag" id="activeLeaderTag">LÍDER: NORUEGA</span>
+        </header>
+
+        <div class="decision-content-body">
+          <h3 class="decision-title" id="decisionTitle">1970: A EXPLOSÃO DO CONSUMO INDUSTRIAL</h3>
+          <p class="decision-description" id="decisionDescription">
+            As fábricas operam em capacidade máxima e a demanda por energia cresce a um ritmo vertiginoso. Defina o investimento prioritário inicial da sua nação.
+          </p>
+
+          <!-- Dynamic Action Choices / Interactive Controls -->
+          <div class="action-options-container" id="actionOptionsContainer">
+            <!-- Botoes de acao, comercio e investimentos inseridos dinamicamente -->
+          </div>
+        </div>
+
+        <footer class="decision-panel-footer">
+          <div class="active-nation-stats-bar" id="activeNationStatsBar">
+            <!-- Estatisticas de recursos em tempo real -->
+          </div>
+          <button class="btn-confirm-turn" id="btnConfirmTurn">
+            <span class="btn-icon">⚡</span>
+            <span class="btn-text" id="btnConfirmTurnText">CONCLUIR FASE DE NORUEGA</span>
+          </button>
+        </footer>
+      </aside>
+
+    </main>
+
+    <!-- Bottom Status Log & Timeline Bar -->
+    <footer class="game-footer-bar">
+      <div class="ticker-box">
+        <span class="ticker-label">📰 CINEJORNAL DISPATCH:</span>
+        <marquee class="ticker-text" id="newsTickerText">1970 • Início da corrida pela hegemonia energética mundial na Cúpula de Genebra...</marquee>
+      </div>
+    </footer>
+
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
