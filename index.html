@@ -22,6 +22,19 @@
     <div class="film-grain-overlay"></div>
     <div class="projector-light-beam"></div>
 
+    <!-- Initial Start Projector & Audio Prompt Overlay -->
+    <div class="start-prompt-overlay active" id="startPromptOverlay">
+      <div class="start-prompt-card">
+        <div class="start-prompt-badge">CINEMA 1970</div>
+        <h2 class="start-prompt-title">GEOPOWER • CINEJORNAL</h2>
+        <p class="start-prompt-text">Clique em qualquer lugar para ligar o projetor, o som ambiente e a locução.</p>
+        <button class="btn-retro-cta" id="btnStartProjector">
+          <span class="btn-icon">📽️</span>
+          <span class="btn-text">LIGAR PROJETOR E LOCUÇÃO</span>
+        </button>
+      </div>
+    </div>
+
     <!-- Header Cinejornal Bar -->
     <header class="newsreel-header">
       <div class="newsreel-badge">EDITION 1970</div>
@@ -160,6 +173,49 @@
 
       </div>
 
+    </footer>
+
+  </div>
+
+  <!-- Player Setup Screen (Cúpula de Credenciamento 1970) -->
+  <div class="setup-screen hidden" id="playerSetupScreen">
+    
+    <!-- Static Vignette Frame for Setup Screen -->
+    <div class="film-vignette"></div>
+
+    <!-- Setup Screen Header -->
+    <header class="setup-header">
+      <div class="setup-badge">CONFERÊNCIA INTERNACIONAL 1970</div>
+      <h1 class="setup-title">CREDENCIAMENTO DAS NAÇÕES PARTICIPANTES</h1>
+      <p class="setup-subtitle">Selecione o número de líderes mundiais e configure a diplomacia energética de cada nação.</p>
+    </header>
+
+    <!-- Player Count Selection Bar -->
+    <section class="player-count-selector">
+      <span class="count-label">NÚMERO DE NAÇÕES NA CÚPULA:</span>
+      <div class="count-buttons" id="countButtonsGroup">
+        <button class="btn-count" data-count="2">2 NAÇÕES</button>
+        <button class="btn-count active" data-count="3">3 NAÇÕES</button>
+        <button class="btn-count" data-count="4">4 NAÇÕES</button>
+        <button class="btn-count" data-count="5">5 NAÇÕES</button>
+      </div>
+    </section>
+
+    <!-- Player Slots Grid -->
+    <main class="player-slots-container" id="playerSlotsContainer">
+      <!-- Cards de jogadores renderizados dinamicamente via JavaScript -->
+    </main>
+
+    <!-- Setup Action Footer -->
+    <footer class="setup-footer">
+      <button class="btn-setup-action secondary" id="btnBackToIntro">
+        <span class="btn-icon">⏮</span>
+        <span class="btn-text">VOLTAR AO CINEJORNAL</span>
+      </button>
+      <button class="btn-setup-action primary" id="btnConfirmSetup">
+        <span class="btn-icon">⚡</span>
+        <span class="btn-text">INICIAR CÚPULA ENERGÉTICA (1970)</span>
+      </button>
     </footer>
 
   </div>
