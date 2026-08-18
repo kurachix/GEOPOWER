@@ -290,92 +290,109 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================================================
 
   // Next Scene Button
-  btnNext.addEventListener('click', () => {
-    playClickSound();
-    if (currentSceneIndex < scenes.length - 1) {
-      showScene(currentSceneIndex + 1);
-    } else if (!ctaOverlay.classList.contains('active')) {
-      // On last scene (Cena 4), clicking Next shows the Start Game card
-      ctaOverlay.classList.add('active');
-    }
-  });
+  if (btnNext) {
+    btnNext.addEventListener('click', () => {
+      playClickSound();
+      if (currentSceneIndex < scenes.length - 1) {
+        showScene(currentSceneIndex + 1);
+      } else if (ctaOverlay && !ctaOverlay.classList.contains('active')) {
+        // On last scene (Cena 4), clicking Next shows the Start Game card
+        ctaOverlay.classList.add('active');
+      }
+    });
+  }
 
   // Prev Scene Button
-  btnPrev.addEventListener('click', () => {
-    playClickSound();
-    if (ctaOverlay.classList.contains('active')) {
-      // If Start Game card is active, hide it to reveal Scene 4
-      ctaOverlay.classList.remove('active');
-    } else if (currentSceneIndex > 0) {
-      showScene(currentSceneIndex - 1);
-    }
-  });
+  if (btnPrev) {
+    btnPrev.addEventListener('click', () => {
+      playClickSound();
+      if (ctaOverlay && ctaOverlay.classList.contains('active')) {
+        // If Start Game card is active, hide it to reveal Scene 4
+        ctaOverlay.classList.remove('active');
+      } else if (currentSceneIndex > 0) {
+        showScene(currentSceneIndex - 1);
+      }
+    });
+  }
 
   // Direct Scene Pill Navigation
-  scenePills.forEach(pill => {
-    pill.addEventListener('click', (e) => {
-      playClickSound();
-      const targetIndex = parseInt(e.target.getAttribute('data-goto')) - 1;
-      showScene(targetIndex);
+  if (scenePills) {
+    scenePills.forEach(pill => {
+      pill.addEventListener('click', (e) => {
+        playClickSound();
+        const targetIndex = parseInt(e.target.getAttribute('data-goto')) - 1;
+        showScene(targetIndex);
+      });
     });
-  });
+  }
 
   // Sound Toggle Button
-  btnSoundToggle.addEventListener('click', () => {
-    soundEnabled = !soundEnabled;
-    toggleAudio(soundEnabled);
-    if (soundEnabled) {
-      btnSoundToggle.classList.add('toggle-active');
-      btnSoundToggle.innerHTML = '🔊 SOM';
-    } else {
-      btnSoundToggle.classList.remove('toggle-active');
-      btnSoundToggle.innerHTML = '🔇 MUTE';
-    }
-  });
+  if (btnSoundToggle) {
+    btnSoundToggle.addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      toggleAudio(soundEnabled);
+      if (soundEnabled) {
+        btnSoundToggle.classList.add('toggle-active');
+        btnSoundToggle.innerHTML = '🔊 SOM';
+      } else {
+        btnSoundToggle.classList.remove('toggle-active');
+        btnSoundToggle.innerHTML = '🔇 MUTE';
+      }
+    });
+  }
 
   // Voice Toggle Button
-  btnVoiceToggle.addEventListener('click', () => {
-    voiceEnabled = !voiceEnabled;
-    if (!voiceEnabled && 'speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-      btnVoiceToggle.classList.remove('toggle-active');
-      btnVoiceToggle.innerHTML = '🎙️ VOZ: OFF';
-    } else {
-      btnVoiceToggle.classList.add('toggle-active');
-      btnVoiceToggle.innerHTML = '🎙️ LOCUÇÃO';
-      speakNarration(narrations[currentSceneIndex]);
-    }
-  });
-
-  const startPromptOverlay = document.getElementById('startPromptOverlay');
-  const btnStartProjector = document.getElementById('btnStartProjector');
+  if (btnVoiceToggle) {
+    btnVoiceToggle.addEventListener('click', () => {
+      voiceEnabled = !voiceEnabled;
+      if (!voiceEnabled && 'speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        btnVoiceToggle.classList.remove('toggle-active');
+        btnVoiceToggle.innerHTML = '🎙️ VOZ: OFF';
+      } else {
+        btnVoiceToggle.classList.add('toggle-active');
+        btnVoiceToggle.innerHTML = '🎙️ LOCUÇÃO';
+        speakNarration(narrations[currentSceneIndex]);
+      }
+    });
+  }
 
   // Start Experience Machine (Ligar Projetor, Som e Locução Simultaneamente)
   let isStarted = false;
 
-  function startExperience() {
+  window.startExperience = function() {
     if (isStarted) return;
     isStarted = true;
 
-    if (startPromptOverlay) {
-      startPromptOverlay.classList.remove('active');
-    }
+    try {
+      const overlay = document.getElementById('startPromptOverlay');
+      if (overlay) {
+        overlay.classList.remove('active');
+        overlay.style.display = 'none';
+      }
+    } catch (e) {}
 
-    // Inicializa sintetizador de áudio (ruído de vinil + zumbido do motor)
-    initAudioEngine();
+    try {
+      initAudioEngine();
+    } catch (e) {}
 
-    // Dispara a cena 0 (locução + efeito de digitação) exatamente no mesmo instante
-    showScene(0);
+    try {
+      showScene(0);
+    } catch (e) {}
+  };
+
+  function startExperience() {
+    window.startExperience();
   }
 
   if (startPromptOverlay) {
-    startPromptOverlay.addEventListener('click', startExperience);
+    startPromptOverlay.addEventListener('click', () => window.startExperience());
   }
 
   if (btnStartProjector) {
     btnStartProjector.addEventListener('click', (e) => {
       e.stopPropagation();
-      startExperience();
+      window.startExperience();
     });
   }
 
@@ -612,13 +629,21 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Transition to Setup Screen from Intro CTA
-  btnStartGame.addEventListener('click', () => {
-    playClickSound();
+  window.goToSetupScreen = function() {
+    try { playClickSound(); } catch (e) {}
+    const retroIntroScreen = document.getElementById('retroIntroScreen');
+    const playerSetupScreen = document.getElementById('playerSetupScreen');
     if (retroIntroScreen) retroIntroScreen.classList.add('hidden');
     if (playerSetupScreen) playerSetupScreen.classList.remove('hidden');
-    renderPlayerSlots();
-    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-  });
+    try { renderPlayerSlots(); } catch (e) {}
+    if ('speechSynthesis' in window) {
+      try { window.speechSynthesis.cancel(); } catch (e) {}
+    }
+  };
+
+  if (btnStartGame) {
+    btnStartGame.addEventListener('click', () => window.goToSetupScreen());
+  }
 
   // Transition back to Intro Newsreel from Setup
   if (btnBackToIntro) {
@@ -650,13 +675,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnConfirmTurnText = document.getElementById('btnConfirmTurnText');
   const newsTickerText = document.getElementById('newsTickerText');
 
-  // Game Engine State
-  let currentYear = 1970;
-  let currentTurnNumber = 1; // Exactly 1 to 50 turns
-  let activeLeaderIndex = 0;
-  let globalFootprint = 25; // 0 to 1500 pts
-  let activeGamePlayers = [];
-
   // Question Dataset Generator for 50 Annual Turn Dilemmas (1970 to 2020)
   function getTurnQuestionData(year, turnNum, nation) {
     // Key Historical Milestones
@@ -666,9 +684,9 @@ document.addEventListener('DOMContentLoaded', () => {
         desc: "As indústrias mundiais operam a pleno vapor na abertura da Cúpula de Genebra. Qual a prioridade inicial de arranque da matriz de " + nation.name + "?",
         ticker: "1970 • Abertura Oficial da Cúpula Mundial de Energia em Genebra. Líderes buscam suficiência industrial.",
         options: [
-          { text: "💧 Expandir Grandes Hidrelétricas (+35 MW | -$30M)", effect: p => { p.capacity.hydro += 35; p.capital -= 30; } },
-          { text: "⛏️ Construir Térmicas a Carvão (+45 MW | -$20M)", effect: p => { p.capacity.thermal += 45; p.capital -= 20; globalFootprint += 15; } },
-          { text: "🔬 Subsidiar P&D de Eficiência Energética (+2 Patentes | -$25M)", effect: p => { p.patents += 2; p.capital -= 25; } }
+          { text: "💧 Expandir Grandes Hidrelétricas (+35 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.hydro += 35; p.capital -= 30; } },
+          { text: "⛏️ Construir Térmicas a Carvão (+45 MW | Custo: $20M)", cost: 20, effect: p => { p.capacity.thermal += 45; p.capital -= 20; globalFootprint += 15; } },
+          { text: "🔬 Subsidiar P&D de Eficiência Energética (+2 Patentes | Custo: $25M)", cost: 25, effect: p => { p.patents += 2; p.capital -= 25; } }
         ]
       };
     }
@@ -679,9 +697,9 @@ document.addEventListener('DOMContentLoaded', () => {
         desc: "Embargos internacionais elevam o barril de petróleo em 300%. Nações dependentes de combustíveis fósseis sofrem surto inflacionário.",
         ticker: "1973 • Crise do Petróleo! Embargos internacionais geram racionamento e disparada nos transportes.",
         options: [
-          { text: "🌿 Programa de Biocombustíveis & Biomassa (+30 MW | -$25M)", effect: p => { p.capacity.biofuels += 30; p.capital -= 25; } },
-          { text: "⛏️ Extração Carvoeira de Emergência (+40 MW | -$20M)", effect: p => { p.capacity.thermal += 40; p.capital -= 20; globalFootprint += 20; } },
-          { text: "🛡️ Subsídio Estatal à População (-$15M Capital | +5% Estabilidade)", effect: p => { p.capital -= 15; p.stability = Math.min(100, p.stability + 5); } }
+          { text: "🌿 Programa de Biocombustíveis & Biomassa (+30 MW | Custo: $25M)", cost: 25, effect: p => { p.capacity.biofuels += 30; p.capital -= 25; } },
+          { text: "⛏️ Extração Carvoeira de Emergência (+40 MW | Custo: $20M)", cost: 20, effect: p => { p.capacity.thermal += 40; p.capital -= 20; globalFootprint += 20; } },
+          { text: "🛡️ Contingenciamento de Emergência & Apoio (Gratuito | +5% Estabilidade)", cost: 0, effect: p => { p.stability = Math.min(100, p.stability + 5); } }
         ]
       };
     }
@@ -692,9 +710,9 @@ document.addEventListener('DOMContentLoaded', () => {
         desc: "Uma seca prolongada atinge grandes bacias hidrográficas mundiais. A vazão das hidrelétricas sofre queda temporária.",
         ticker: "1979 • Alerta Hidrológico Mundial! Secas históricas reduzem capacidade geradora de barragens.",
         options: [
-          { text: "🌋 Investir em Geotérmica / Térmica Emergencial (+35 MW | -$30M)", effect: p => { p.capacity.geothermal += 35; p.capital -= 30; } },
-          { text: "🛢️ Importação Emergencial de Fósseis (+30 MW | -$25M)", effect: p => { p.capacity.thermal += 30; p.capital -= 25; globalFootprint += 10; } },
-          { text: "⚡ Manutenção em Linhas HVDC de Alta Tensão (+15 MW | -$15M)", effect: p => { p.capacity.hydro += 15; p.capital -= 15; } }
+          { text: "🌋 Investir em Geotérmica / Térmica Emergencial (+35 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.geothermal += 35; p.capital -= 30; } },
+          { text: "🛢️ Importação Emergencial de Fósseis (+30 MW | Custo: $25M)", cost: 25, effect: p => { p.capacity.thermal += 30; p.capital -= 25; globalFootprint += 10; } },
+          { text: "⚡ Otimizar Manutenção em Linhas HVDC (+15 MW | Custo: $15M)", cost: 15, effect: p => { p.capacity.hydro += 15; p.capital -= 15; } }
         ]
       };
     }
@@ -705,9 +723,9 @@ document.addEventListener('DOMContentLoaded', () => {
         desc: "Acidentes em plantas industriais pesadas exigem inspeções rigorosas e modernização de infraestrutura.",
         ticker: "1986 • Revisão de Segurança Internacional! Inspeções rigorosas aplicadas a reatores e geradores.",
         options: [
-          { text: "⚛️ Modernizar Reatores Nucleares / Instalações (+40 MW | -$40M)", effect: p => { p.capacity.nuclear += 40; p.capital -= 40; } },
-          { text: "🌬️ Migrar Investimentos para Matriz Eólica (+25 MW | -$30M)", effect: p => { p.capacity.wind += 25; p.capital -= 30; } },
-          { text: "📋 Manutenção Preventiva Padronizada (-$15M | +10% Estabilidade)", effect: p => { p.capital -= 15; p.stability = Math.min(100, p.stability + 10); } }
+          { text: "⚛️ Modernizar Reatores Nucleares / Instalações (+40 MW | Custo: $40M)", cost: 40, effect: p => { p.capacity.nuclear += 40; p.capital -= 40; } },
+          { text: "🌬️ Migrar Investimentos para Matriz Eólica (+25 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.wind += 25; p.capital -= 30; } },
+          { text: "📋 Manutenção Preventiva Padronizada (Custo: $15M | +10% Estabilidade)", cost: 15, effect: p => { p.capital -= 15; p.stability = Math.min(100, p.stability + 10); } }
         ]
       };
     }
@@ -718,9 +736,9 @@ document.addEventListener('DOMContentLoaded', () => {
         desc: "O primeiro tratado internacional com metas de redução de emissões de carbono entra em vigor na Cúpula.",
         ticker: "1997 • Assinado o Protocolo de Quioto! Nações estabelecem metas de redução da pegada ecológica.",
         options: [
-          { text: "🌱 Subsidiar Parques Eólicos/Solares (+35 MW | -$35M)", effect: p => { p.capacity.wind += 35; p.capital -= 35; globalFootprint = Math.max(0, globalFootprint - 15); } },
-          { text: "📜 Licenciar Patentes de Inovação Limpa (+3 Patentes | -$30M)", effect: p => { p.patents += 3; p.capital -= 30; } },
-          { text: "🏭 Manter Produção Fóssil Existente (+40 MW Térmica | -$15M)", effect: p => { p.capacity.thermal += 40; p.capital -= 15; globalFootprint += 25; } }
+          { text: "🌱 Subsidiar Parques Eólicos/Solares (+35 MW | Custo: $35M)", cost: 35, effect: p => { p.capacity.wind += 35; p.capital -= 35; globalFootprint = Math.max(0, globalFootprint - 15); } },
+          { text: "📜 Licenciar Patentes de Inovação Limpa (+3 Patentes | Custo: $30M)", cost: 30, effect: p => { p.patents += 3; p.capital -= 30; } },
+          { text: "🏭 Manter Produção Fóssil Existente (+40 MW Térmica | Custo: $15M)", cost: 15, effect: p => { p.capacity.thermal += 40; p.capital -= 15; globalFootprint += 25; } }
         ]
       };
     }
@@ -731,9 +749,9 @@ document.addEventListener('DOMContentLoaded', () => {
         desc: "O choque financeiro global restringe o crédito internacional para grande infraestrutura. Aloque recursos com cautela.",
         ticker: "2008 • Crise de Crédito Global! Investimentos energéticos desaceleram em todo o mundo.",
         options: [
-          { text: "⚡ Otimizar Eficiência da Redes Elétricas (+20 MW | -$15M)", effect: p => { p.capacity.hydro += 20; p.capital -= 15; } },
-          { text: "🏛️ Injeção de Capital Estatal na Economia (+$40M Capital | -5% PIB)", effect: p => { p.capital += 40; p.gdp *= 0.95; } },
-          { text: "🌿 Projetos Renováveis Descentralizados (+20 MW | -$20M)", effect: p => { p.capacity.wind += 20; p.capital -= 20; } }
+          { text: "⚡ Otimizar Eficiência da Redes Elétricas (+20 MW | Custo: $15M)", cost: 15, effect: p => { p.capacity.hydro += 20; p.capital -= 15; } },
+          { text: "🏛️ Injeção de Capital Estatal na Economia (Receita: +$40M | -5% PIB)", cost: 0, effect: p => { p.capital += 40; p.gdp *= 0.95; } },
+          { text: "🌿 Projetos Renováveis Descentralizados (+20 MW | Custo: $20M)", cost: 20, effect: p => { p.capacity.wind += 20; p.capital -= 20; } }
         ]
       };
     }
@@ -744,9 +762,9 @@ document.addEventListener('DOMContentLoaded', () => {
         desc: "Compromisso histórico para acelerar a descarbonização da economia mundial até 2050.",
         ticker: "2015 • Histórico Acordo de Paris! Países unem forças para acelerar a transição limpa.",
         options: [
-          { text: "🌞 Megaprojeto Solar & Eólico Offshore (+50 MW | -$45M)", effect: p => { p.capacity.wind += 50; p.capital -= 45; globalFootprint = Math.max(0, globalFootprint - 20); } },
-          { text: "🌿 Expansão de Biocombustíveis Avançados (+40 MW | -$35M)", effect: p => { p.capacity.biofuels += 40; p.capital -= 35; } },
-          { text: "⚛️ Reatores de Próxima Geração (+45 MW | -$40M)", effect: p => { p.capacity.nuclear += 45; p.capital -= 40; } }
+          { text: "🌞 Megaprojeto Solar & Eólico Offshore (+50 MW | Custo: $45M)", cost: 45, effect: p => { p.capacity.wind += 50; p.capital -= 45; globalFootprint = Math.max(0, globalFootprint - 20); } },
+          { text: "🌿 Expansão de Biocombustíveis Avançados (+40 MW | Custo: $35M)", cost: 35, effect: p => { p.capacity.biofuels += 40; p.capital -= 35; } },
+          { text: "⚛️ Reatores de Próxima Geração (+45 MW | Custo: $40M)", cost: 40, effect: p => { p.capacity.nuclear += 45; p.capital -= 40; } }
         ]
       };
     }
@@ -757,9 +775,9 @@ document.addEventListener('DOMContentLoaded', () => {
         desc: "Último ano da corrida energética de 50 anos! Tome a decisão final para consolidar o score de resiliência de " + nation.name + ".",
         ticker: "2020 • Rodada Final da Cúpula Internacional! Apuração da Nação Vencedora.",
         options: [
-          { text: "🏆 Pacote Final de Sustentabilidade (+10% Estabilidade | -$20M)", effect: p => { p.stability = Math.min(100, p.stability + 10); p.capital -= 20; } },
-          { text: "⚡ Expansão de Geração Emergencial (+40 MW | -$25M)", effect: p => { p.capacity.hydro += 40; p.capital -= 25; } },
-          { text: "📜 Registro Final de Patentes (+2 Patentes | -$20M)", effect: p => { p.patents += 2; p.capital -= 20; } }
+          { text: "🏆 Pacote Final de Sustentabilidade (+10% Estabilidade | Custo: $20M)", cost: 20, effect: p => { p.stability = Math.min(100, p.stability + 10); p.capital -= 20; } },
+          { text: "⚡ Expansão de Geração Emergencial (+40 MW | Custo: $25M)", cost: 25, effect: p => { p.capacity.hydro += 40; p.capital -= 25; } },
+          { text: "📜 Registro Final de Patentes (+2 Patentes | Custo: $20M)", cost: 20, effect: p => { p.patents += 2; p.capital -= 20; } }
         ]
       };
     }
@@ -769,12 +787,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cycle === 1) {
       return {
         title: `${year}: EXPANSÃO DE INFRAESTRUTURA`,
-        desc: `A economia de ${nation.name} expande no ano de ${year}. Defina como ampliar a capacidade geradora.`,
+        desc: `A economia de ${nation.name} expande no ano de ${year}. Defina como ampliar a capacidade geradora. Orçamento atual: $${nation.capital || 100}M.`,
         ticker: `${year} • Cúpula de Genebra processa demandas de infraestrutura elétrica nacional.`,
         options: [
-          { text: `💧 Expandir Usinas Hidroelétricas (+30 MW | -$30M)`, effect: p => { p.capacity.hydro += 30; p.capital -= 30; } },
-          { text: `⛏️ Adicionar Térmica a Carvão (+40 MW | -$20M)`, effect: p => { p.capacity.thermal += 40; p.capital -= 20; globalFootprint += 12; } },
-          { text: `🔬 Fundo Nacional de P&D (+2 Patentes | -$20M)`, effect: p => { p.patents += 2; p.capital -= 20; } }
+          { text: `💧 Expandir Usinas Hidroelétricas (+30 MW | Custo: $30M)`, cost: 30, effect: p => { p.capacity.hydro += 30; p.capital -= 30; } },
+          { text: `⛏️ Adicionar Térmica a Carvão (+40 MW | Custo: $20M)`, cost: 20, effect: p => { p.capacity.thermal += 40; p.capital -= 20; globalFootprint += 12; } },
+          { text: `💰 Emissão de Títulos Públicos / Reserva (Receita: +$35M Capital)`, cost: 0, effect: p => { p.capital += 35; } }
         ]
       };
     } else if (cycle === 2) {
@@ -783,9 +801,9 @@ document.addEventListener('DOMContentLoaded', () => {
         desc: `Cotações mundiais flutuam em ${year}. Como ${nation.name} otimizará seus recursos econômicos?`,
         ticker: `${year} • Mercado de commodities elétricas em negociação internacional.`,
         options: [
-          { text: `🛢️ Comprar Fósseis Importados (+35 MW | -$25M)`, effect: p => { p.capacity.thermal += 35; p.capital -= 25; globalFootprint += 10; } },
-          { text: `🌬️ Subsidiar Matriz Renováveis (+25 MW | -$25M)`, effect: p => { p.capacity.wind += 25; p.capital -= 25; } },
-          { text: `💰 Arrecadação Fiscal & Fundo de Reserva (+$35M Capital)`, effect: p => { p.capital += 35; } }
+          { text: `🛢️ Comprar Fósseis Importados (+35 MW | Custo: $25M)`, cost: 25, effect: p => { p.capacity.thermal += 35; p.capital -= 25; globalFootprint += 10; } },
+          { text: `🌬️ Subsidiar Matriz Renováveis (+25 MW | Custo: $25M)`, cost: 25, effect: p => { p.capacity.wind += 25; p.capital -= 25; } },
+          { text: `🛡️ Contingenciamento Financeiro (Gratuito | +5% Estabilidade)`, cost: 0, effect: p => { p.stability = Math.min(100, p.stability + 5); } }
         ]
       };
     } else if (cycle === 3) {
@@ -794,9 +812,9 @@ document.addEventListener('DOMContentLoaded', () => {
         desc: `A rede elétrica de ${nation.name} requer calibração no ano de ${year} para manter a estabilidade social.`,
         ticker: `${year} • Relatório de estabilidade elétrica e eficiência em malhas de transmissão.`,
         options: [
-          { text: `⚡ Linhas de Transmissão de Alta Tensão (+25 MW | -$20M)`, effect: p => { p.capacity.hydro += 25; p.capital -= 20; } },
-          { text: `🛡️ Programa de Emprego & Apoio (+8% Estabilidade | -$15M)`, effect: p => { p.stability = Math.min(100, p.stability + 8); p.capital -= 15; } },
-          { text: `🌋 Expandir Geotérmica / Biomassa (+30 MW | -$25M)`, effect: p => { p.capacity.geothermal += 30; p.capital -= 25; } }
+          { text: `⚡ Linhas de Transmissão de Alta Tensão (+25 MW | Custo: $20M)`, cost: 20, effect: p => { p.capacity.hydro += 25; p.capital -= 20; } },
+          { text: `🌋 Expandir Geotérmica / Biomassa (+30 MW | Custo: $25M)`, cost: 25, effect: p => { p.capacity.geothermal += 30; p.capital -= 25; } },
+          { text: `💰 Arrecadação de Imposto Emergencial (Receita: +$30M | -4% Confiança)`, cost: 0, effect: p => { p.capital += 30; p.trust = Math.max(0, p.trust - 4); } }
         ]
       };
     } else {
@@ -805,15 +823,15 @@ document.addEventListener('DOMContentLoaded', () => {
         desc: `Avanços científicos surgem em ${year}. Qual tecnologia trará maior resiliência a ${nation.name}?`,
         ticker: `${year} • Pesquisa em física aplicada e automação elétrica avançada.`,
         options: [
-          { text: `⚛️ Investir em Tecnologia Nuclear (+35 MW | -$35M)`, effect: p => { p.capacity.nuclear += 35; p.capital -= 35; } },
-          { text: `🌿 Expansão de Fontes Verdes (+30 MW | -$30M)`, effect: p => { p.capacity.wind += 30; p.capital -= 30; globalFootprint = Math.max(0, globalFootprint - 5); } },
-          { text: `📜 Adquirir Patentes Internacionais (+3 Patentes | -$25M)`, effect: p => { p.patents += 3; p.capital -= 25; } }
+          { text: `⚛️ Investir em Tecnologia Nuclear (+35 MW | Custo: $35M)`, cost: 35, effect: p => { p.capacity.nuclear += 35; p.capital -= 35; } },
+          { text: `🌿 Expansão de Fontes Verdes (+30 MW | Custo: $30M)`, cost: 30, effect: p => { p.capacity.wind += 30; p.capital -= 30; globalFootprint = Math.max(0, globalFootprint - 5); } },
+          { text: `🔬 Manutenção Preventiva da Malha (Custo: $10M | +1 Patente)`, cost: 10, effect: p => { p.patents += 1; p.capital -= 10; } }
         ]
       };
     }
   }
 
-  function initMainGame() {
+  window.initMainGame = function() {
     currentYear = 1970;
     currentTurnNumber = 1;
     activeLeaderIndex = 0;
@@ -857,10 +875,15 @@ document.addEventListener('DOMContentLoaded', () => {
       };
     });
 
+    if (retroIntroScreen) retroIntroScreen.classList.add('hidden');
     if (playerSetupScreen) playerSetupScreen.classList.add('hidden');
     if (gameStageScreen) gameStageScreen.classList.remove('hidden');
 
     renderTurnQuestion();
+  };
+
+  function initMainGame() {
+    window.initMainGame();
   }
 
   // Visual State Machine: Render Seats around table with Spotlight vs Penumbra & Trust Badge
@@ -972,47 +995,75 @@ document.addEventListener('DOMContentLoaded', () => {
     if (decisionTitle) decisionTitle.innerHTML = qData.title;
     if (decisionDescription) decisionDescription.innerHTML = qData.desc;
 
-    // Render Choice Buttons
+    // Render Choice Cards (Cards de Escolha Diplomáticos)
     if (actionOptionsContainer) {
       actionOptionsContainer.innerHTML = '';
 
-      qData.options.forEach((opt, oIdx) => {
-        const btn = document.createElement('button');
-        btn.className = 'btn-action-option';
+      const optionBadges = ['OPÇÃO A', 'OPÇÃO B', 'OPÇÃO C', 'OPÇÃO D'];
 
-        // Apply Low Trust Penalty (+35% Cost) if Government Trust < 40%
-        let optionLabel = opt.text;
-        if (player.trust < 40 && optionLabel.includes('-$')) {
-          optionLabel += ' ⚠️ (Greves: +35% Custo)';
+      qData.options.forEach((opt, oIdx) => {
+        const card = document.createElement('div');
+        card.className = 'choice-card';
+
+        const requiredCost = opt.cost || 0;
+        const canAfford = player.capital >= requiredCost;
+
+        let penaltyTag = '';
+        if (!canAfford) {
+          card.classList.add('disabled-unaffordable');
+          penaltyTag = `<span class="confidential-stamp" style="font-size: 0.62rem; padding: 2px 6px; border-color: #f44336; color: #f44336; transform: none;">🚫 ORÇAMENTO INSUFICIENTE ($${requiredCost}M)</span>`;
+        } else if (player.trust < 40 && requiredCost > 0) {
+          penaltyTag = `<span class="confidential-stamp" style="font-size: 0.62rem; padding: 2px 6px; border-color: #ff9800; color: #ff9800; transform: none;">GREVES: +$10M</span>`;
         }
 
-        btn.innerHTML = optionLabel;
-        btn.onclick = () => {
+        const badgeText = optionBadges[oIdx] || `OPÇÃO ${oIdx + 1}`;
+
+        card.innerHTML = `
+          <div class="choice-card-left">
+            <span class="choice-badge-num">${badgeText}</span>
+            <span class="choice-text-content">${opt.text}</span>
+          </div>
+          ${penaltyTag}
+        `;
+
+        card.onclick = () => {
+          if (!canAfford) {
+            playClickSound();
+            alert(`⚠️ Orçamento insuficiente!\n\nA nação ${player.nation.name} possui $${player.capital}M em caixa, mas esta opção requer $${requiredCost}M.\n\nEscolha uma alternativa mais econômica ou uma medida de arrecadação fiscal!`);
+            return;
+          }
+
           playClickSound();
 
           // Apply Option Effect to active player
           opt.effect(player);
 
           // Apply extra cost penalty if trust is low (< 40%)
-          if (player.trust < 40) {
+          if (player.trust < 40 && requiredCost > 0) {
             player.capital -= 10;
           }
 
-          // Resolve Turn Math & Trust updates for all nations
+          // Resolve Turn Math & Annual Tax Collection for all nations
           activeGamePlayers.forEach(p => {
             const pGen = Math.round(Object.values(p.capacity).reduce((a, b) => a + b, 0));
             const pDem = Math.round(p.baseDemand * Math.pow(1.022, currentTurnNumber - 1));
             const pNet = pGen - pDem;
 
+            // Base Annual Tax Revenue ($20M + 3% of GDP)
+            let annualTaxIncome = 20 + Math.round(p.gdp * 0.03);
+
             if (pNet >= 0) {
-              // Superávit: Aumenta a aprovação popular!
-              const trustBonus = p.trust >= 75 ? 1.20 : 1.0;
-              p.capital += Math.round(25 * trustBonus);
+              // Superávit: Arrecadação tributária completa + Bônus de apoio popular
+              annualTaxIncome += 15;
+              if (p.trust >= 75) annualTaxIncome = Math.round(annualTaxIncome * 1.20);
+              p.capital += annualTaxIncome;
               p.gdp *= 1.02;
               p.trust = Math.min(100, p.trust + 3);
               p.stability = Math.min(100, p.stability + 1);
             } else {
-              // Apagão: Queda acentuada na Confiança do Governo!
+              // Apagão: Retração industrial reduz arrecadação tributária em 50%
+              annualTaxIncome = Math.round(annualTaxIncome * 0.5);
+              p.capital += annualTaxIncome;
               const defRatio = Math.abs(pNet) / pDem;
               const trustPenalty = Math.round(defRatio * 35);
               p.trust = Math.max(0, p.trust - trustPenalty);
@@ -1020,9 +1071,8 @@ document.addEventListener('DOMContentLoaded', () => {
               p.gdp *= Math.max(0.85, 1 - (defRatio * 0.10));
             }
 
-            // Penalidade extrema se a Confiança for Crítica (<= 15%)
             if (p.trust <= 15) {
-              p.capital = Math.max(0, p.capital - 25); // Multa de estabilização de emergência
+              p.capital = Math.max(0, p.capital - 25);
               p.gdp *= 0.93;
             }
           });
@@ -1038,7 +1088,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         };
 
-        actionOptionsContainer.appendChild(btn);
+        actionOptionsContainer.appendChild(card);
       });
     }
 

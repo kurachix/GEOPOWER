@@ -1239,20 +1239,21 @@ html, body {
   100% { opacity: 1; text-shadow: 0 0 6px #f44336; }
 }
 
-/* Painel de Decisão Retrô (Estilo Máquina de Escrever / Balão de Diálogo) */
+/* Painel de Decisão Retrô (Telegrama Diplomático & Cards de Escolha) */
 .decision-panel-box {
   position: relative;
   z-index: 30;
   width: 95%;
-  max-width: 1100px;
+  max-width: 1200px;
   margin-bottom: 12px;
-  background: #0f0f0f;
+  background: #0d0d0d;
   border: 2px solid var(--text-light);
-  box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.9);
-  padding: 16px 24px;
+  border-radius: 6px;
+  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.95);
+  padding: 18px 24px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
   animation: panelPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -1266,12 +1267,18 @@ html, body {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px dashed var(--border-sepia);
-  padding-bottom: 8px;
+  padding-bottom: 10px;
+}
+
+.panel-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .decision-badge {
   font-family: var(--font-title);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   letter-spacing: 2px;
   color: var(--accent-gold);
 }
@@ -1282,15 +1289,46 @@ html, body {
   font-family: var(--font-title);
   font-weight: 900;
   font-size: 0.78rem;
-  padding: 3px 10px;
+  padding: 3px 12px;
   letter-spacing: 1px;
   border-radius: 2px;
 }
 
-.decision-content-body {
+.confidential-stamp {
+  border: 2px solid #b71c1c;
+  color: #ef5350;
+  font-family: var(--font-title);
+  font-size: 0.7rem;
+  font-weight: 900;
+  padding: 2px 8px;
+  letter-spacing: 2px;
+  transform: rotate(-3deg);
+  display: inline-block;
+}
+
+/* Decision Panel 2-Column Grid Layout */
+.decision-panel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  gap: 20px;
+  align-items: stretch;
+}
+
+@media (max-width: 900px) {
+  .decision-panel-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.narrative-column {
+  background: #141414;
+  border: 1px dashed var(--border-sepia);
+  padding: 16px 20px;
+  border-radius: 4px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  justify-content: center;
+  gap: 10px;
 }
 
 .decision-title {
@@ -1302,50 +1340,91 @@ html, body {
 
 .decision-description {
   font-family: var(--font-newsreel);
-  font-size: 0.95rem;
-  line-height: 1.4;
+  font-size: 0.92rem;
+  line-height: 1.45;
   color: var(--text-muted);
 }
 
-/* Opções de Ação Interativas */
+.choices-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Opções de Ação Interativas (Cards de Escolha Retro) */
 .action-options-container {
   display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-top: 6px;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.btn-action-option {
-  background: #1b1b1b;
-  border: 1px solid var(--border-sepia);
-  color: var(--text-light);
-  padding: 10px 16px;
-  font-family: var(--font-newsreel);
-  font-size: 0.85rem;
+.choice-card {
+  background: #171717;
+  border: 2px solid var(--border-sepia);
+  border-radius: 5px;
+  padding: 12px 16px;
   cursor: pointer;
-  transition: all 0.2s ease;
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+  gap: 14px;
+  transition: all 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 3px 3px 0 #000;
+  text-align: left;
+  width: 100%;
 }
 
-.btn-action-option:hover {
-  background: #2b2b2b;
-  border-color: var(--text-light);
-  transform: translateY(-2px);
-}
-
-.btn-action-option.selected {
-  background: #3a3222;
+.choice-card:hover {
+  background: #242424;
   border-color: var(--accent-gold);
-  color: var(--accent-light);
-  font-weight: bold;
+  transform: translate(-3px, -3px);
+  box-shadow: 6px 6px 0 #000;
 }
 
-.btn-action-option:disabled {
-  opacity: 0.4;
+.choice-card.disabled-unaffordable {
+  opacity: 0.45;
+  filter: grayscale(80%);
   cursor: not-allowed;
-  transform: none;
+  border-color: #555 !important;
+  box-shadow: none !important;
+  transform: none !important;
+  background: #111 !important;
+}
+
+.choice-card.disabled-unaffordable:hover {
+  transform: none !important;
+  box-shadow: none !important;
+  border-color: #555 !important;
+}
+
+.choice-card-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.choice-badge-num {
+  background: var(--text-light);
+  color: #000;
+  font-family: var(--font-title);
+  font-weight: 900;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 3px;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.choice-card:hover .choice-badge-num {
+  background: var(--accent-gold);
+}
+
+.choice-text-content {
+  font-family: var(--font-newsreel);
+  font-size: 0.9rem;
+  color: var(--text-light);
+  line-height: 1.3;
 }
 
 /* Rodapé do Painel com Stats & Botão Concluir Turno */

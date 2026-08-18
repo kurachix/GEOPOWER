@@ -28,7 +28,7 @@
         <div class="start-prompt-badge">CINEMA 1970</div>
         <h2 class="start-prompt-title">GEOPOWER • CINEJORNAL</h2>
         <p class="start-prompt-text">Clique em qualquer lugar para ligar o projetor, o som ambiente e a locução.</p>
-        <button class="btn-retro-cta" id="btnStartProjector">
+        <button class="btn-retro-cta" id="btnStartProjector" onclick="window.startExperience && window.startExperience()">
           <span class="btn-icon">📽️</span>
           <span class="btn-text">LIGAR PROJETOR E LOCUÇÃO</span>
         </button>
@@ -120,7 +120,7 @@
             <div class="cta-badge">INÍCIO DA CAMPANHA</div>
             <h3 class="cta-title">A CORRIDA ENERGÉTICA COMEÇOU</h3>
             <p class="cta-subtitle">Assuma a liderança global e determine a estratégia energética do seu país.</p>
-            <button class="btn-retro-cta" id="btnStartGame">
+            <button class="btn-retro-cta" id="btnStartGame" onclick="window.goToSetupScreen && window.goToSetupScreen()">
               <span class="btn-icon">⚡</span>
               <span class="btn-text">ASSUMIR O COMANDO (INICIAR JOGO)</span>
             </button>
@@ -212,7 +212,7 @@
         <span class="btn-icon">⏮</span>
         <span class="btn-text">VOLTAR AO CINEJORNAL</span>
       </button>
-      <button class="btn-setup-action primary" id="btnConfirmSetup">
+      <button class="btn-setup-action primary" id="btnConfirmSetup" onclick="window.initMainGame && window.initMainGame()">
         <span class="btn-icon">⚡</span>
         <span class="btn-text">INICIAR CÚPULA ENERGÉTICA (1970)</span>
       </button>
@@ -267,30 +267,36 @@
       <!-- Decision Typewriter Panel / Speech Bubble overlay for active leader -->
       <aside class="decision-panel-box" id="decisionPanelBox">
         <header class="decision-panel-header">
-          <span class="decision-badge" id="decisionBadge">PAINEL DE DECISÃO GEOPOLÍTICA</span>
-          <span class="active-leader-tag" id="activeLeaderTag">LÍDER: NORUEGA</span>
+          <div class="panel-header-left">
+            <span class="decision-badge" id="decisionBadge">TELEGRAMA DIPLOMÁTICO 1970</span>
+            <span class="active-leader-tag" id="activeLeaderTag">LÍDER DA RODADA: 🇳🇴 NORUEGA</span>
+          </div>
+          <div class="panel-header-right">
+            <span class="confidential-stamp">CONFIDENCIAL</span>
+          </div>
         </header>
 
-        <div class="decision-content-body">
-          <h3 class="decision-title" id="decisionTitle">1970: A EXPLOSÃO DO CONSUMO INDUSTRIAL</h3>
-          <p class="decision-description" id="decisionDescription">
-            As fábricas operam em capacidade máxima e a demanda por energia cresce a um ritmo vertiginoso. Defina o investimento prioritário inicial da sua nação.
-          </p>
+        <div class="decision-panel-grid">
+          <!-- Left Column: Story Narrative / Dispatch -->
+          <div class="narrative-column">
+            <h3 class="decision-title" id="decisionTitle">1970: A EXPLOSÃO DO CONSUMO INDUSTRIAL</h3>
+            <p class="decision-description" id="decisionDescription">
+              As fábricas operam em capacidade máxima e a demanda por energia cresce a um ritmo vertiginoso. Defina o investimento prioritário inicial da sua nação.
+            </p>
+          </div>
 
-          <!-- Dynamic Action Choices / Interactive Controls -->
-          <div class="action-options-container" id="actionOptionsContainer">
-            <!-- Botoes de acao, comercio e investimentos inseridos dinamicamente -->
+          <!-- Right Column: Interactive Choice Cards -->
+          <div class="choices-column">
+            <div class="action-options-container" id="actionOptionsContainer">
+              <!-- Cards de escolha gerados dinamicamente via JS -->
+            </div>
           </div>
         </div>
 
         <footer class="decision-panel-footer">
           <div class="active-nation-stats-bar" id="activeNationStatsBar">
-            <!-- Estatisticas de recursos em tempo real -->
+            <!-- Estatisticas em pílulas retrô (Confiança 👑, Capital 💰, Geração ⚡, Demanda 📈, PIB 🏛️) -->
           </div>
-          <button class="btn-confirm-turn" id="btnConfirmTurn">
-            <span class="btn-icon">⚡</span>
-            <span class="btn-text" id="btnConfirmTurnText">CONCLUIR FASE DE NORUEGA</span>
-          </button>
         </footer>
       </aside>
 
