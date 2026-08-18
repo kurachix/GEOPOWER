@@ -1363,7 +1363,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const isSurplus = netMW >= 0;
 
     // Update HUD
-    if (hudYearBadge) hudYearBadge.innerHTML = `${currentYear} (TURNO ${currentTurnNumber}/50)`;
+    if (hudYearBadge) hudYearBadge.innerHTML = `${currentYear} (TURNO ${currentTurnNumber}/51)`;
     if (hudPhaseBadge) hudPhaseBadge.innerHTML = `ANO ${currentYear} • DILEMA DE ENERGIA`;
     if (activeLeaderTag) activeLeaderTag.innerHTML = `LÍDER DA RODADA: ${player.nation.flag} ${player.name.toUpperCase()}`;
 
@@ -1451,7 +1451,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const rankingsStr = rankedPlayers.map((rp, idx) => `#${idx + 1} ${rp.flag} ${rp.name}: ${rp.score} pts`).join(' | ');
 
     if (newsTickerText) newsTickerText.innerHTML = `${qData.ticker} &nbsp;&nbsp;•&nbsp;&nbsp; 🏆 <strong>RANKING AO VIVO:</strong> ${rankingsStr}`;
-    if (decisionBadge) decisionBadge.innerHTML = `TURNO ${currentTurnNumber} DE 50 • DILEMA GEOPOLÍTICO (${currentYear})`;
+    if (decisionBadge) decisionBadge.innerHTML = `TURNO ${currentTurnNumber} DE 51 • DILEMA GEOPOLÍTICO (${currentYear})`;
     if (decisionTitle) decisionTitle.innerHTML = qData.title;
     if (decisionDescription) {
       const conceptBadge = qData.concept ? `<div class="physics-geo-concept-pill" style="margin-top: 10px; font-size: 0.76rem; background: #18150d; border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 5px 10px; border-radius: 4px; font-family: var(--font-title); letter-spacing: 1px;">${qData.concept}</div>` : '';
@@ -1579,7 +1579,7 @@ document.addEventListener('DOMContentLoaded', () => {
           currentTurnNumber++;
           currentYear++;
 
-          if (currentTurnNumber <= 50) {
+          if (currentTurnNumber <= 51) {
             renderTurnQuestion();
           } else {
             triggerVictoryResolution();
@@ -1591,7 +1591,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (btnConfirmTurnText) {
-      btnConfirmTurnText.innerHTML = `AVANÇAR PARA ${currentYear + 1} ⏭`;
+      btnConfirmTurnText.innerHTML = currentTurnNumber < 51 ? `AVANÇAR PARA ${currentYear + 1} ⏭` : `FINALIZAR CÚPULA 2020 🏆`;
     }
   }
 
@@ -1617,10 +1617,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Victory Resolution (Turn 50 / Year 2020)
   function triggerVictoryResolution() {
+    const retroNewspaperModal = document.getElementById('retroNewspaperModal');
+    if (retroNewspaperModal) retroNewspaperModal.classList.add('hidden');
+    const gameTutorialModal = document.getElementById('gameTutorialModal');
+    if (gameTutorialModal) gameTutorialModal.classList.add('hidden');
+
     const scoredPlayers = activeGamePlayers.map(p => {
       const score = (0.35 * (p.gdp / 1000)) + (0.30 * (p.trust / 100)) + (0.20 * (p.patents / 10)) - (0.15 * (p.cumulativeEmissions / 100));
       return { ...p, resilienceScore: (score * 100).toFixed(1) };
-    }).sort((a, b) => b.resilienceScore - a.resilienceScore);
+    }).sort((a, b) => parseFloat(b.resilienceScore) - parseFloat(a.resilienceScore));
 
     const winner = scoredPlayers[0];
     const isHumanWinner = winner.type === 'human';
@@ -1711,6 +1716,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // State Collapse / Impeachment Defeat Screen (Trust = 0%)
   function triggerImpeachmentDefeat(failedPlayer) {
+    const retroNewspaperModal = document.getElementById('retroNewspaperModal');
+    if (retroNewspaperModal) retroNewspaperModal.classList.add('hidden');
+    const gameTutorialModal = document.getElementById('gameTutorialModal');
+    if (gameTutorialModal) gameTutorialModal.classList.add('hidden');
     const endgameScreen = document.getElementById('endgameScreen');
     const endgameCard = document.getElementById('endgameCard');
     const endgameBadge = document.getElementById('endgameBadge');

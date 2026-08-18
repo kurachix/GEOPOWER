@@ -1624,7 +1624,7 @@ html, body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 100;
+  z-index: 12000;
   background: rgba(0, 0, 0, 0.94);
   backdrop-filter: blur(8px);
   display: flex;
@@ -2358,7 +2358,7 @@ html, body {
   height: 100vh;
   background: rgba(0, 0, 0, 0.88);
   backdrop-filter: blur(8px);
-  z-index: 10000;
+  z-index: 9500;
   display: flex;
   justify-content: center;
   align-items: center;
