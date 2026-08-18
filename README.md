@@ -162,14 +162,3 @@ Cada jogador assume o comando de uma superpotência ou nação estratégica (**B
 
 ---
 
-## 👩‍💻 Créditos e Desenvolvedoras
-
-Trabalho desenvolvido para a disciplina de **Física e Geografia**:
-
-- 👩‍🎓 **Ana Clara Pantaleao Tirola N°02**
-- 👩‍🎓 **Ana Laura Pessotto Camargo N°03**
-- 👩‍🎓 **Lorena Santos Leme N°23**
-- 👩‍🎓 **Maria Clara De Núncio Oliveira N°25**
-
----
-*© 2026 GEOPOWER — Todos os direitos reservados.*
