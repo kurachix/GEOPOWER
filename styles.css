@@ -1506,3 +1506,420 @@ html, body {
   color: var(--text-muted);
   font-family: var(--font-newsreel);
 }
+
+/* ==========================================================================
+   Tela de Vitória / Derrota (Endgame Screen Overlay & Podium Animations)
+   ========================================================================== */
+.endgame-screen-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.94);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+  animation: overlayFadeIn 0.5s ease-out;
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Background Animated Spotlights & Confetti Particles */
+.endgame-bg-effects {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.victory-confetti-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.confetti-particle {
+  position: absolute;
+  top: -20px;
+  font-size: 1.4rem;
+  user-select: none;
+  animation: confettiFall 4s linear infinite;
+}
+
+@keyframes confettiFall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+}
+
+.spotlight-rotate-beam {
+  position: absolute;
+  top: -40%;
+  width: 50vw;
+  height: 140vh;
+  background: radial-gradient(ellipse at top, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.spotlight-rotate-beam.left {
+  left: -10%;
+  animation: beamRotateLeft 8s ease-in-out infinite alternate;
+}
+
+.spotlight-rotate-beam.right {
+  right: -10%;
+  animation: beamRotateRight 8s ease-in-out infinite alternate;
+}
+
+@keyframes beamRotateLeft {
+  0% { transform: rotate(-15deg); }
+  100% { transform: rotate(15deg); }
+}
+
+@keyframes beamRotateRight {
+  0% { transform: rotate(15deg); }
+  100% { transform: rotate(-15deg); }
+}
+
+/* Main Endgame Card Container */
+.endgame-card {
+  position: relative;
+  z-index: 10;
+  width: 95%;
+  max-width: 1050px;
+  background: #0d0d0d;
+  border: 3px solid var(--accent-gold);
+  border-radius: 8px;
+  box-shadow: 0 0 60px rgba(212, 175, 55, 0.4);
+  padding: 28px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: cardPopSpin 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes cardPopSpin {
+  0% { transform: scale(0.4) rotate(-10deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* Defeat / Impeachment Newspaper Spin Animation */
+.endgame-card.theme-defeat {
+  border-color: #b71c1c;
+  box-shadow: 0 0 60px rgba(183, 28, 28, 0.7);
+  animation: newspaperSpin 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@keyframes newspaperSpin {
+  0% { transform: scale(0.1) rotate(-720deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.endgame-card-header {
+  text-align: center;
+  border-bottom: 1px dashed var(--border-sepia);
+  padding-bottom: 16px;
+}
+
+.endgame-badge {
+  font-family: var(--font-title);
+  font-size: 0.85rem;
+  letter-spacing: 3px;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+}
+
+.endgame-card.theme-defeat .endgame-badge {
+  color: #ef5350;
+}
+
+.endgame-headline-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 8px 0;
+}
+
+.endgame-icon-hero {
+  font-size: 3rem;
+  line-height: 1;
+  animation: bounceHero 1.5s infinite alternate;
+}
+
+@keyframes bounceHero {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-8px); }
+}
+
+.endgame-title {
+  font-family: var(--font-title);
+  font-size: 2.2rem;
+  color: var(--text-light);
+  letter-spacing: 3px;
+}
+
+.endgame-card.theme-defeat .endgame-title {
+  color: #f44336;
+}
+
+.endgame-subtitle {
+  font-family: var(--font-newsreel);
+  font-size: 1rem;
+  color: var(--text-muted);
+  max-width: 750px;
+  margin: 0 auto;
+  line-height: 1.4;
+}
+
+/* Grid: Champion Spotlight Left | Full Leaderboard Right */
+.endgame-body-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: 24px;
+  align-items: stretch;
+}
+
+@media (max-width: 850px) {
+  .endgame-body-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Champion Spotlight Card */
+.champion-spotlight-card {
+  background: #141414;
+  border: 2px solid var(--accent-gold);
+  border-radius: 6px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  box-shadow: inset 0 0 20px rgba(212, 175, 55, 0.15);
+}
+
+.endgame-card.theme-defeat .champion-spotlight-card {
+  border-color: #b71c1c;
+  box-shadow: inset 0 0 20px rgba(183, 28, 28, 0.2);
+}
+
+.champion-crown {
+  background: var(--accent-gold);
+  color: #000;
+  font-family: var(--font-title);
+  font-weight: 900;
+  font-size: 0.78rem;
+  padding: 3px 12px;
+  letter-spacing: 2px;
+  border-radius: 3px;
+}
+
+.endgame-card.theme-defeat .champion-crown {
+  background: #b71c1c;
+  color: #fff;
+}
+
+.champion-avatar-box {
+  position: relative;
+  margin: 10px 0;
+  width: 90px;
+  height: 90px;
+  background: #090909;
+  border: 2px solid var(--border-sepia);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.2rem;
+}
+
+.champion-flag {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  font-size: 1.6rem;
+}
+
+.champion-name {
+  font-family: var(--font-title);
+  font-size: 1.3rem;
+  color: var(--text-light);
+  letter-spacing: 2px;
+}
+
+.champion-nation-title {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.champion-stats-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.champ-stat-pill {
+  background: #090909;
+  border: 1px solid var(--border-sepia);
+  padding: 6px 12px;
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+}
+
+.champ-stat-lbl {
+  color: var(--text-muted);
+}
+
+.champ-stat-val {
+  font-family: var(--font-title);
+  color: var(--accent-gold);
+  font-weight: bold;
+}
+
+.endgame-card.theme-defeat .champ-stat-val {
+  color: #ef5350;
+}
+
+/* Leaderboard List Right */
+.ranking-leaderboard-box {
+  background: #121212;
+  border: 1px dashed var(--border-sepia);
+  border-radius: 6px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.leaderboard-title {
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  letter-spacing: 2px;
+  color: var(--text-light);
+  border-bottom: 1px solid #222;
+  padding-bottom: 8px;
+}
+
+.leaderboard-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.leader-rank-item {
+  background: #181818;
+  border: 1px solid #2a2a2a;
+  border-radius: 4px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 0.88rem;
+}
+
+.leader-rank-item.is-winner {
+  border-color: var(--accent-gold);
+  background: #242015;
+}
+
+.rank-position-badge {
+  font-family: var(--font-title);
+  font-weight: 900;
+  font-size: 0.9rem;
+  color: var(--accent-gold);
+  width: 32px;
+}
+
+.rank-player-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.rank-player-name {
+  color: var(--text-light);
+  font-weight: bold;
+}
+
+.rank-score-badge {
+  font-family: var(--font-title);
+  font-size: 0.85rem;
+  color: var(--accent-gold);
+  background: #080808;
+  padding: 4px 10px;
+  border-radius: 3px;
+  border: 1px solid #333;
+}
+
+/* Endgame Action Footer */
+.endgame-footer {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  border-top: 1px dashed var(--border-sepia);
+  padding-top: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-endgame-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.22s ease;
+  box-shadow: 3px 3px 0 #000;
+}
+
+.btn-endgame-action.primary {
+  background: var(--accent-gold);
+  color: #000;
+  border: 2px solid var(--accent-gold);
+}
+
+.btn-endgame-action.primary:hover {
+  background: #fff;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #000;
+}
+
+.btn-endgame-action.secondary {
+  background: #1c1c1c;
+  color: var(--text-light);
+  border: 2px solid var(--border-sepia);
+}
+
+.btn-endgame-action.secondary:hover {
+  background: #2c2c2c;
+  border-color: var(--text-light);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #000;
+}

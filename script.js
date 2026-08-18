@@ -1075,9 +1075,18 @@ document.addEventListener('DOMContentLoaded', () => {
               p.capital = Math.max(0, p.capital - 25);
               p.gdp *= 0.93;
             }
+
+            // Check for Impeachment State Collapse (Trust = 0%)
+            if (p.trust <= 0 && p.type === 'human') {
+              triggerImpeachmentDefeat(p);
+              return;
+            }
           });
 
-          // Advance to next turn
+          // Advance to next turn if game is still active
+          const endgameScreen = document.getElementById('endgameScreen');
+          if (endgameScreen && !endgameScreen.classList.contains('hidden')) return;
+
           currentTurnNumber++;
           currentYear++;
 
@@ -1097,7 +1106,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Victory Resolution (Turn 50 / 2020) with Government Trust Weight (30%)
+  // ==========================================================================
+  // Victory & Defeat Podium System (Tela de Vitória / Derrota Animada)
+  // ==========================================================================
+  function spawnConfetti() {
+    const container = document.getElementById('confettiContainer');
+    if (!container) return;
+    container.innerHTML = '';
+
+    const shapes = ['🎉', '✨', '⚡', '🍃', '🌟', '💰', '🏆', '📜'];
+    for (let i = 0; i < 40; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'confetti-particle';
+      particle.innerHTML = shapes[Math.floor(Math.random() * shapes.length)];
+      particle.style.left = `${Math.random() * 95}%`;
+      particle.style.animationDelay = `${Math.random() * 3}s`;
+      particle.style.animationDuration = `${3.2 + Math.random() * 2.8}s`;
+      container.appendChild(particle);
+    }
+  }
+
+  // Victory Resolution (Turn 50 / Year 2020)
   function triggerVictoryResolution() {
     const scoredPlayers = activeGamePlayers.map(p => {
       const score = (0.35 * (p.gdp / 1000)) + (0.30 * (p.trust / 100)) + (0.20 * (p.patents / 10)) - (0.15 * (p.cumulativeEmissions / 100));
@@ -1105,10 +1134,162 @@ document.addEventListener('DOMContentLoaded', () => {
     }).sort((a, b) => b.resilienceScore - a.resilienceScore);
 
     const winner = scoredPlayers[0];
-    const rankingText = scoredPlayers.map((p, idx) => `${idx + 1}º - ${p.nation.flag} ${p.name} (${p.nation.name}): Score ${p.resilienceScore} pts (Confiança: ${Math.round(p.trust)}%)`).join('\n');
+    const isHumanWinner = winner.type === 'human';
 
-    alert(`🏆 CÚPULA DE 2020 CONCLUÍDA - VITÓRIA ENERGÉTICA!\n\nCampeão Global:\n${winner.nation.flag} ${winner.name} (${winner.nation.name})\n\nClassificação de Resiliência (50 Turnos):\n${rankingText}\n\nParabéns pela liderança na transição energética mundial!`);
+    const endgameScreen = document.getElementById('endgameScreen');
+    const endgameCard = document.getElementById('endgameCard');
+    const endgameBadge = document.getElementById('endgameBadge');
+    const endgameIconHero = document.getElementById('endgameIconHero');
+    const endgameTitle = document.getElementById('endgameTitle');
+    const endgameSubtitle = document.getElementById('endgameSubtitle');
+
+    const championCrownLabel = document.getElementById('championCrownLabel');
+    const championFlag = document.getElementById('championFlag');
+    const championAvatarIcon = document.getElementById('championAvatarIcon');
+    const championName = document.getElementById('championName');
+    const championNationTitle = document.getElementById('championNationTitle');
+
+    const champResilienceVal = document.getElementById('champResilienceVal');
+    const champTrustVal = document.getElementById('champTrustVal');
+    const champGdpVal = document.getElementById('champGdpVal');
+
+    const leaderboardList = document.getElementById('leaderboardList');
+
+    if (!endgameScreen || !endgameCard) return;
+
+    // Reset themes
+    endgameCard.className = 'endgame-card';
+
+    if (isHumanWinner) {
+      // Human Victory Theme
+      if (endgameBadge) endgameBadge.innerHTML = 'RESULTADO FINAL • CÚPULA DE GENEBRA (2020)';
+      if (endgameIconHero) endgameIconHero.innerHTML = '🏆';
+      if (endgameTitle) endgameTitle.innerHTML = 'VITÓRIA HISTÓRICA!';
+      if (endgameSubtitle) endgameSubtitle.innerHTML = `Parabéns ${winner.name}! Sua diplomacia e estratégia lideraram a transição energética mundial com maestria!`;
+      if (championCrownLabel) championCrownLabel.innerHTML = '👑 CAMPEÃO MUNDIAL';
+      spawnConfetti();
+    } else {
+      // AI Winner Theme / Human Runner-Up
+      if (endgameBadge) endgameBadge.innerHTML = 'RESULTADO FINAL • APURAÇÃO DA CÚPULA';
+      if (endgameIconHero) endgameIconHero.innerHTML = '📜';
+      if (endgameTitle) endgameTitle.innerHTML = 'CÚPULA CONCLUÍDA!';
+      if (endgameSubtitle) endgameSubtitle.innerHTML = `A nação ${winner.nation.name} alcançou o maior índice de resiliência energética global ao fim dos 50 anos.`;
+      if (championCrownLabel) championCrownLabel.innerHTML = '🥇 1º LUGAR NA CÚPULA';
+    }
+
+    // Populate Champion Card
+    if (championFlag) championFlag.innerHTML = winner.nation.flag;
+    let avatarIcon = '👨‍💼';
+    if (winner.nationId === 'norway') avatarIcon = '🧔🏻‍♂️';
+    if (winner.nationId === 'brazil') avatarIcon = '👨🏽‍💼';
+    if (winner.nationId === 'iceland') avatarIcon = '👨🏼‍💼';
+    if (winner.nationId === 'uk') avatarIcon = '🤵🏼‍♂️';
+    if (winner.nationId === 'usa') avatarIcon = '🇺🇸🏼';
+    if (championAvatarIcon) championAvatarIcon.innerHTML = avatarIcon;
+
+    if (championName) championName.innerHTML = winner.name.toUpperCase();
+    if (championNationTitle) championNationTitle.innerHTML = `${winner.nation.name.toUpperCase()} • ${winner.nation.tagline}`;
+    if (champResilienceVal) champResilienceVal.innerHTML = `${winner.resilienceScore} PTS`;
+    if (champTrustVal) champTrustVal.innerHTML = `${Math.round(winner.trust)}%`;
+    if (champGdpVal) champGdpVal.innerHTML = `$${(winner.gdp / 1000).toFixed(2)}T`;
+
+    // Populate Full Leaderboard List
+    if (leaderboardList) {
+      leaderboardList.innerHTML = '';
+      scoredPlayers.forEach((p, idx) => {
+        const item = document.createElement('div');
+        item.className = `leader-rank-item ${idx === 0 ? 'is-winner' : ''}`;
+        
+        let posBadge = `${idx + 1}º`;
+        if (idx === 0) posBadge = '🥇';
+        if (idx === 1) posBadge = '🥈';
+        if (idx === 2) posBadge = '🥉';
+
+        item.innerHTML = `
+          <span class="rank-position-badge">${posBadge}</span>
+          <div class="rank-player-info">
+            <span class="rank-player-flag">${p.nation.flag}</span>
+            <span class="rank-player-name">${p.name} (${p.nation.name})</span>
+          </div>
+          <span class="rank-score-badge">${p.resilienceScore} pts</span>
+        `;
+        leaderboardList.appendChild(item);
+      });
+    }
+
+    endgameScreen.classList.remove('hidden');
   }
+
+  // State Collapse / Impeachment Defeat Screen (Trust = 0%)
+  function triggerImpeachmentDefeat(failedPlayer) {
+    const endgameScreen = document.getElementById('endgameScreen');
+    const endgameCard = document.getElementById('endgameCard');
+    const endgameBadge = document.getElementById('endgameBadge');
+    const endgameIconHero = document.getElementById('endgameIconHero');
+    const endgameTitle = document.getElementById('endgameTitle');
+    const endgameSubtitle = document.getElementById('endgameSubtitle');
+
+    const championCrownLabel = document.getElementById('championCrownLabel');
+    const championFlag = document.getElementById('championFlag');
+    const championAvatarIcon = document.getElementById('championAvatarIcon');
+    const championName = document.getElementById('championName');
+    const championNationTitle = document.getElementById('championNationTitle');
+
+    const champResilienceVal = document.getElementById('champResilienceVal');
+    const champTrustVal = document.getElementById('champTrustVal');
+    const champGdpVal = document.getElementById('champGdpVal');
+
+    if (!endgameScreen || !endgameCard) return;
+
+    // Apply Defeat Theme (Red Crisis Styling + Newspaper Spin Animation)
+    endgameCard.className = 'endgame-card theme-defeat';
+
+    if (endgameBadge) endgameBadge.innerHTML = 'EXTRA! CRISE DE ESTADO & IMPEACHMENT';
+    if (endgameIconHero) endgameIconHero.innerHTML = '🚨';
+    if (endgameTitle) endgameTitle.innerHTML = 'GOVERNO DESTITUÍDO!';
+    if (endgameSubtitle) endgameSubtitle.innerHTML = `A aprovação do governo de ${failedPlayer.name} em ${failedPlayer.nation.name} ruiu para 0%! Protestos populares forçaram a renúncia do gabinete.`;
+
+    if (championCrownLabel) championCrownLabel.innerHTML = '🔴 REVOLTA POPULAR';
+    if (championFlag) championFlag.innerHTML = failedPlayer.nation.flag;
+    if (championAvatarIcon) championAvatarIcon.innerHTML = '⚠️';
+    if (championName) championName.innerHTML = failedPlayer.name.toUpperCase();
+    if (championNationTitle) championNationTitle.innerHTML = `${failedPlayer.nation.name.toUpperCase()} • IMPEACHMENT EM ${currentYear}`;
+
+    if (champResilienceVal) champResilienceVal.innerHTML = `0.0 PTS`;
+    if (champTrustVal) champTrustVal.innerHTML = `0% (COLAPSO)`;
+    if (champGdpVal) champGdpVal.innerHTML = `$${Math.round(failedPlayer.gdp)}B`;
+
+    endgameScreen.classList.remove('hidden');
+  }
+
+  // Restart Handlers for Victory/Defeat Screen
+  window.restartGameSetup = function() {
+    try { playClickSound(); } catch (e) {}
+    const endgameScreen = document.getElementById('endgameScreen');
+    const gameStageScreen = document.getElementById('gameStageScreen');
+    const playerSetupScreen = document.getElementById('playerSetupScreen');
+
+    if (endgameScreen) endgameScreen.classList.add('hidden');
+    if (gameStageScreen) gameStageScreen.classList.add('hidden');
+    if (playerSetupScreen) playerSetupScreen.classList.remove('hidden');
+
+    try { renderPlayerSlots(); } catch (e) {}
+  };
+
+  window.replayIntroNewsreel = function() {
+    try { playClickSound(); } catch (e) {}
+    const endgameScreen = document.getElementById('endgameScreen');
+    const gameStageScreen = document.getElementById('gameStageScreen');
+    const playerSetupScreen = document.getElementById('playerSetupScreen');
+    const retroIntroScreen = document.getElementById('retroIntroScreen');
+
+    if (endgameScreen) endgameScreen.classList.add('hidden');
+    if (gameStageScreen) gameStageScreen.classList.add('hidden');
+    if (playerSetupScreen) playerSetupScreen.classList.add('hidden');
+    if (retroIntroScreen) retroIntroScreen.classList.remove('hidden');
+
+    try { showScene(0); } catch (e) {}
+  };
 
   // Confirm Setup Action -> Triggers Main Game Engine Entry
   if (btnConfirmSetup) {

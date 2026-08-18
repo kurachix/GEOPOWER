@@ -309,6 +309,85 @@
         <marquee class="ticker-text" id="newsTickerText">1970 • Início da corrida pela hegemonia energética mundial na Cúpula de Genebra...</marquee>
       </div>
     </footer>
+  </div>
+
+  <!-- End-of-Game Victory / Defeat Screen Overlay -->
+  <div class="endgame-screen-overlay hidden" id="endgameScreen">
+    
+    <!-- Animated Background Particles / Spotlight Beams -->
+    <div class="endgame-bg-effects" id="endgameBgEffects">
+      <div class="victory-confetti-container" id="confettiContainer"></div>
+      <div class="spotlight-rotate-beam left"></div>
+      <div class="spotlight-rotate-beam right"></div>
+    </div>
+
+    <!-- Main Endgame Card Container -->
+    <div class="endgame-card" id="endgameCard">
+      
+      <!-- Header Badge & Status Title -->
+      <header class="endgame-card-header">
+        <span class="endgame-badge" id="endgameBadge">RESULTADO FINAL • CÚPULA DE GENEBRA (2020)</span>
+        <div class="endgame-headline-box">
+          <span class="endgame-icon-hero" id="endgameIconHero">🏆</span>
+          <h1 class="endgame-title" id="endgameTitle">VITÓRIA HISTÓRICA!</h1>
+        </div>
+        <p class="endgame-subtitle" id="endgameSubtitle">
+          Sua nação liderou a maior transição energética da história da humanidade de 1970 a 2020!
+        </p>
+      </header>
+
+      <!-- Podium / Final Ranking Leaderboards -->
+      <div class="endgame-body-grid">
+        
+        <!-- Winner Champion Highlight Card -->
+        <div class="champion-spotlight-card" id="championSpotlightCard">
+          <div class="champion-crown" id="championCrownLabel">👑 CAMPEÃO MUNDIAL</div>
+          <div class="champion-avatar-box" id="championAvatarBox">
+            <span class="champion-flag" id="championFlag">🇳🇴</span>
+            <span class="champion-avatar-icon" id="championAvatarIcon">🧔🏻‍♂️</span>
+          </div>
+          <h2 class="champion-name" id="championName">LÍDER NORUEGA</h2>
+          <span class="champion-nation-title" id="championNationTitle">NORUEGA • PIONEIRA LIMPA</span>
+          
+          <div class="champion-stats-grid">
+            <div class="champ-stat-pill">
+              <span class="champ-stat-lbl">SCORE DE RESILIÊNCIA</span>
+              <span class="champ-stat-val" id="champResilienceVal">94.5 PTS</span>
+            </div>
+            <div class="champ-stat-pill">
+              <span class="champ-stat-lbl">CONFIANÇA FINAL</span>
+              <span class="champ-stat-val" id="champTrustVal">92%</span>
+            </div>
+            <div class="champ-stat-pill">
+              <span class="champ-stat-lbl">PIB ACUMULADO</span>
+              <span class="champ-stat-val" id="champGdpVal">$1.42T</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Full Ranking Table (2nd to 5th place) -->
+        <div class="ranking-leaderboard-box">
+          <h3 class="leaderboard-title">CLASSIFICAÇÃO GERAL DE RESILIÊNCIA ENERGÉTICA</h3>
+          <div class="leaderboard-list" id="leaderboardList">
+            <!-- Rendered dynamically in JS -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Action Footer -->
+      <footer class="endgame-footer">
+        <button class="btn-endgame-action secondary" id="btnRestartSetup" onclick="window.restartGameSetup && window.restartGameSetup()">
+          <span class="btn-icon">🔄</span>
+          <span class="btn-text">NOVA CÚPULA ENERGÉTICA</span>
+        </button>
+        <button class="btn-endgame-action primary" id="btnReplayIntro" onclick="window.replayIntroNewsreel && window.replayIntroNewsreel()">
+          <span class="btn-icon">📽️</span>
+          <span class="btn-text">ASSISTIR CINEJORNAL NOVAMENTE</span>
+        </button>
+      </footer>
+
+    </div>
 
   </div>
 
