@@ -1221,6 +1221,7 @@ document.addEventListener('DOMContentLoaded', () => {
     currentTurnNumber = 1;
     activeLeaderIndex = 0;
     globalFootprint = 25;
+    shownNewsYears.clear();
 
     // Initialize runtime state for each active player with Government Trust
     activeGamePlayers = playersState.slice(0, selectedPlayerCount).map(p => {
@@ -1351,6 +1352,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const qData = getTurnQuestionData(currentYear, currentTurnNumber, player);
 
     updatePlenarySeats();
+
+    // Trigger Breaking News Newspaper Modal on landmark historical years or random turns
+    checkAndTriggerTurnNewspaper(currentYear, currentTurnNumber);
 
     // Calculate current demand and generation
     const totalGen = Math.round(Object.values(player.capacity).reduce((a, b) => a + b, 0));
@@ -1747,10 +1751,204 @@ document.addEventListener('DOMContentLoaded', () => {
     endgameScreen.classList.remove('hidden');
   }
 
+  // ==========================================================================
+  // BREAKING NEWS NEWSPAPER ENGINE (Jornal Extraordinário Retro no Meio da Tela)
+  // ==========================================================================
+  const BREAKING_NEWS_DATABASE = [
+    {
+      years: [1973, 1974],
+      category: "🚨 EMBARGO MUNDIAL DO PETRÓLEO",
+      headline: "OPEC INTERROMPE EXPORTAÇÕES E PREÇO DO BARRIL QUADRUPLICA!",
+      subheadline: "Países produtores fecham torneiras petrolíferas. Filas nos postos e racionamento atingem o Ocidente.",
+      icon: "🛢️",
+      caption: "Caminhões-tanque paralisados em refinarias da Europa e América do Norte.",
+      paragraph: "A decisão surpresa do cartel de produtores causou pânico nas bolsas mundiais. A dependência excessiva de combustíveis fósseis revelou a vulnerabilidade das matrizes energéticas continentais. Líderes convocam sessões de emergência em Genevra para aprovar planos de autonomia energética.",
+      impact: "⚠️ IMPACTO ECONÔMICO: Custo de usinas térmicas sobe +25% nesta rodada."
+    },
+    {
+      years: [1977, 1978],
+      category: "⚡ CHUVA ÁCIDA CONTINENTAL",
+      headline: "EMISSÕES INDUSTRIAIS PROVOCAM CHUVAS TÓXICAS NA EUROPA!",
+      subheadline: "Acidez pluviométrica danifica lavouras, ecossistemas e estruturas urbanas.",
+      icon: "🌧️",
+      caption: "Florestas da Europa Central sofrem desfolhamento por precipitação ácida.",
+      paragraph: "Estudos de institutos meteorológicos comprovaram que cinzas e dióxido de enxofre oriundos de usinas a carvão estão atravessando fronteiras nacionais, devastando a agricultura e elevando o descontentamento popular.",
+      impact: "🌿 IMPACTO AMBIENTAL: Confiança do Governo cai -4% em matrizes poluentes."
+    },
+    {
+      years: [1979, 1980],
+      category: "⚡ SECA HISTÓRICA E REVOLUÇÃO",
+      headline: "RESERVATÓRIOS HIDRELÉTRICOS ATINGEM O NÍVEL CRÍTICO DA DÉCADA!",
+      subheadline: "Estiagem prolongada reduz o fluxo das grandes bacias e força o acionamento de usinas de reserva.",
+      icon: "💧",
+      caption: "Nível das represas de cabeceira despenca 40% em relação à média histórica.",
+      paragraph: "Com a redução severa nos índices pluviométricos, a capacidade de geração das hidrelétricas foi drasticamente afetada. Nações dependentes de recursos hídricos enfrentam risco iminente de apagão e retração na produção industrial.",
+      impact: "⚡ IMPACTO NO TURNO: Demanda de emergência cresce +15 MW nas bacias."
+    },
+    {
+      years: [1986, 1987],
+      category: "☢️ SEGURANÇA INDUSTRIAL & NUCLEAR",
+      headline: "ALERTA MUNDIAL APÓS O ACIDENTE EM CHERNOBYL!",
+      subheadline: "Vazamento radioativo na Europa Oriental dispara exigências de inspeções severas no setor elétrico.",
+      icon: "⚛️",
+      caption: "Equipes de emergência realizam medição de radiação em perímetros industriais.",
+      paragraph: "A tragédia de Chernobyl reacendeu o debate sobre os riscos da energia nuclear. Movimentos ambientais exigem o congelamento de novas obras de reatores e auditorias imediatas em todas as usinas ativas do planeta.",
+      impact: "🛡️ IMPACTO POLÍTICO: Reatores nucleares exigem +$10M em manutenção preventiva."
+    },
+    {
+      years: [1990, 1991, 1992],
+      category: "🌱 CÚPULA DA TERRA & DIPLOMACIA",
+      headline: "NAÇÕES ASSINAM TRATADO GLOBAL DE PRESERVAÇÃO AMBIENTAL!",
+      subheadline: "Cúpula do Rio aprova a Agenda 21 e estabelece fundos internacionais de financiamento sustentável.",
+      icon: "🌿",
+      caption: "Líderes de 170 países assinam compromisso de desenvolvimento limpo em Genevra.",
+      paragraph: "Pela primeira vez na história moderna, a comunidade internacional alinhou metas vinculantes de preservação e transição energética. Nações que investirem em patentes verdes e matrizes renováveis receberão créditos fiscais multilaterais.",
+      impact: "💰 IMPACTO FINANCEIRO: Bônus de +$15M para países com patentes registradas!"
+    },
+    {
+      years: [2003, 2004],
+      category: "🔌 COLAPSO NA REDE DE TRANSMISSÃO",
+      headline: "O GRANDE APAGÃO CONTINENTAL DEIXA 50 MILHÕES NO ESCURO!",
+      subheadline: "Sobrecarga de linha em cascata paralisa metrópoles e evidencia urgência de automação.",
+      icon: "⚡",
+      caption: "Linhas de transmissão de alta tensão sobrecarregadas desarmam em efeito dominó.",
+      paragraph: "Um erro de chaveamento em uma subestação central provocou o maior desligamento elétrico da história recente. O caos urbano reforçou a necessidade imperiosa de modernizar a infraestrutura com redes inteligentes de automação.",
+      impact: "⚠️ IMPACTO NA REDE: Confiança do Governo cai -5% se houver déficit de energia!"
+    },
+    {
+      years: [2008, 2009, 2010],
+      category: "📈 CRISE FINANCEIRA GLOBAL",
+      headline: "COLAPSO DE BANCOS MUNDIAIS TRAVA CRÉDITO PARA INFRAESTRUTURA!",
+      subheadline: "Mercados globais de capital secam e megaprojetos de usinas têm financiamento suspenso.",
+      icon: "🏛️",
+      caption: "Bolsas de valores despencam e títulos de infraestrutura perdem valor de mercado.",
+      paragraph: "A recessão econômica global paralisou os investimentos privados em energia. Governos são chamados a intervir diretamente com capital estatal para evitar a paralisação de obras estratégicas de geração elétrica.",
+      impact: "📉 IMPACTO ECONÔMICO: PIB das nações sofre retração provisória de -3%."
+    },
+    {
+      years: [2015, 2016, 2017],
+      category: "🌞 REVOLUÇÃO SOLAR E PARIDADE DE REDE",
+      headline: "ENERGIA FOTOVOLTAICA ALCANÇA O MENOR CUSTO HISTÓRICO!",
+      subheadline: "Avanços em células de silício tornam a geração solar mais barata que usinas a carvão.",
+      icon: "🌞",
+      caption: "Painéis fotovoltaicos instalados em escala de giga-watts no deserto.",
+      paragraph: "A paridade de rede fotovoltaica foi atingida antes do previsto por cientistas. A transição tecnológica atrai bilhões em capital privado para projetos de parques solares e armazenamento por baterias.",
+      impact: "🌱 IMPACTO VERDE: Parques solares e eólicos ganham +10 MW de bônus de eficiência!"
+    },
+    {
+      years: [2018, 2019, 2020],
+      category: "🤖 INTELIGÊNCIA ARTIFICIAL E SMART GRIDS",
+      headline: "ALGORITMOS DE IA ASSUMEM O CONTROLE DO FLUXO ELÉTRICO!",
+      subheadline: "Sistemas preditivos reduzem o desperdício em linhas de alta tensão em até 20%.",
+      icon: "🤖",
+      caption: "Centro de operações cibernético monitorando a malha nacional em tempo real.",
+      paragraph: "A integração de sensores inteligentes e redes neurais permite ajustar a distribuição de carga segundo a insolação e a força dos ventos. Nações pioneiras em tecnologia ganham imensa vantagem de resiliência.",
+      impact: "🏆 IMPACTO FINAL: Bônus de +5 Pontos de Resiliência para nações com liderança tecnológica!"
+    }
+  ];
+
+  const PROCEDURAL_NEWS_POOL = [
+    {
+      category: "🔬 ANÚNCIO CIENTÍFICO DE ÚLTIMA HORA",
+      headline: "NOVO CONDUTOR SUPER-EFICIENTE REDUZ PERDAS POR EFEITO JOULE!",
+      subheadline: "Laboratórios nacionais patenteiam ligas metálicas que diminuem a dissipação de calor.",
+      icon: "🔬",
+      caption: "Experimento de laboratório testando a resistência elétrica sob alta corrente.",
+      paragraph: "Engenheiros apresentaram no Congresso de Física Aplicada uma nova tecnologia de cabos de transmissão. A inovação promete economizar milhões de megawatts desperdiçados em redes de distribuição urbanas.",
+      impact: "⚡ IMPACTO TÉCNICO: Eficiência da malha ampliada em todas as nações!"
+    },
+    {
+      category: "🌋 FENÔMENO CLIMÁTICO REGIONAL",
+      headline: "ONDA DE CALOR EXTREMA DISPARA O CONSUMO DE ENERGIA!",
+      subheadline: "Termômetros superam médias históricas e a demanda por refrigeração bate recordes.",
+      icon: "🌡️",
+      caption: "Centrais elétricas operando no limite de capacidade de transformação.",
+      paragraph: "Com temperaturas batendo recordes nos hemisférios norte e sul, o consumo de eletricidade disparou. Concessionárias de energia apelam à população para adotar medidas de racionamento consciente durante horários de pico.",
+      impact: "📈 IMPACTO AMBIENTAL: Demanda nacional aumenta temporariamente neste turno."
+    },
+    {
+      category: "💰 MERCADO INTERNACIONAL DE CAPITAIS",
+      headline: "FUNDO MULTILATERAL LIBERA $30M EM CRÉDITOS VERDES!",
+      subheadline: "Linhas de financiamento com juros reduzidos impulsionam investimentos limpos.",
+      icon: "💰",
+      caption: "Documento de cooperação econômica assinado no Plenário da Cúpula Mundial.",
+      paragraph: "O Banco de Desenvolvimento Internacional anunciou um fundo especial de subsídios para apoiar projetos de energia limpa e descarbonização em nações comprometidas com metas socioambientais.",
+      impact: "💵 IMPACTO FISCAL: Oportunidade de investimento com incentivo estatal!"
+    },
+    {
+      category: "🌾 IMPACTO AGRÍCOLA & BIOCOMBUSTÍVEIS",
+      headline: "SAFRA RECORDE DE BIOMASSA IMPULSIONA GERAÇÃO BIOELÉTRICA!",
+      subheadline: "Usinas de cogeração por resíduos agrícolas ampliam participação na matriz energética.",
+      icon: "🌿",
+      caption: "Colheita de biomassa destinada à fermentação e geração de vapor em turbinas.",
+      paragraph: "A combinação de condições pluviais favoráveis e avanços na biotecnologia permitiu um aumento substancial na produção de combustíveis renováveis de segunda geração. O setor agrícola celebra a conquista.",
+      impact: "🌱 IMPACTO ECOLÓGICO: Pegada global de carbono reduz em -5 pontos!"
+    }
+  ];
+
+  let shownNewsYears = new Set();
+
+  window.showNewspaperModal = function(newsData) {
+    try { playClickSound(); } catch (e) {}
+    
+    const modal = document.getElementById('retroNewspaperModal');
+    const issueNum = document.getElementById('newspaperIssueNum');
+    const dateTag = document.getElementById('newspaperDateTag');
+    const categoryBadge = document.getElementById('newspaperCategoryBadge');
+    const headline = document.getElementById('newspaperHeadlineTitle');
+    const subheadline = document.getElementById('newspaperSubheadline');
+    const photoIcon = document.getElementById('newspaperPhotoIcon');
+    const photoCaption = document.getElementById('newspaperPhotoCaption');
+    const paragraphText = document.getElementById('newspaperParagraphText');
+    const impactPill = document.getElementById('newspaperImpactPill');
+
+    if (issueNum) issueNum.innerHTML = newsData.year || currentYear;
+    if (dateTag) dateTag.innerHTML = `GENEVRA • 15 DE OUTUBRO DE ${newsData.year || currentYear}`;
+    if (categoryBadge) categoryBadge.innerHTML = newsData.category || "🚨 EDIÇÃO EXTRAORDINÁRIA";
+    if (headline) headline.innerHTML = newsData.headline;
+    if (subheadline) subheadline.innerHTML = newsData.subheadline;
+    if (photoIcon) photoIcon.innerHTML = newsData.icon || "📰";
+    if (photoCaption) photoCaption.innerHTML = newsData.caption || "Fotografia oficial transmitida via rádio-telegrafia para Genevra.";
+    if (paragraphText) paragraphText.innerHTML = newsData.paragraph;
+    if (impactPill) impactPill.innerHTML = newsData.impact || "⚡ Notícia Relevante para a Diplomacia Energética Mundial";
+
+    if (modal) {
+      modal.classList.remove('hidden');
+    }
+  };
+
+  window.closeNewspaperModal = function() {
+    try { playClickSound(); } catch (e) {}
+    const modal = document.getElementById('retroNewspaperModal');
+    if (modal) {
+      modal.classList.add('hidden');
+    }
+  };
+
+  function checkAndTriggerTurnNewspaper(year, turnNum) {
+    if (shownNewsYears.has(year)) return false;
+
+    // 1. Check historical matches
+    const historicalMatch = BREAKING_NEWS_DATABASE.find(item => item.years.includes(year));
+    if (historicalMatch) {
+      shownNewsYears.add(year);
+      window.showNewspaperModal({ ...historicalMatch, year });
+      return true;
+    }
+
+    // 2. Random chance (25% probability on non-historical turns after turn 2)
+    if (turnNum > 2 && Math.random() < 0.25) {
+      shownNewsYears.add(year);
+      const randNews = PROCEDURAL_NEWS_POOL[Math.floor(Math.random() * PROCEDURAL_NEWS_POOL.length)];
+      window.showNewspaperModal({ ...randNews, year });
+      return true;
+    }
+
+    return false;
+  }
+
   // Restart Handlers for Victory/Defeat Screen & Credits
   window.restartGameSetup = function() {
-    try { playClickSound(); } catch (e) {}
-    const movieCreditsOverlay = document.getElementById('movieCreditsOverlay');
     const endgameScreen = document.getElementById('endgameScreen');
     const gameStageScreen = document.getElementById('gameStageScreen');
     const playerSetupScreen = document.getElementById('playerSetupScreen');
