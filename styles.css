@@ -1,0 +1,540 @@
+/* ==========================================================================
+   GEOPOWER 1970s RETRO NEWSREEL CINEMA INTRO - STYLESHEET
+   Aesthetic: 1970s Rubber-Hose Vintage Newsreel / B&W High-Contrast Cinema
+   ========================================================================== */
+
+/* CSS Variables */
+:root {
+  --bg-dark: #090909;
+  --bg-darker: #020202;
+  --text-light: #f4f0e6;
+  --text-muted: #a8a298;
+  --accent-gold: #d4af37;
+  --accent-light: #fff8e7;
+  --border-sepia: #4a453b;
+  --overlay-vignette: rgba(0, 0, 0, 0.85);
+  --font-newsreel: 'Special Elite', 'Courier Prime', monospace;
+  --font-title: 'Cinzel', serif;
+}
+
+/* Reset & Global */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-darker);
+  color: var(--text-light);
+  font-family: var(--font-newsreel);
+  overflow: hidden;
+  user-select: none;
+}
+
+/* ==========================================================================
+   Retro Intro Screen Wrapper with Grayscale & Flicker Filters
+   ========================================================================== */
+.retro-intro-screen {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0d0d0d;
+  filter: grayscale(100%) contrast(125%) brightness(95%);
+  animation: flicker 0.15s infinite alternate;
+  overflow: hidden;
+}
+
+/* Flicker Animation for 1970s Projector Bulb Simulation */
+@keyframes flicker {
+  0% {
+    opacity: 0.97;
+    filter: grayscale(100%) contrast(124%) brightness(94%);
+  }
+  50% {
+    opacity: 1;
+    filter: grayscale(100%) contrast(127%) brightness(97%);
+  }
+  100% {
+    opacity: 0.95;
+    filter: grayscale(100%) contrast(122%) brightness(93%);
+  }
+}
+
+/* Film Grain Overlay Generated via CSS Radial/Halftone Patterns */
+.film-grain-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0.18;
+  background-image: 
+    radial-gradient(#ffffff 1px, transparent 0),
+    radial-gradient(#000000 1px, transparent 0);
+  background-size: 4px 4px, 3px 3px;
+  background-position: 0 0, 2px 2px;
+  animation: grainShift 0.08s steps(4) infinite;
+}
+
+@keyframes grainShift {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-2px, 1px); }
+  50% { transform: translate(1px, -1px); }
+  75% { transform: translate(-1px, -2px); }
+  100% { transform: translate(2px, 2px); }
+}
+
+/* Vignette Dark Shadow Frame */
+.film-vignette {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 11;
+  background: radial-gradient(circle at center, transparent 40%, rgba(0, 0, 0, 0.92) 90%);
+  box-shadow: inset 0 0 100px #000;
+}
+
+/* Vertical Dust & Film Scratch Line Effect */
+.film-scratches {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 12;
+  opacity: 0.12;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 180px,
+    rgba(255, 255, 255, 0.4) 181px,
+    transparent 182px,
+    transparent 360px
+  );
+  animation: scratchJitter 0.3s infinite;
+}
+
+@keyframes scratchJitter {
+  0% { transform: translateX(0); opacity: 0.08; }
+  50% { transform: translateX(35px); opacity: 0.15; }
+  100% { transform: translateX(-20px); opacity: 0.05; }
+}
+
+/* Projector Beam Flicker Effect */
+.projector-light-beam {
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120vw;
+  height: 120vh;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.06) 0%, transparent 70%);
+}
+
+/* ==========================================================================
+   Cinejornal Header
+   ========================================================================== */
+.newsreel-header {
+  position: relative;
+  z-index: 20;
+  width: 100%;
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(180deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 100%);
+  border-bottom: 2px solid var(--border-sepia);
+  letter-spacing: 2px;
+}
+
+.newsreel-badge {
+  background-color: var(--text-light);
+  color: var(--bg-darker);
+  font-family: var(--font-title);
+  font-weight: 900;
+  font-size: 0.8rem;
+  padding: 3px 8px;
+  border-radius: 2px;
+}
+
+.newsreel-title {
+  font-family: var(--font-title);
+  font-size: 1.4rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  text-shadow: 2px 2px 4px #000;
+  text-align: center;
+}
+
+.newsreel-date {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   Projector Viewport & Sprocket Hole Cinema Frame
+   ========================================================================== */
+.projector-viewport-wrapper {
+  position: relative;
+  z-index: 15;
+  flex: 1;
+  width: 100%;
+  max-width: 1280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+}
+
+/* Film Strip Sprocket Holes */
+.sprocket-strip {
+  width: 40px;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #000;
+  border: 1px solid #222;
+}
+
+.sprocket-hole {
+  width: 22px;
+  height: 32px;
+  background-color: #1a1a1a;
+  border-radius: 4px;
+  border: 2px solid #080808;
+  box-shadow: inset 0 0 6px #000;
+}
+
+.sprocket-left {
+  margin-right: 15px;
+}
+
+.sprocket-right {
+  margin-left: 15px;
+}
+
+/* Projector Screen Frame (16:9 Aspect Ratio) */
+.projector-screen {
+  position: relative;
+  flex: 1;
+  aspect-ratio: 16 / 9;
+  max-height: 72vh;
+  background-color: #000;
+  border: 8px solid #1c1c1c;
+  outline: 2px solid var(--border-sepia);
+  border-radius: 6px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.9);
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   Newsreel Scenes & Transitions
+   ========================================================================== */
+.newsreel-scene {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.03);
+  transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.newsreel-scene.active {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+}
+
+.scene-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.scene-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) contrast(130%) brightness(92%);
+}
+
+.scene-stamp {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(0, 0, 0, 0.85);
+  border: 1px solid var(--text-light);
+  color: var(--text-light);
+  padding: 6px 14px;
+  font-family: var(--font-title);
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Subtitle & Narration Typewriter Caption Box */
+.scene-caption-box {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 30px;
+  background: linear-gradient(0deg, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.85) 75%, transparent 100%);
+  border-top: 2px dashed var(--border-sepia);
+}
+
+.scene-heading {
+  font-family: var(--font-title);
+  font-size: 1.15rem;
+  color: var(--accent-gold);
+  margin-bottom: 8px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.scene-narration {
+  font-family: var(--font-newsreel);
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: var(--text-light);
+  min-height: 3em;
+  text-shadow: 1px 1px 3px #000;
+}
+
+/* ==========================================================================
+   Call To Action Overlay
+   ========================================================================== */
+.cta-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+  background: rgba(0, 0, 0, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease-in-out;
+}
+
+.cta-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cta-card {
+  background: #121212;
+  border: 3px double var(--text-light);
+  padding: 36px 48px;
+  max-width: 580px;
+  text-align: center;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.95);
+  animation: cardPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes cardPop {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.cta-badge {
+  font-family: var(--font-title);
+  font-size: 0.85rem;
+  letter-spacing: 3px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.cta-title {
+  font-family: var(--font-title);
+  font-size: 1.6rem;
+  color: var(--text-light);
+  margin-bottom: 12px;
+  letter-spacing: 2px;
+}
+
+.cta-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+  line-height: 1.4;
+}
+
+.btn-retro-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background-color: var(--text-light);
+  color: var(--bg-darker);
+  border: 2px solid var(--text-light);
+  padding: 14px 28px;
+  font-family: var(--font-title);
+  font-size: 1.05rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 4px 4px 0 #000;
+}
+
+.btn-retro-cta:hover {
+  background-color: #ffffff;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #000;
+}
+
+.btn-retro-cta:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #000;
+}
+
+/* ==========================================================================
+   Newsreel Footer Controls
+   ========================================================================== */
+.newsreel-controls {
+  position: relative;
+  z-index: 20;
+  width: 100%;
+  background: rgba(5, 5, 5, 0.95);
+  border-top: 2px solid var(--border-sepia);
+  padding: 12px 24px;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 4px;
+  background-color: #222;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  width: 0%;
+  height: 100%;
+  background-color: var(--text-light);
+  transition: width 0.1s linear;
+}
+
+.controls-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.scene-indicator {
+  display: flex;
+  gap: 8px;
+}
+
+.scene-pill {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border-sepia);
+  background-color: #121212;
+  color: var(--text-muted);
+  font-family: var(--font-title);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.scene-pill:hover {
+  border-color: var(--text-light);
+  color: var(--text-light);
+}
+
+.scene-pill.active {
+  background-color: var(--text-light);
+  color: var(--bg-darker);
+  border-color: var(--text-light);
+  font-weight: 900;
+}
+
+.playback-buttons, .audio-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-control {
+  background-color: #1a1a1a;
+  color: var(--text-light);
+  border: 1px solid var(--border-sepia);
+  padding: 8px 16px;
+  font-family: var(--font-newsreel);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-control:hover {
+  background-color: #2a2a2a;
+  border-color: var(--text-light);
+}
+
+.btn-control.primary {
+  background-color: #333;
+  font-weight: bold;
+}
+
+.btn-control.toggle-active {
+  background-color: #2b261b;
+  border-color: var(--accent-gold);
+  color: var(--accent-light);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .newsreel-header {
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+  }
+  .newsreel-title {
+    font-size: 1rem;
+  }
+  .sprocket-strip {
+    display: none;
+  }
+  .controls-toolbar {
+    flex-direction: column;
+    align-items: center;
+  }
+  .scene-caption-box {
+    padding: 12px 16px;
+  }
+  .scene-narration {
+    font-size: 0.9rem;
+  }
+}

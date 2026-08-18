@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GEOPOWER - Cinejornal 1970 (Introdução)</title>
+  <meta name="description" content="GEOPOWER: Cinejornal animado dos anos 1970 - A corrida pela política energética mundial.">
+  <!-- Retro Fonts from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Special+Elite&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Main Retro Intro Screen Container -->
+  <div class="retro-intro-screen" id="retroIntroScreen">
+    
+    <!-- Vintage Film Overlays -->
+    <div class="film-vignette"></div>
+    <div class="film-scratches"></div>
+    <div class="film-grain-overlay"></div>
+    <div class="projector-light-beam"></div>
+
+    <!-- Header Cinejornal Bar -->
+    <header class="newsreel-header">
+      <div class="newsreel-badge">EDITION 1970</div>
+      <h1 class="newsreel-title">GEOPOWER • CINEJORNAL INTERNACIONAL</h1>
+      <div class="newsreel-date">18 DE AGOSTO DE 1970</div>
+    </header>
+
+    <!-- Main Projector Frame with Sprocket Holes -->
+    <main class="projector-viewport-wrapper">
+      
+      <!-- Film Strip Sprocket Holes Left -->
+      <div class="sprocket-strip sprocket-left">
+        <div class="sprocket-hole"></div>
+        <div class="sprocket-hole"></div>
+        <div class="sprocket-hole"></div>
+        <div class="sprocket-hole"></div>
+        <div class="sprocket-hole"></div>
+        <div class="sprocket-hole"></div>
+      </div>
+
+      <!-- Cinema Screen Container (16:9 Aspect Ratio) -->
+      <div class="projector-screen" id="projectorScreen">
+
+        <!-- Scene 1: A Explosão do Consumo (1970) -->
+        <section class="newsreel-scene active" id="scene-1" data-scene="1" data-duration="5500">
+          <div class="scene-image-wrapper">
+            <img src="assets/scene1.jpg" alt="Cena 1: A Explosão do Consumo (1970)" class="scene-img">
+            <div class="scene-stamp">CENA 01 / 1970</div>
+          </div>
+          <div class="scene-caption-box">
+            <h2 class="scene-heading">CENA 1: A EXPLOSÃO DO CONSUMO (1970)</h2>
+            <p class="scene-narration" id="narration-1">
+              "O ano é 1970! O mundo marcha a passos largos rumo ao progresso industrial. Máquinas que nunca dormem, cidades iluminadas dia e noite e um apetite insaciável por energia!"
+            </p>
+          </div>
+        </section>
+
+        <!-- Scene 2: O Sinal de Alerta (A Vulnerabilidade dos Recursos) -->
+        <section class="newsreel-scene" id="scene-2" data-scene="2" data-duration="6000">
+          <div class="scene-image-wrapper">
+            <img src="assets/scene2.jpg" alt="Cena 2: O Sinal de Alerta" class="scene-img">
+            <div class="scene-stamp">CENA 02 / CRISE</div>
+          </div>
+          <div class="scene-caption-box">
+            <h2 class="scene-heading">CENA 2: O SINAL DE ALERTA</h2>
+            <p class="scene-narration" id="narration-2">
+              "Mas a locomotiva do desenvolvimento encontra seus limites! Secas severas esvaziam grandes represas, o petróleo torna-se uma arma de disputa geopolítica e as rotas marítimas mundiais entram em colapso!"
+            </p>
+          </div>
+        </section>
+
+        <!-- Scene 3: A Grande Cúpula Internacional -->
+        <section class="newsreel-scene" id="scene-3" data-scene="3" data-duration="6000">
+          <div class="scene-image-wrapper">
+            <img src="assets/scene3.jpg" alt="Cena 3: A Grande Cúpula Internacional" class="scene-img">
+            <div class="scene-stamp">CENA 03 / DIPLOMACIA</div>
+          </div>
+          <div class="scene-caption-box">
+            <h2 class="scene-heading">CENA 3: A GRANDE CÚPULA INTERNACIONAL</h2>
+            <p class="scene-narration" id="narration-3">
+              "Nenhuma nação é uma ilha! Isolados, todos enfrentam o colapso. Juntos, os líderes mundiais são convocados para a mais decisiva conferência internacional da história recente."
+            </p>
+          </div>
+        </section>
+
+        <!-- Scene 4: A Convocação do Jogador (Chamada para Ação) -->
+        <section class="newsreel-scene" id="scene-4" data-scene="4" data-duration="7000">
+          <div class="scene-image-wrapper">
+            <img src="assets/scene4.jpg" alt="Cena 4: A Convocação do Jogador" class="scene-img">
+            <div class="scene-stamp">CENA 04 / COMANDO</div>
+          </div>
+          <div class="scene-caption-box">
+            <h2 class="scene-heading">CENA 4: A CONVOCAÇÃO DO JOGADOR</h2>
+            <p class="scene-narration" id="narration-4">
+              "Você assume o comando da política energética de sua pátria. Comércio, diplomacia, ciência e coragem. O destino de cinquenta anos de história está sob o seu controle. Que comece a corrida energética!"
+            </p>
+          </div>
+        </section>
+
+        <!-- Final Call to Action Overlay (Shown on Scene 4 completion or button) -->
+        <div class="cta-overlay" id="ctaOverlay">
+          <div class="cta-card">
+            <div class="cta-badge">INÍCIO DA CAMPANHA</div>
+            <h3 class="cta-title">A CORRIDA ENERGÉTICA COMEÇOU</h3>
+            <p class="cta-subtitle">Assuma a liderança global e determine a estratégia energética do seu país.</p>
+            <button class="btn-retro-cta" id="btnStartGame">
+              <span class="btn-icon">⚡</span>
+              <span class="btn-text">ASSUMIR O COMANDO (INICIAR JOGO)</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Film Strip Sprocket Holes Right -->
+      <div class="sprocket-strip sprocket-right">
+        <div class="sprocket-hole"></div>
+        <div class="sprocket-hole"></div>
+        <div class="sprocket-hole"></div>
+        <div class="sprocket-hole"></div>
+        <div class="sprocket-hole"></div>
+        <div class="sprocket-hole"></div>
+      </div>
+
+    </main>
+
+    <!-- Newsreel Controls and Progress Bar -->
+    <footer class="newsreel-controls">
+      
+      <div class="progress-bar-container">
+        <div class="progress-bar-fill" id="progressBar"></div>
+      </div>
+
+      <div class="controls-toolbar">
+        
+        <div class="scene-indicator">
+          <button class="scene-pill active" data-goto="1">1</button>
+          <button class="scene-pill" data-goto="2">2</button>
+          <button class="scene-pill" data-goto="3">3</button>
+          <button class="scene-pill" data-goto="4">4</button>
+        </div>
+
+        <div class="playback-buttons">
+          <button class="btn-control" id="btnPrev" title="Cena Anterior (Seta Esquerda)">⏮ ANTERIOR</button>
+          <button class="btn-control primary" id="btnNext" title="Próxima Cena (Seta Direita)">PRÓXIMA ⏭</button>
+        </div>
+
+        <div class="audio-controls">
+          <button class="btn-control toggle-active" id="btnSoundToggle" title="Som de Projetor e Vinil (Tecla S)">
+            🔊 SOM
+          </button>
+          <button class="btn-control toggle-active" id="btnVoiceToggle" title="Narração por Voz (Tecla V)">
+            🎙️ LOCUÇÃO
+          </button>
+        </div>
+
+      </div>
+
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
