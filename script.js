@@ -683,9 +683,10 @@ document.addEventListener('DOMContentLoaded', () => {
         title: "1970: A EXPLOSÃO DO CONSUMO INDUSTRIAL",
         desc: `As indústrias operam em capacidade máxima na abertura da Cúpula de Genebra. Defina a prioridade de arranque da matriz de ${nationName}.`,
         ticker: "1970 • Abertura da Cúpula de Genebra. Países aceleram investimentos em matrizes industriais de base.",
+        concept: "🔬 FÍSICA: Termodinâmica de Matrizes (Ciclos Térmicos Rankine) | 🌍 GEOGRAFIA: Industrialização de Base & Demografia",
         options: [
-          { text: "💧 Grandes Usinas Hidrelétricas (+40 MW | Custo: $35M)", cost: 35, effect: p => { p.capacity.hydro += 40; p.capital -= 35; } },
-          { text: "⛏️ Térmicas a Carvão de Rápida Construção (+50 MW | Custo: $25M)", cost: 25, effect: p => { p.capacity.thermal += 50; p.capital -= 25; globalFootprint += 18; } },
+          { text: "💧 Hidrelétricas de Alta Queda (Bernoulli: P = η·ρ·g·Q·H | +40 MW | Custo: $35M)", cost: 35, effect: p => { p.capacity.hydro += 40; p.capital -= 35; } },
+          { text: "⛏️ Térmicas a Carvão (Rendimento Térmico η = W/Q_in | +50 MW | Custo: $25M)", cost: 25, effect: p => { p.capacity.thermal += 50; p.capital -= 25; globalFootprint += 18; } },
           { text: "🔬 Subsidiar P&D de Eficiência Energética (+2 Patentes | Custo: $20M)", cost: 20, effect: p => { p.patents += 2; p.capital -= 20; } },
           { text: "💰 Emissão de Títulos de Reserva Estatal (Receita: +$35M Capital)", cost: 0, effect: p => { p.capital += 35; } }
         ]
@@ -697,10 +698,11 @@ document.addEventListener('DOMContentLoaded', () => {
         title: "1971: O ACORDO DE TEERÃ & COTAÇÃO FÓSSIL",
         desc: `Países exportadores renegociam preços do barril de petróleo. Como ${nationName} protegerá sua matriz de combustíveis?`,
         ticker: "1971 • Reunião em Teerã eleva preços globais dos combustíveis fósseis.",
+        concept: "🔬 FÍSICA: Densidade de Energia Específica (MJ/kg) | 🌍 GEOGRAFIA: Cartelização da OPEP e Geopolítica dos Estreitos",
         options: [
-          { text: "🛢️ Contrato de Suprimento de Longo Prazo (+35 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.thermal += 35; p.capital -= 30; globalFootprint += 12; } },
-          { text: "🌿 Ampliar Parque de Biocombustíveis (+30 MW | Custo: $25M)", cost: 25, effect: p => { p.capacity.biofuels += 30; p.capital -= 25; } },
-          { text: "⚡ Modernizar Subestações Elétricas (+20 MW | Custo: $18M)", cost: 18, effect: p => { p.capacity.hydro += 20; p.capital -= 18; } },
+          { text: "🛢️ Contrato Fóssil de Longo Prazo (+35 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.thermal += 35; p.capital -= 30; globalFootprint += 12; } },
+          { text: "🌿 Biocombustíveis & Fotossíntese Sintética (+30 MW | Custo: $25M)", cost: 25, effect: p => { p.capacity.biofuels += 30; p.capital -= 25; } },
+          { text: "⚡ Reduzir Perda por Aquecimento em Subestações (+20 MW | Custo: $18M)", cost: 18, effect: p => { p.capacity.hydro += 20; p.capital -= 18; } },
           { text: "🛡️ Fundo Nacional de Contingência (Gratuito | +6% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 6); } }
         ]
       };
@@ -711,8 +713,9 @@ document.addEventListener('DOMContentLoaded', () => {
         title: "1972: CONFERÊNCIA DE ESTOCOLMO (PRIMEIRO ALERTA AMBIENTAL)",
         desc: `A ONU realiza a primeira conferência sobre o Meio Ambiente Humano. Pressão internacional surge contra a poluição descontrolada.`,
         ticker: "1972 • Conferência de Estocolmo! Surgem os primeiros tratados de controle de emissões.",
+        concept: "🔬 FÍSICA: Física de Aerossóis & Efeito Albedo | 🌍 GEOGRAFIA: Biogeografia & Impactos Transfronteiriços",
         options: [
-          { text: "🌱 Subsidiar Fontes Limpas Geotérmicas/Eólicas (+30 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.wind += 30; p.capital -= 30; globalFootprint = Math.max(0, globalFootprint - 10); } },
+          { text: "🌱 Subsidiar Fontes Geotérmicas/Eólicas (+30 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.wind += 30; p.capital -= 30; globalFootprint = Math.max(0, globalFootprint - 10); } },
           { text: "⛏️ Manter Foco na Industrialização Fóssil (+45 MW | Custo: $20M)", cost: 20, effect: p => { p.capacity.thermal += 45; p.capital -= 20; globalFootprint += 22; } },
           { text: "📜 Adquirir Patentes de Filtragem Industrial (+2 Patentes | Custo: $22M)", cost: 22, effect: p => { p.patents += 2; p.capital -= 22; } },
           { text: "🏛️ Programa de Redução de Gastos Públicos (Receita: +$30M | -3% PIB)", cost: 0, effect: p => { p.capital += 30; p.gdp *= 0.97; } }
@@ -725,10 +728,11 @@ document.addEventListener('DOMContentLoaded', () => {
         title: "1973: PRIMEIRO CHOQUE GLOBAL DO PETRÓLEO",
         desc: `Embargos da OPEP disparam o preço do barril em 300%. Postos de combustíveis e termelétricas enfrentam desabastecimento agudo.`,
         ticker: "1973 • CHOQUE DO PETRÓLEO! Embargo internacional gera racionamento nos transportes e térmicas.",
+        concept: "🔬 FÍSICA: Conservação de Energia & Balanço Térmico | 🌍 GEOGRAFIA: Geopolítica de Recursos & Estreito de Ormuz",
         options: [
-          { text: "🌿 Programa Nacional de Biocombustíveis (+35 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.biofuels += 35; p.capital -= 28; } },
+          { text: "🌿 Programa de Biocombustíveis C4 (Cana/Milho) (+35 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.biofuels += 35; p.capital -= 28; } },
           { text: "⛏️ Reativação Emergencial de Minas de Carvão (+45 MW | Custo: $22M)", cost: 22, effect: p => { p.capacity.thermal += 45; p.capital -= 22; globalFootprint += 25; } },
-          { text: "⚛️ Iniciar Programa Nuclear Comercial (+30 MW | Custo: $40M)", cost: 40, effect: p => { p.capacity.nuclear += 30; p.capital -= 40; } },
+          { text: "⚛️ Iniciar Reator Nuclear de Fissão U-235 (+30 MW | Custo: $40M)", cost: 40, effect: p => { p.capacity.nuclear += 30; p.capital -= 40; } },
           { text: "🛡️ Racionamento Noturno de iluminação Publica (Gratuito | +8% Estabilidade)", cost: 0, effect: p => { p.stability = Math.min(100, p.stability + 8); } }
         ]
       };
@@ -739,9 +743,10 @@ document.addEventListener('DOMContentLoaded', () => {
         title: "1974: A CORRIDA NUCLEAR COMERCIAL",
         desc: `Com a alta do petróleo, a tecnologia nuclear surge como a grande promessa de independência energética massiva.`,
         ticker: "1974 • Potências investem pesadamente em reatores nucleares comerciais de alta capacidade.",
+        concept: "🔬 FÍSICA: Fissão Nuclear & Equação de Einstein (E = Δm·c²) | 🌍 GEOGRAFIA: Geologia do Urânio & Soberania",
         options: [
-          { text: "⚛️ Construir Usina Nuclear de Grande Porte (+50 MW | Custo: $45M)", cost: 45, effect: p => { p.capacity.nuclear += 50; p.capital -= 45; } },
-          { text: "💧 Expansão de Barragens de Acumulação (+35 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.hydro += 35; p.capital -= 30; } },
+          { text: "⚛️ Usina Nuclear de Fissão PWR (+50 MW | Custo: $45M)", cost: 45, effect: p => { p.capacity.nuclear += 50; p.capital -= 45; } },
+          { text: "💧 Barragens de Reservatório Pluviométrico (+35 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.hydro += 35; p.capital -= 30; } },
           { text: "📜 Licenciamento Internacional de Reatores (+3 Patentes | Custo: $32M)", cost: 32, effect: p => { p.patents += 3; p.capital -= 32; } },
           { text: "💰 Taxa Emergencial sobre Importações Fósseis (Receita: +$30M | -5% Confiança)", cost: 0, effect: p => { p.capital += 30; p.trust = Math.max(0, p.trust - 5); } }
         ]
@@ -751,11 +756,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (year === 1975) {
       return {
         title: "1975: EXPANSÃO DE MALHAS DE TRANSMISSÃO (HVDC)",
-        desc: `Perdas na transmissão de eletricidade afetam as grandes indústrias de ${nationName}. É preciso modernizar os cabos de alta tensão.`,
-        ticker: "1975 • Avanços em transmissão HVDC reduzem perdas em longas distâncias.",
+        desc: `Perdas por Efeito Joule na transmissão de eletricidade afetam as indústrias de ${nationName}. É preciso elevar a tensão para reduzir a corrente elétrica.`,
+        ticker: "1975 • Avanços em transmissão HVDC reduzem perdas por aquecimento Joule (P = R·I²).",
+        concept: "🔬 FÍSICA: Efeito Joule (P_perda = R·I²) & Transmissão HVDC | 🌍 GEOGRAFIA: Integração Regional de Redes",
         options: [
           { text: "⚡ Linhas HVDC de Ultra-Alta Tensão (+30 MW | Custo: $25M)", cost: 25, effect: p => { p.capacity.hydro += 30; p.capital -= 25; } },
-          { text: "🌋 Expansão Geotérmica Regional (+30 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.geothermal += 30; p.capital -= 28; } },
+          { text: "🌋 Geotermia Crustal em Rocha Vulcânica (+30 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.geothermal += 30; p.capital -= 28; } },
           { text: "🛢️ Queimar Reservas Estratégicas de Óleo (+35 MW | Custo: $20M)", cost: 20, effect: p => { p.capacity.thermal += 35; p.capital -= 20; globalFootprint += 15; } },
           { text: "🛡️ Otimização de Demanda Industrial (Gratuito | +5% Estabilidade)", cost: 0, effect: p => { p.stability = Math.min(100, p.stability + 5); } }
         ]
@@ -824,11 +830,193 @@ document.addEventListener('DOMContentLoaded', () => {
         title: "1980: JUROS ALTOS E RESTRIÇÃO DE CRÉDITO",
         desc: "A taxa de juros mundial atinge picos históricos. O custo de financiamento de megaprojetos duplica no mercado.",
         ticker: "1980 • Choque de Juros Globais! Financiamentos internacionais de infraestrutura desaceleram.",
+        concept: "🔬 FÍSICA: Termodinâmica & Perdas de Carnot | 🌍 GEOGRAFIA: Geopolítica do Crédito & Dívidas Externas",
         options: [
           { text: "⚡ Otimizar Redes Existentes de Transmissão (+25 MW | Custo: $20M)", cost: 20, effect: p => { p.capacity.hydro += 25; p.capital -= 20; } },
           { text: "⛏️ Usina a Carvão de Baixa Complexidade (+35 MW | Custo: $22M)", cost: 22, effect: p => { p.capacity.thermal += 35; p.capital -= 22; globalFootprint += 16; } },
           { text: "📜 P&D de Microgeração Descentralizada (+2 Patentes | Custo: $24M)", cost: 24, effect: p => { p.patents += 2; p.capital -= 24; } },
           { text: "💰 Empréstimo Emergencial com Fundo Monetário (Receita: +$40M | -4% PIB)", cost: 0, effect: p => { p.capital += 40; p.gdp *= 0.96; } }
+        ]
+      };
+    }
+
+    if (year === 1982) {
+      return {
+        title: "1982: A CRISE DA DÍVIDA & HIDRODIPLOMACIA",
+        desc: `Crises cambiais afetam o financiamento de grandes barragens binacionais. Como ${nationName} protegerá suas obras de grande porte?`,
+        ticker: "1982 • Crise da Dívida! Projetos de mega-hidrelétricas exigem acordos bilaterais.",
+        concept: "🔬 FÍSICA: Potência Hidráulica Efetiva (P = η·ρ·g·Q·H) | 🌍 GEOGRAFIA: Bacias Hidrográficas Binacionais & Fronteiras",
+        options: [
+          { text: "💧 Empreendimento Hidrelétrico Binacional (+40 MW | Custo: $35M)", cost: 35, effect: p => { p.capacity.hydro += 40; p.capital -= 35; } },
+          { text: "🛢️ Térmicas Locais de Rápida Operação (+35 MW | Custo: $22M)", cost: 22, effect: p => { p.capacity.thermal += 35; p.capital -= 22; globalFootprint += 14; } },
+          { text: "📜 Adquirir Patentes de Turbinas Francis de Alta Vazão (+2 Patentes | Custo: $24M)", cost: 24, effect: p => { p.patents += 2; p.capital -= 24; } },
+          { text: "🛡️ Acordo Diplomático Bilateral de Energia (Gratuito | +7% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 7); } }
+        ]
+      };
+    }
+
+    if (year === 1984) {
+      return {
+        title: "1984: A REVOLUÇÃO DO PETRÓLEO EM ÁGUAS PROFUNDAS",
+        desc: `Avanços na engenharia de plataformas offshore permitem perfurar sob altíssima pressão hidrostática no oceano.`,
+        ticker: "1984 • Perfuração Offshore! Novas tecnologias exploram reservas no assoalho marinho.",
+        concept: "🔬 FÍSICA: Pressão Hidrostática (P = ρ·g·h) & Resistência de Materiais | 🌍 GEOGRAFIA: Geologia da Margem Continental",
+        options: [
+          { text: "🛢️ Plataforma Offshore de Águas Profundas (+45 MW | Custo: $38M)", cost: 38, effect: p => { p.capacity.thermal += 45; p.capital -= 38; globalFootprint += 18; } },
+          { text: "🌊 Energia Maremotriz & Das Ondas (+25 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.wind += 25; p.capital -= 28; } },
+          { text: "📜 Licenciamento de Sondagem Submarina (+3 Patentes | Custo: $30M)", cost: 30, effect: p => { p.patents += 3; p.capital -= 30; } },
+          { text: "💰 Concessão de Blocos Marítimos a Empresas (Receita: +$35M Capital)", cost: 0, effect: p => { p.capital += 35; } }
+        ]
+      };
+    }
+
+    if (year === 1986) {
+      return {
+        title: "1986: REVISÃO DE SEGURANÇA INDUSTRIAL E NUCLEAR",
+        desc: "O acidente de Chernobyl paralisa o setor nuclear mundial e exige auditorias de segurança rigorosas em todas as usinas.",
+        ticker: "1986 • Alerta Nuclear em Chernobyl! Auditoria de segurança paralisante é exigida no setor.",
+        concept: "🔬 FÍSICA: Fissão de Urânio-235 (E=mc²) & Contenção de Radiação | 🌍 GEOGRAFIA: Dispersão Atmosférica Transfronteiriça",
+        options: [
+          { text: "⚛️ Modernização Completa dos Reatores Nucleares (+35 MW | Custo: $40M)", cost: 40, effect: p => { p.capacity.nuclear += 35; p.capital -= 40; } },
+          { text: "🌬️ Migração Apressada para Parques Eólicos (+30 MW | Custo: $32M)", cost: 32, effect: p => { p.capacity.wind += 30; p.capital -= 32; } },
+          { text: "💧 Expansão de PCHs (Pequenas Central Hidrelétricas) (+30 MW | Custo: $26M)", cost: 26, effect: p => { p.capacity.hydro += 30; p.capital -= 26; } },
+          { text: "📋 Manutenção e Inspeção Padronizada (Custo: $15M | +10% Estabilidade)", cost: 15, effect: p => { p.capital -= 15; p.stability = Math.min(100, p.stability + 10); } }
+        ]
+      };
+    }
+
+    if (year === 1988) {
+      return {
+        title: "1988: CRIAÇÃO DO IPCC & PAINEL CLIMÁTICO DA ONU",
+        desc: "A ONU e a WMO fundam o IPCC para monitorar as emissões de gases estufa e o aquecimento global.",
+        ticker: "1988 • Fundação do IPCC! Cientistas unem dados atmosféricos para mapear o clima mundial.",
+        concept: "🔬 FÍSICA: Forçante Radiativa (ΔF em W/m²) & Absorção Infravermelha | 🌍 GEOGRAFIA: Climatologia Global & Biomas",
+        options: [
+          { text: "🌱 Substituir Fósseis por Parque Eólico/Solar (+35 MW | Custo: $35M)", cost: 35, effect: p => { p.capacity.wind += 35; p.capital -= 35; globalFootprint = Math.max(0, globalFootprint - 15); } },
+          { text: "🌿 Expansão de Reflorestamento e Biocombustíveis (+30 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.biofuels += 30; p.capital -= 28; } },
+          { text: "📜 Investir em Sensores Atmosféricos (+2 Patentes | Custo: $24M)", cost: 24, effect: p => { p.patents += 2; p.capital -= 24; } },
+          { text: "🛡️ Declaração de Compromisso Ecológico (Gratuito | +7% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 7); } }
+        ]
+      };
+    }
+
+    if (year === 1989) {
+      return {
+        title: "1989: DESASTRE AMBIENTAL & REGULAMENTAÇÃO MARÍTIMA",
+        desc: "O vazamento do petroleiro Exxon Valdez mancha o oceano e desencadeia protestos globais por regras ambientais severas.",
+        ticker: "1989 • Vazamento do Exxon Valdez! Governos aprovam leis severas de responsabilidade ambiental.",
+        concept: "🔬 FÍSICA: Tensão Superficial e Dispersão de Fluidos | 🌍 GEOGRAFIA: Biogeografia Marinha e Preservação de Costas",
+        options: [
+          { text: "🌱 Subsidiar Matriz Solar / Biomassa (+35 MW | Custo: $34M)", cost: 34, effect: p => { p.capacity.biofuels += 35; p.capital -= 34; globalFootprint = Math.max(0, globalFootprint - 15); } },
+          { text: "🛢️ Duplicação de Cascos de Petroleiros e Térmicas (+35 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.thermal += 35; p.capital -= 28; } },
+          { text: "📜 Registro de Patentes de Contenção de Danos (+2 Patentes | Custo: $22M)", cost: 22, effect: p => { p.patents += 2; p.capital -= 22; } },
+          { text: "🛡️ Fundo Emergencial de Resposta a Desastres (Gratuito | +8% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 8); } }
+        ]
+      };
+    }
+
+    // 3. DÉCADA DE 1990 (1990 – 1999)
+    if (year === 1990) {
+      return {
+        title: "1990: A GUERRA DO GOLFO & INCÊNDIO DOS POÇOS",
+        desc: "Conflitos geopolíticos no Kuwait incendiam poços de petróleo, gerando fuligem atmosférica e disparada na cotação do barril.",
+        ticker: "1990 • GUERRA DO GOLFO! Incêndio em poços de petróleo gera nuvem tóxica e choque de preços.",
+        concept: "🔬 FÍSICA: Combustão Incompleta & Aerossóis Absorventes de Luz | 🌍 GEOGRAFIA: Geopolítica do Oriente Médio",
+        options: [
+          { text: "🌿 Programa Emergencial de Biocombustíveis Nacionais (+35 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.biofuels += 35; p.capital -= 30; } },
+          { text: "⚡ Expansão de Hidrelétricas de Reserva (+35 MW | Custo: $32M)", cost: 32, effect: p => { p.capacity.hydro += 35; p.capital -= 32; } },
+          { text: "⛏️ Manter Térmicas a Carvão de Estoque (+40 MW | Custo: $22M)", cost: 22, effect: p => { p.capacity.thermal += 40; p.capital -= 22; globalFootprint += 20; } },
+          { text: "🛡️ Racionamento Estratégico de Combustíveis (Gratuito | +8% Estabilidade)", cost: 0, effect: p => { p.stability = Math.min(100, p.stability + 8); } }
+        ]
+      };
+    }
+
+    if (year === 1994) {
+      return {
+        title: "1994: A CONVENÇÃO-QUADRO DAS NAÇÕES UNIDAS (UNFCCC)",
+        desc: "Entra em vigor o tratado da ONU para estabilizar as concentrações de gases de efeito estufa na atmosfera.",
+        ticker: "1994 • UNFCCC em vigor! Tratado internacional estabelece base para diplomacia climática.",
+        concept: "🔬 FÍSICA: Espectroscopia de Absorção Infravermelha do CO₂ | 🌍 GEOGRAFIA: Diplomacia Climatológica Norte-Sul",
+        options: [
+          { text: "🌱 Parque Eólico de Alta Capacidade (+40 MW | Custo: $38M)", cost: 38, effect: p => { p.capacity.wind += 40; p.capital -= 38; globalFootprint = Math.max(0, globalFootprint - 15); } },
+          { text: "📜 Registrar Patentes de Filtros Industriais (+3 Patentes | Custo: $30M)", cost: 30, effect: p => { p.patents += 3; p.capital -= 30; } },
+          { text: "🛢️ Expansão de Térmicas a Gás de Ciclo Combinado (+40 MW | Custo: $26M)", cost: 26, effect: p => { p.capacity.thermal += 40; p.capital -= 26; globalFootprint += 10; } },
+          { text: "💰 Venda de Créditos Nacionais de Preservação (Receita: +$35M Capital)", cost: 0, effect: p => { p.capital += 35; } }
+        ]
+      };
+    }
+
+    if (year === 2001) {
+      return {
+        title: "2001: RACIONAMENTO & SECA DOS RESERVATÓRIOS",
+        desc: `Falta de chuvas e escassez de planejamento provocam surto de racionamento elétrico. O governo de ${nationName} enfrenta crise de aprovação.`,
+        ticker: "2001 • RACIONAMENTO ELÉTRICO! Secas severas e baixo nível dos reservatórios exigem corte de consumo.",
+        concept: "🔬 FÍSICA: Energia Potencial Gravitacional (E_p = m·g·h) | 🌍 GEOGRAFIA: Regimes Pluviométricos & Bacias Hidrográficas",
+        options: [
+          { text: "🌋 Expansão de Geotérmica / Biomassa de Emergência (+35 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.geothermal += 35; p.capital -= 30; } },
+          { text: "🛢️ Contratação Apressada de Usinas Térmicas (+40 MW | Custo: $26M)", cost: 26, effect: p => { p.capacity.thermal += 40; p.capital -= 26; globalFootprint += 18; } },
+          { text: "📜 Licenciar Tecnologia de Gestão de Carga (+2 Patentes | Custo: $22M)", cost: 22, effect: p => { p.patents += 2; p.capital -= 22; } },
+          { text: "🛡️ Campanha de Conscientização de Consumo (Gratuito | +8% Estabilidade)", cost: 0, effect: p => { p.stability = Math.min(100, p.stability + 8); } }
+        ]
+      };
+    }
+
+    if (year === 2005) {
+      return {
+        title: "2005: MERCADO DE EMISSÕES DA UE (EU ETS)",
+        desc: "Entra em operação o maior mercado de carbono do mundo. Poluir ganha preço financeiro direto por tonelada de CO₂e.",
+        ticker: "2005 • Lançado o Mercado de Emissões da UE! Tonelada de CO2 ganha cotação em bolsa de valores.",
+        concept: "🔬 FÍSICA: Valoração de Carbono Equivalente (CO₂e) | 🌍 GEOGRAFIA: Comércio Transfronteiriço de Licenças",
+        options: [
+          { text: "🌱 Migração Total para Parques Eólicos/Solares (+45 MW | Custo: $40M)", cost: 40, effect: p => { p.capacity.wind += 45; p.capital -= 40; globalFootprint = Math.max(0, globalFootprint - 20); } },
+          { text: "📜 Comercialização Global de Licenças Verdes (+3 Patentes | Custo: $30M)", cost: 30, effect: p => { p.patents += 3; p.capital -= 30; } },
+          { text: "🏭 Pagar Taxa de Poluição e Manter Térmicas (+40 MW | Custo: $20M)", cost: 20, effect: p => { p.capacity.thermal += 40; p.capital -= 20; globalFootprint += 22; } },
+          { text: "💰 Subvenção Fiscais a Empresas de Baixa Emissão (Receita: +$35M Capital)", cost: 0, effect: p => { p.capital += 35; } }
+        ]
+      };
+    }
+
+    if (year === 2012) {
+      return {
+        title: "2012: REVOLUÇÃO DO GÁS DE XISTO (SHALE GAS)",
+        desc: "Técnicas de fraturamento hidráulico (fracking) disparam a produção de gás natural e barateiam a energia fóssil.",
+        ticker: "2012 • Boom do Gás de Xisto! Fraturamento hidráulico transforma o mercado global de combustíveis.",
+        concept: "🔬 FÍSICA: Porosidade & Permeabilidade de Rochas Folhelho | 🌍 GEOGRAFIA: Geologia Sedimentar & Recursos Não-Renováveis",
+        options: [
+          { text: "🛢️ Usinas Térmicas a Gás de Xisto (+50 MW | Custo: $32M)", cost: 32, effect: p => { p.capacity.thermal += 50; p.capital -= 32; globalFootprint += 14; } },
+          { text: "🌞 Expansão de Parques Solares Fotovoltaicos (+40 MW | Custo: $36M)", cost: 36, effect: p => { p.capacity.wind += 40; p.capital -= 36; globalFootprint = Math.max(0, globalFootprint - 10); } },
+          { text: "📜 Patentes de Fraturamento Ecológico (+2 Patentes | Custo: $25M)", cost: 25, effect: p => { p.patents += 2; p.capital -= 25; } },
+          { text: "🛡️ Isenção Fiscal para Indústrias Eletrointensivas (Gratuito | +6% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 6); } }
+        ]
+      };
+    }
+
+    if (year === 2016) {
+      return {
+        title: "2016: PARIDADE DE REDE DA ENERGIA SOLAR",
+        desc: "O custo das células fotovoltaicas despenca. Gerar energia solar torna-se mais barato do que construir térmicas a carvão.",
+        ticker: "2016 • Paridade de Rede Solar! Energia fotovoltaica atinge o menor custo histórico de instalação.",
+        concept: "🔬 FÍSICA: Rendimento Quântico de Semicondutores p-n (E = h·ν) | 🌍 GEOGRAFIA: Insolação Solar & Cintura de Radiação",
+        options: [
+          { text: "🌞 Megafazenda Solar Fotovoltaica (+55 MW | Custo: $38M)", cost: 38, effect: p => { p.capacity.wind += 55; p.capital -= 38; globalFootprint = Math.max(0, globalFootprint - 22); } },
+          { text: "🌿 Usina Bioelétrica de Co-geração (+40 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.biofuels += 40; p.capital -= 30; } },
+          { text: "📜 Registrar Patentes de Células de Perovskita (+3 Patentes | Custo: $28M)", cost: 28, effect: p => { p.patents += 3; p.capital -= 28; } },
+          { text: "💰 Linha de Crédito Verde a Cidadãos (Receita: +$35M Capital)", cost: 0, effect: p => { p.capital += 35; } }
+        ]
+      };
+    }
+
+    if (year === 2019) {
+      return {
+        title: "2019: INCÊNDIOS EXTREMOS & RESILIÊNCIA DA REDE",
+        desc: "Ondas de calor e incêndios florestais ameaçam desarmar grandes linhas de transmissão. Redes exigem sensores inteligentes.",
+        ticker: "2019 • Ondas de Calor Globais! Incêndios florestais ameaçam malhas elétricas continentais.",
+        concept: "🔬 FÍSICA: Ionização do Ar & Dilatação Térmica de Cabos | 🌍 GEOGRAFIA: Eventos Climáticos Extremos & Vulnerabilidade",
+        options: [
+          { text: "🤖 Automatizar Linhas com Sensores Térmicos (+35 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.hydro += 35; p.capital -= 28; } },
+          { text: "🔋 Baterias Gigawatt de Armazenamento (+35 MW | Custo: $32M)", cost: 32, effect: p => { p.capacity.wind += 35; p.capital -= 32; } },
+          { text: "📜 Patentes de Isolamento Contra Incêndios (+2 Patentes | Custo: $24M)", cost: 24, effect: p => { p.patents += 2; p.capital -= 24; } },
+          { text: "🛡️ Plano de Manejo Florestal de Emergência (Gratuito | +8% Estabilidade)", cost: 0, effect: p => { p.stability = Math.min(100, p.stability + 8); } }
         ]
       };
     }
@@ -1259,13 +1447,24 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     }
 
-    // Fetch Question Data
-    const qData = getTurnQuestionData(currentYear, currentTurnNumber, player);
+    // Calculate Live Geopolitical Rankings for News Ticker
+    const rankedPlayers = activeGamePlayers.map(p => {
+      const pGen = Math.round(Object.values(p.capacity).reduce((a, b) => a + b, 0));
+      const pDem = Math.round(p.baseDemand * Math.pow(1.022, currentTurnNumber - 1));
+      const pNet = pGen - pDem;
+      const score = (p.stability * 0.35) + (p.trust * 0.25) + ((p.gdp / 10) * 0.20) + (p.patents * 3) + (pNet >= 0 ? 10 : -15);
+      return { flag: p.nation.flag, name: p.name, score: score.toFixed(1) };
+    }).sort((a, b) => b.score - a.score);
 
-    if (newsTickerText) newsTickerText.innerHTML = qData.ticker;
+    const rankingsStr = rankedPlayers.map((rp, idx) => `#${idx + 1} ${rp.flag} ${rp.name}: ${rp.score} pts`).join(' | ');
+
+    if (newsTickerText) newsTickerText.innerHTML = `${qData.ticker} &nbsp;&nbsp;•&nbsp;&nbsp; 🏆 <strong>RANKING AO VIVO:</strong> ${rankingsStr}`;
     if (decisionBadge) decisionBadge.innerHTML = `TURNO ${currentTurnNumber} DE 50 • DILEMA GEOPOLÍTICO (${currentYear})`;
     if (decisionTitle) decisionTitle.innerHTML = qData.title;
-    if (decisionDescription) decisionDescription.innerHTML = qData.desc;
+    if (decisionDescription) {
+      const conceptBadge = qData.concept ? `<div class="physics-geo-concept-pill" style="margin-top: 10px; font-size: 0.76rem; background: #18150d; border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 5px 10px; border-radius: 4px; font-family: var(--font-title); letter-spacing: 1px;">${qData.concept}</div>` : '';
+      decisionDescription.innerHTML = `${qData.desc} ${conceptBadge}`;
+    }
 
     // Render Choice Cards (Cards de Escolha Diplomáticos)
     if (actionOptionsContainer) {
@@ -1315,6 +1514,32 @@ document.addEventListener('DOMContentLoaded', () => {
             player.capital -= 10;
           }
 
+          // Competitive Market System (Exportação de Energia & Royalties de Patentes)
+          const surplusNations = activeGamePlayers.filter(p => {
+            const pGen = Math.round(Object.values(p.capacity).reduce((a, b) => a + b, 0));
+            const pDem = Math.round(p.baseDemand * Math.pow(1.022, currentTurnNumber - 1));
+            return pGen > pDem;
+          });
+
+          const deficitNations = activeGamePlayers.filter(p => {
+            const pGen = Math.round(Object.values(p.capacity).reduce((a, b) => a + b, 0));
+            const pDem = Math.round(p.baseDemand * Math.pow(1.022, currentTurnNumber - 1));
+            return pGen < pDem;
+          });
+
+          // Energy Export Revenue & Penalty
+          if (surplusNations.length > 0 && deficitNations.length > 0) {
+            surplusNations.forEach(p => { p.capital += 15; }); // +$15M Bônus de Exportação
+            deficitNations.forEach(p => { p.capital = Math.max(0, p.capital - 12); }); // -$12M Tarifa de Emergência
+          }
+
+          // Patent Royalties
+          activeGamePlayers.forEach(p => {
+            if (p.patents > 0) {
+              p.capital += (p.patents * 4); // +$4M por patente ao ano
+            }
+          });
+
           // Resolve Turn Math & Annual Tax Collection for all nations
           activeGamePlayers.forEach(p => {
             const pGen = Math.round(Object.values(p.capacity).reduce((a, b) => a + b, 0));
@@ -1337,15 +1562,15 @@ document.addEventListener('DOMContentLoaded', () => {
               annualTaxIncome = Math.round(annualTaxIncome * 0.5);
               p.capital += annualTaxIncome;
               const defRatio = Math.abs(pNet) / pDem;
-              const trustPenalty = Math.round(defRatio * 35);
+              const trustPenalty = Math.round(defRatio * 40); // Increased penalty for tighter competition
               p.trust = Math.max(0, p.trust - trustPenalty);
-              p.stability = Math.max(10, p.stability - (defRatio * 25));
-              p.gdp *= Math.max(0.85, 1 - (defRatio * 0.10));
+              p.stability = Math.max(10, p.stability - (defRatio * 30));
+              p.gdp *= Math.max(0.80, 1 - (defRatio * 0.12));
             }
 
             if (p.trust <= 15) {
-              p.capital = Math.max(0, p.capital - 25);
-              p.gdp *= 0.93;
+              p.capital = Math.max(0, p.capital - 30);
+              p.gdp *= 0.90;
             }
 
             // Check for Impeachment State Collapse (Trust = 0%)
