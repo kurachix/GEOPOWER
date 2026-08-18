@@ -1223,6 +1223,22 @@ html, body {
 .nameplate-balance.surplus { color: #4caf50; }
 .nameplate-balance.deficit { color: #f44336; }
 
+.nameplate-trust {
+  font-size: 0.68rem;
+  font-weight: bold;
+  margin-top: 1px;
+}
+
+.trust-high { color: #4caf50; }
+.trust-medium { color: #ffca28; }
+.trust-low { color: #ff9800; }
+.trust-critical { color: #f44336; animation: pulseRed 1s infinite alternate; }
+
+@keyframes pulseRed {
+  0% { opacity: 0.7; }
+  100% { opacity: 1; text-shadow: 0 0 6px #f44336; }
+}
+
 /* Painel de Decisão Retrô (Estilo Máquina de Escrever / Balão de Diálogo) */
 .decision-panel-box {
   position: relative;

@@ -819,7 +819,7 @@ document.addEventListener('DOMContentLoaded', () => {
     activeLeaderIndex = 0;
     globalFootprint = 25;
 
-    // Initialize runtime state for each active player
+    // Initialize runtime state for each active player with Government Trust
     activeGamePlayers = playersState.slice(0, selectedPlayerCount).map(p => {
       const nat = NATIONS_DATA[p.nationId];
       let hydroCap = 0, thermalCap = 0, geoCap = 0, nucCap = 0, bioCap = 0, windCap = 0;
@@ -842,6 +842,7 @@ document.addEventListener('DOMContentLoaded', () => {
         capital: 100, // $100 Million
         gdp: 500, // $500 Billion
         stability: 100, // 100%
+        trust: 85, // 85% Initial Popular Approval (Confiança do Governo)
         baseDemand: 110, // 110 MW
         capacity: {
           hydro: hydroCap || 10,
@@ -862,7 +863,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderTurnQuestion();
   }
 
-  // Visual State Machine: Render Seats around table with Spotlight vs Penumbra
+  // Visual State Machine: Render Seats around table with Spotlight vs Penumbra & Trust Badge
   function updatePlenarySeats() {
     if (!councilSeatsGrid) return;
     councilSeatsGrid.innerHTML = '';
@@ -885,6 +886,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (player.nationId === 'uk') avatarIcon = '🤵🏼‍♂️';
       if (player.nationId === 'usa') avatarIcon = '🇺🇸🏼';
 
+      // Determine Government Trust Styling
+      let trustClass = 'trust-medium';
+      if (player.trust >= 75) trustClass = 'trust-high';
+      else if (player.trust < 40 && player.trust > 15) trustClass = 'trust-low';
+      else if (player.trust <= 15) trustClass = 'trust-critical';
+
       seat.innerHTML = `
         <div class="spotlight-beam"></div>
         <div class="leader-avatar-box">
@@ -894,6 +901,9 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="nameplate-title"><span class="nameplate-flag">${player.nation.flag}</span> ${player.name.toUpperCase()}</div>
           <div class="nameplate-balance ${isSurplus ? 'surplus' : 'deficit'}">
             ${isSurplus ? '⚡ +' + netMW + ' MW' : '⚠️ ' + netMW + ' MW'}
+          </div>
+          <div class="nameplate-trust ${trustClass}">
+            👑 Confiança: ${Math.round(player.trust)}%
           </div>
         </div>
       `;
@@ -930,13 +940,26 @@ document.addEventListener('DOMContentLoaded', () => {
     if (hudFootprintFill) hudFootprintFill.style.width = `${pctFootprint}%`;
     if (hudFootprintVal) hudFootprintVal.innerHTML = `${globalFootprint} / 1500 PTS`;
 
-    // Active Stats Footer Bar
+    // Active Stats Footer Bar with Government Trust Status
+    let trustTierLabel = 'Estável';
+    let trustClass = 'trust-medium';
+    if (player.trust >= 75) {
+      trustTierLabel = 'Alta (+20% Impostos)';
+      trustClass = 'trust-high';
+    } else if (player.trust < 40 && player.trust > 15) {
+      trustTierLabel = 'Baixa (Greves: Obras +35% Custo)';
+      trustClass = 'trust-low';
+    } else if (player.trust <= 15) {
+      trustTierLabel = 'CRÍTICA (Risco de Impeachment!)';
+      trustClass = 'trust-critical';
+    }
+
     if (activeNationStatsBar) {
       activeNationStatsBar.innerHTML = `
+        <span class="stat-pill">👑 Confiança: <strong class="${trustClass}">${Math.round(player.trust)}% (${trustTierLabel})</strong></span>
         <span class="stat-pill">💰 Capital: <strong>$${player.capital}M</strong></span>
         <span class="stat-pill">⚡ Ger.: <strong>${totalGen} MW</strong></span>
         <span class="stat-pill">📈 Demanda: <strong>${currentDemand} MW</strong></span>
-        <span class="stat-pill">🛡️ Estabilidade: <strong>${Math.round(player.stability)}%</strong></span>
         <span class="stat-pill">🏛️ PIB: <strong>$${Math.round(player.gdp)}B</strong></span>
       `;
     }
@@ -956,27 +979,51 @@ document.addEventListener('DOMContentLoaded', () => {
       qData.options.forEach((opt, oIdx) => {
         const btn = document.createElement('button');
         btn.className = 'btn-action-option';
-        btn.innerHTML = opt.text;
+
+        // Apply Low Trust Penalty (+35% Cost) if Government Trust < 40%
+        let optionLabel = opt.text;
+        if (player.trust < 40 && optionLabel.includes('-$')) {
+          optionLabel += ' ⚠️ (Greves: +35% Custo)';
+        }
+
+        btn.innerHTML = optionLabel;
         btn.onclick = () => {
           playClickSound();
 
           // Apply Option Effect to active player
           opt.effect(player);
 
-          // Resolve Turn Math for all nations
+          // Apply extra cost penalty if trust is low (< 40%)
+          if (player.trust < 40) {
+            player.capital -= 10;
+          }
+
+          // Resolve Turn Math & Trust updates for all nations
           activeGamePlayers.forEach(p => {
             const pGen = Math.round(Object.values(p.capacity).reduce((a, b) => a + b, 0));
             const pDem = Math.round(p.baseDemand * Math.pow(1.022, currentTurnNumber - 1));
             const pNet = pGen - pDem;
 
             if (pNet >= 0) {
-              p.capital += 25;
+              // Superávit: Aumenta a aprovação popular!
+              const trustBonus = p.trust >= 75 ? 1.20 : 1.0;
+              p.capital += Math.round(25 * trustBonus);
               p.gdp *= 1.02;
+              p.trust = Math.min(100, p.trust + 3);
               p.stability = Math.min(100, p.stability + 1);
             } else {
+              // Apagão: Queda acentuada na Confiança do Governo!
               const defRatio = Math.abs(pNet) / pDem;
+              const trustPenalty = Math.round(defRatio * 35);
+              p.trust = Math.max(0, p.trust - trustPenalty);
               p.stability = Math.max(10, p.stability - (defRatio * 25));
               p.gdp *= Math.max(0.85, 1 - (defRatio * 0.10));
+            }
+
+            // Penalidade extrema se a Confiança for Crítica (<= 15%)
+            if (p.trust <= 15) {
+              p.capital = Math.max(0, p.capital - 25); // Multa de estabilização de emergência
+              p.gdp *= 0.93;
             }
           });
 
@@ -1000,15 +1047,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Victory Resolution (Turn 50 / 2020)
+  // Victory Resolution (Turn 50 / 2020) with Government Trust Weight (30%)
   function triggerVictoryResolution() {
     const scoredPlayers = activeGamePlayers.map(p => {
-      const score = (0.35 * (p.gdp / 1000)) + (0.30 * (p.stability / 100)) + (0.20 * (p.patents / 10)) - (0.15 * (p.cumulativeEmissions / 100));
+      const score = (0.35 * (p.gdp / 1000)) + (0.30 * (p.trust / 100)) + (0.20 * (p.patents / 10)) - (0.15 * (p.cumulativeEmissions / 100));
       return { ...p, resilienceScore: (score * 100).toFixed(1) };
     }).sort((a, b) => b.resilienceScore - a.resilienceScore);
 
     const winner = scoredPlayers[0];
-    const rankingText = scoredPlayers.map((p, idx) => `${idx + 1}º - ${p.nation.flag} ${p.name} (${p.nation.name}): Score ${p.resilienceScore} pts`).join('\n');
+    const rankingText = scoredPlayers.map((p, idx) => `${idx + 1}º - ${p.nation.flag} ${p.name} (${p.nation.name}): Score ${p.resilienceScore} pts (Confiança: ${Math.round(p.trust)}%)`).join('\n');
 
     alert(`🏆 CÚPULA DE 2020 CONCLUÍDA - VITÓRIA ENERGÉTICA!\n\nCampeão Global:\n${winner.nation.flag} ${winner.name} (${winner.nation.name})\n\nClassificação de Resiliência (50 Turnos):\n${rankingText}\n\nParabéns pela liderança na transição energética mundial!`);
   }
@@ -1021,7 +1068,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Keyboard Shortcuts (Arrow keys, Spacebar, Enter, M, V)
   // Keyboard Shortcuts (Arrow keys, Spacebar, Enter, M, V)
   document.addEventListener('keydown', (e) => {
     if (!isStarted) {
