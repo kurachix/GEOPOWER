@@ -412,6 +412,9 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Noruega',
       flag: '🇳🇴',
       tagline: 'Pioneira Hidrelétrica & Petróleo do Mar do Norte',
+      startCapital: 120, // $120M Fundo Soberano
+      startGdp: 460, // $460B PIB
+      startDemand: 100, // 100 MW
       matrix: [
         { label: '💧 HIDRELÉTRICA', pct: 75 },
         { label: '🛢️ PETRÓLEO / GÁS', pct: 20 },
@@ -424,6 +427,9 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Brasil',
       flag: '🇧🇷',
       tagline: 'Bacias Hidrográficas & Biocombustíveis',
+      startCapital: 110, // $110M
+      startGdp: 490, // $490B PIB
+      startDemand: 110, // 110 MW
       matrix: [
         { label: '💧 HIDRELÉTRICA', pct: 80 },
         { label: '🌿 BIOCOMBUSTÍVEIS', pct: 10 },
@@ -436,6 +442,9 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Islândia',
       flag: '🇮🇸',
       tagline: 'Energia Vulcânica Geotérmica & Hidro',
+      startCapital: 95, // $95M
+      startGdp: 380, // $380B PIB
+      startDemand: 85, // 85 MW
       matrix: [
         { label: '🌋 GEOTÉRMICA', pct: 65 },
         { label: '💧 HIDRELÉTRICA', pct: 30 },
@@ -448,6 +457,9 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Reino Unido',
       flag: '🇬🇧',
       tagline: 'Tradição Carvoeira, Gás e Eólica Offshore',
+      startCapital: 135, // $135M
+      startGdp: 620, // $620B PIB
+      startDemand: 130, // 130 MW
       matrix: [
         { label: '⛏️ CARVÃO TÉRMICO', pct: 55 },
         { label: '🛢️ GÁS / PETRÓLEO', pct: 35 },
@@ -461,6 +473,9 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Estados Unidos',
       flag: '🇺🇸',
       tagline: 'Potência Industrial, Carvão & Matriz Nuclear',
+      startCapital: 155, // $155M Superpotência
+      startGdp: 820, // $820B PIB
+      startDemand: 160, // 160 MW
       matrix: [
         { label: '⛏️ CARVÃO TÉRMICO', pct: 45 },
         { label: '🛢️ PETRÓLEO / GÁS', pct: 30 },
@@ -475,9 +490,9 @@ document.addEventListener('DOMContentLoaded', () => {
   let playersState = [
     { id: 1, name: 'Líder 1', type: 'human', nationId: 'norway' },
     { id: 2, name: 'Líder 2', type: 'human', nationId: 'brazil' },
-    { id: 3, name: 'Líder 3', type: 'bot', nationId: 'iceland' },
-    { id: 4, name: 'Líder 4', type: 'bot', nationId: 'uk' },
-    { id: 5, name: 'Líder 5', type: 'bot', nationId: 'usa' }
+    { id: 3, name: 'Líder 3', type: 'human', nationId: 'iceland' },
+    { id: 4, name: 'Líder 4', type: 'human', nationId: 'uk' },
+    { id: 5, name: 'Líder 5', type: 'human', nationId: 'usa' }
   ];
 
   const nationKeys = Object.keys(NATIONS_DATA);
@@ -522,11 +537,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       card.innerHTML = `
         <header class="player-card-header">
-          <div class="player-badge">CREDENCIAL Nº 0${player.id}</div>
-          <div class="controller-toggle">
-            <button class="btn-toggle-type ${player.type === 'human' ? 'active' : ''}" data-type="human" data-player="${player.id}">👤 HUMANO</button>
-            <button class="btn-toggle-type ${player.type === 'bot' ? 'active' : ''}" data-type="bot" data-player="${player.id}">🤖 BOT (IA)</button>
-          </div>
+          <div class="player-badge">CREDENCIAL Nº 0${player.id} • LÍDER HUMANO</div>
         </header>
 
         <div class="player-input-group">
@@ -569,20 +580,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function attachPlayerCardListeners() {
-    // Type Toggle Buttons (Humano / Bot)
-    document.querySelectorAll('.btn-toggle-type').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        playClickSound();
-        const pId = parseInt(e.target.getAttribute('data-player'));
-        const newType = e.target.getAttribute('data-type');
-        const player = playersState.find(p => p.id === pId);
-        if (player) {
-          player.type = newType;
-          renderPlayerSlots();
-        }
-      });
-    });
-
     // Player Name Inputs
     document.querySelectorAll('.player-name-input').forEach(input => {
       input.addEventListener('change', (e) => {
@@ -857,11 +854,11 @@ document.addEventListener('DOMContentLoaded', () => {
         type: p.type,
         nationId: p.nationId,
         nation: nat,
-        capital: 100, // $100 Million
-        gdp: 500, // $500 Billion
+        capital: nat.startCapital || 100, // Capital/Orçamento inicial único da nação
+        gdp: nat.startGdp || 500, // PIB inicial único da nação
         stability: 100, // 100%
         trust: 85, // 85% Initial Popular Approval (Confiança do Governo)
-        baseDemand: 110, // 110 MW
+        baseDemand: nat.startDemand || 110, // Demanda base em MW única da nação
         capacity: {
           hydro: hydroCap || 10,
           thermal: thermalCap || 10,
@@ -876,6 +873,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (retroIntroScreen) retroIntroScreen.classList.add('hidden');
+    
+    // Display Game Tutorial & Briefing Overlay
+    const gameTutorialModal = document.getElementById('gameTutorialModal');
+    if (gameTutorialModal) {
+      gameTutorialModal.classList.remove('hidden');
+    } else {
+      window.confirmTutorialAndStartStage();
+    }
+  };
+
+  window.confirmTutorialAndStartStage = function() {
+    try { playClickSound(); } catch (e) {}
+    const gameTutorialModal = document.getElementById('gameTutorialModal');
+    const playerSetupScreen = document.getElementById('playerSetupScreen');
+    const gameStageScreen = document.getElementById('gameStageScreen');
+
+    if (gameTutorialModal) gameTutorialModal.classList.add('hidden');
     if (playerSetupScreen) playerSetupScreen.classList.add('hidden');
     if (gameStageScreen) gameStageScreen.classList.remove('hidden');
 
@@ -923,7 +937,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="leader-nameplate">
           <div class="nameplate-title"><span class="nameplate-flag">${player.nation.flag}</span> ${player.name.toUpperCase()}</div>
           <div class="nameplate-balance ${isSurplus ? 'surplus' : 'deficit'}">
-            ${isSurplus ? '⚡ +' + netMW + ' MW' : '⚠️ ' + netMW + ' MW'}
+            ${isSurplus ? '⚡ +' + netMW + ' MW' : '⚠️ ' + netMW + ' MW'} | 💰 $${player.capital}M
           </div>
           <div class="nameplate-trust ${trustClass}">
             👑 Confiança: ${Math.round(player.trust)}%
@@ -952,6 +966,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Calculate current demand and generation
     const totalGen = Math.round(Object.values(player.capacity).reduce((a, b) => a + b, 0));
     const currentDemand = Math.round(player.baseDemand * Math.pow(1.022, currentTurnNumber - 1));
+    const netMW = totalGen - currentDemand;
+    const isSurplus = netMW >= 0;
 
     // Update HUD
     if (hudYearBadge) hudYearBadge.innerHTML = `${currentYear} (TURNO ${currentTurnNumber}/50)`;
@@ -964,7 +980,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (hudFootprintVal) hudFootprintVal.innerHTML = `${globalFootprint} / 1500 PTS`;
 
     // Active Stats Footer Bar with Government Trust Status
-    let trustTierLabel = 'Estável';
+    let trustTierLabel = 'Aprovação Estável';
     let trustClass = 'trust-medium';
     if (player.trust >= 75) {
       trustTierLabel = 'Alta (+20% Impostos)';
@@ -975,6 +991,49 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (player.trust <= 15) {
       trustTierLabel = 'CRÍTICA (Risco de Impeachment!)';
       trustClass = 'trust-critical';
+    }
+
+    // Render Executive Statistics CRT Dashboard (Dados Estatísticos em Destaque)
+    const executiveStatsDashboard = document.getElementById('executiveStatsDashboard');
+    if (executiveStatsDashboard) {
+      const estimatedIncome = Math.round(20 + player.gdp * 0.03 + (isSurplus ? 15 : 0));
+      executiveStatsDashboard.innerHTML = `
+        <div class="stat-card-widget capital-widget">
+          <div class="widget-header">
+            <span class="widget-icon">💰</span>
+            <span class="widget-title">ORÇAMENTO / CAPITAL</span>
+          </div>
+          <div class="widget-value">$${player.capital}M</div>
+          <div class="widget-sub">Impostos Anuais Est.: +$${estimatedIncome}M</div>
+        </div>
+
+        <div class="stat-card-widget balance-widget ${isSurplus ? 'surplus' : 'deficit'}">
+          <div class="widget-header">
+            <span class="widget-icon">⚡</span>
+            <span class="widget-title">GERAÇÃO vs DEMANDA</span>
+          </div>
+          <div class="widget-value">${totalGen} / ${currentDemand} MW</div>
+          <div class="widget-sub">${isSurplus ? '🟢 SUPERÁVIT (+' + netMW + ' MW)' : '🔴 APAGÃO (' + netMW + ' MW)'}</div>
+        </div>
+
+        <div class="stat-card-widget trust-widget ${trustClass}">
+          <div class="widget-header">
+            <span class="widget-icon">👑</span>
+            <span class="widget-title">CONFIANÇA DO GOVERNO</span>
+          </div>
+          <div class="widget-value">${Math.round(player.trust)}%</div>
+          <div class="widget-sub">${trustTierLabel}</div>
+        </div>
+
+        <div class="stat-card-widget gdp-widget">
+          <div class="widget-header">
+            <span class="widget-icon">📈</span>
+            <span class="widget-title">PIB & ESTABILIDADE</span>
+          </div>
+          <div class="widget-value">$${Math.round(player.gdp)}B</div>
+          <div class="widget-sub">📜 Patentes: ${player.patents} | 🛡️ Est.: ${Math.round(player.stability)}%</div>
+        </div>
+      `;
     }
 
     if (activeNationStatsBar) {

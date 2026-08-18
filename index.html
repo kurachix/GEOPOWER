@@ -276,6 +276,11 @@
           </div>
         </header>
 
+        <!-- Executive Statistics CRT Dashboard (Dados Estatísticos em Destaque) -->
+        <section class="executive-stats-dashboard" id="executiveStatsDashboard">
+          <!-- Renderizado dinamicamente via JS com 4 cards de métricas estratégicas em tempo real -->
+        </section>
+
         <div class="decision-panel-grid">
           <!-- Left Column: Story Narrative / Dispatch -->
           <div class="narrative-column">
@@ -309,6 +314,68 @@
         <marquee class="ticker-text" id="newsTickerText">1970 • Início da corrida pela hegemonia energética mundial na Cúpula de Genebra...</marquee>
       </div>
     </footer>
+  </div>
+
+  <!-- Game Tutorial & Briefing Modal Overlay -->
+  <div class="tutorial-modal-overlay hidden" id="gameTutorialModal">
+    <div class="tutorial-card">
+      <header class="tutorial-card-header">
+        <span class="tutorial-badge">CONSELHO INTERNACIONAL DE ENERGIA</span>
+        <h2 class="tutorial-title">📜 MANUAL DO LÍDER & REGRAS DO JOGO</h2>
+        <p class="tutorial-subtitle">Leia com atenção as 5 diretrizes da diplomacia energética antes de assumir a bancada de votação.</p>
+      </header>
+
+      <main class="tutorial-body-content">
+        
+        <div class="tutorial-rule-box">
+          <div class="rule-icon">⏳</div>
+          <div class="rule-text-box">
+            <h4 class="rule-heading">1. A CORRIDA DE 50 ANOS (1970 – 2020)</h4>
+            <p class="rule-desc">O jogo possui 50 turnos diretos. A cada turno (1 ano), o holofote de teatro ilumina o líder da rodada para responder a um dilema geopolítico.</p>
+          </div>
+        </div>
+
+        <div class="tutorial-rule-box">
+          <div class="rule-icon">⚡</div>
+          <div class="rule-text-box">
+            <h4 class="rule-heading">2. BALANÇO ENERGÉTICO (GERAÇÃO vs DEMANDA)</h4>
+            <p class="rule-desc">Garanta que sua geração em MW cubra a demanda industrial. Superávit gera bônus fiscal (+$30M); apagões causam retração no PIB e crise social.</p>
+          </div>
+        </div>
+
+        <div class="tutorial-rule-box">
+          <div class="rule-icon">👑</div>
+          <div class="rule-text-box">
+            <h4 class="rule-heading">3. CONFIANÇA DO GOVERNO (AÇÕES & GREVES)</h4>
+            <p class="rule-desc">Aprovação alta (≥ 75%) dá +20% em impostos. Aprovação baixa (&lt; 40%) causa greves que inflam custos em +35%. Se atingir 0%, ocorre Impeachment!</p>
+          </div>
+        </div>
+
+        <div class="tutorial-rule-box">
+          <div class="rule-icon">💰</div>
+          <div class="rule-text-box">
+            <h4 class="rule-heading">4. RESTRIÇÃO ORÇAMENTÁRIA DE CAPITAL</h4>
+            <p class="rule-desc">Cada escolha consome capital. Opções mais caras que o seu orçamento serão bloqueadas. Escolha medidas de arrecadação se necessário.</p>
+          </div>
+        </div>
+
+        <div class="tutorial-rule-box">
+          <div class="rule-icon">🏆</div>
+          <div class="rule-text-box">
+            <h4 class="rule-heading">5. VITÓRIA NO PÓDIO DE 2020</h4>
+            <p class="rule-desc">No ano 2020, o Score de Resiliência (35% PIB + 30% Confiança + 20% Patentes - 15% Emissões) determinará a nação campeã mundial!</p>
+          </div>
+        </div>
+
+      </main>
+
+      <footer class="tutorial-card-footer">
+        <button class="btn-retro-cta primary" id="btnStartGameFromTutorial" onclick="window.confirmTutorialAndStartStage && window.confirmTutorialAndStartStage()">
+          <span class="btn-icon">🏛️</span>
+          <span class="btn-text">ENTENDI! IR PARA O PLENÁRIO DO CONSELHO</span>
+        </button>
+      </footer>
+    </div>
   </div>
 
   <!-- End-of-Game Victory / Defeat Screen Overlay -->
