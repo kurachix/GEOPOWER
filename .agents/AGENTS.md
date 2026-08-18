@@ -10,6 +10,12 @@ Welcome to the **GEOPOWER** repository! This document contains the primary rules
 - **Color Palette & Filters**: Black & White monochrome tone palette with vintage paper noise and film grain canvas overlay filters. High-contrast typography and inked visual elements.
 - **Atmosphere & Narrative**: Historical 1970 context, newsreel headlines, vintage press aesthetic, retro UI components with sound/visual feedback resembling vintage printing presses, gauge meters, and radio broadcasts.
 
+## 💻 Technology Stack & Web Platform
+
+- **Platform**: Web Application (Browser-based).
+- **Frontend Core**: HTML5, Vanilla CSS3 (high-performance custom styling without heavy utility frameworks), and JavaScript (ES6+ modular logic & DOM management).
+- **Libraries & Rendering**: Canvas 2D / WebGL for film grain overlay filters, audio synthesis/howler libraries for retro press/radio sound effects, and UI animation helpers.
+
 ---
 
 ## ⚙️ Core Game Architecture Overview
