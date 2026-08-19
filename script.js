@@ -1363,7 +1363,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const isSurplus = netMW >= 0;
 
     // Update HUD
-    if (hudYearBadge) hudYearBadge.innerHTML = `${currentYear} (TURNO ${currentTurnNumber}/51)`;
+    if (hudYearBadge) hudYearBadge.innerHTML = `${currentYear} (TURNO ${currentTurnNumber}/50)`;
     if (hudPhaseBadge) hudPhaseBadge.innerHTML = `ANO ${currentYear} • DILEMA DE ENERGIA`;
     if (activeLeaderTag) activeLeaderTag.innerHTML = `LÍDER DA RODADA: ${player.nation.flag} ${player.name.toUpperCase()}`;
 
@@ -1451,7 +1451,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const rankingsStr = rankedPlayers.map((rp, idx) => `#${idx + 1} ${rp.flag} ${rp.name}: ${rp.score} pts`).join(' | ');
 
     if (newsTickerText) newsTickerText.innerHTML = `${qData.ticker} &nbsp;&nbsp;•&nbsp;&nbsp; 🏆 <strong>RANKING AO VIVO:</strong> ${rankingsStr}`;
-    if (decisionBadge) decisionBadge.innerHTML = `TURNO ${currentTurnNumber} DE 51 • DILEMA GEOPOLÍTICO (${currentYear})`;
+    if (decisionBadge) decisionBadge.innerHTML = `TURNO ${currentTurnNumber} DE 50 • DILEMA GEOPOLÍTICO (${currentYear})`;
     if (decisionTitle) decisionTitle.innerHTML = qData.title;
     if (decisionDescription) {
       const conceptBadge = qData.concept ? `<div class="physics-geo-concept-pill" style="margin-top: 10px; font-size: 0.76rem; background: #18150d; border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 5px 10px; border-radius: 4px; font-family: var(--font-title); letter-spacing: 1px;">${qData.concept}</div>` : '';
@@ -1497,6 +1497,8 @@ document.addEventListener('DOMContentLoaded', () => {
           }
 
           playClickSound();
+
+          let gameEnded = false;
 
           // Apply Option Effect to active player
           opt.effect(player);
@@ -1568,18 +1570,16 @@ document.addEventListener('DOMContentLoaded', () => {
             // Check for Impeachment State Collapse (Trust = 0%)
             if (p.trust <= 0 && p.type === 'human') {
               triggerImpeachmentDefeat(p);
-              return;
+              gameEnded = true;
             }
           });
 
-          // Advance to next turn if game is still active
-          const endgameScreen = document.getElementById('endgameScreen');
-          if (endgameScreen && !endgameScreen.classList.contains('hidden')) return;
+          if (gameEnded) return;
 
           currentTurnNumber++;
           currentYear++;
 
-          if (currentTurnNumber <= 51) {
+          if (currentTurnNumber <= 50) {
             renderTurnQuestion();
           } else {
             triggerVictoryResolution();
@@ -1591,7 +1591,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (btnConfirmTurnText) {
-      btnConfirmTurnText.innerHTML = currentTurnNumber < 51 ? `AVANÇAR PARA ${currentYear + 1} ⏭` : `FINALIZAR CÚPULA 2020 🏆`;
+      btnConfirmTurnText.innerHTML = currentTurnNumber >= 50 ? `🏆 FINALIZAR CÚPULA 2020` : `AVANÇAR PARA ${currentYear + 1} ⏭`;
     }
   }
 
@@ -1615,103 +1615,256 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Victory Resolution (Turn 50 / Year 2020)
+  // Victory Resolution (Turn 50 / Year 2019)
   function triggerVictoryResolution() {
-    const retroNewspaperModal = document.getElementById('retroNewspaperModal');
-    if (retroNewspaperModal) retroNewspaperModal.classList.add('hidden');
-    const gameTutorialModal = document.getElementById('gameTutorialModal');
-    if (gameTutorialModal) gameTutorialModal.classList.add('hidden');
+    try {
+      // Stop any speech synthesis
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
 
-    const scoredPlayers = activeGamePlayers.map(p => {
-      const score = (0.35 * (p.gdp / 1000)) + (0.30 * (p.trust / 100)) + (0.20 * (p.patents / 10)) - (0.15 * (p.cumulativeEmissions / 100));
-      return { ...p, resilienceScore: (score * 100).toFixed(1) };
-    }).sort((a, b) => parseFloat(b.resilienceScore) - parseFloat(a.resilienceScore));
+      // Score all players
+      const scoredPlayers = (activeGamePlayers || []).map(p => {
+        const gdpVal = p.gdp || 500;
+        const trustVal = p.trust || 50;
+        const patentsVal = p.patents || 0;
+        const emissionsVal = p.cumulativeEmissions || 5;
+        const score = (0.35 * (gdpVal / 1000)) + (0.30 * (trustVal / 100)) + (0.20 * (patentsVal / 10)) - (0.15 * (emissionsVal / 100));
+        return { ...p, resilienceScore: (score * 100).toFixed(1) };
+      }).sort((a, b) => parseFloat(b.resilienceScore) - parseFloat(a.resilienceScore));
 
-    const winner = scoredPlayers[0];
-    const isHumanWinner = winner.type === 'human';
+      const winner = scoredPlayers[0] || { name: 'Líder', type: 'human', trust: 80, gdp: 500, resilienceScore: '85.0', nationId: 'norway', nation: { name: 'Noruega', flag: '🇳🇴', tagline: 'Pioneira Hidrelétrica' } };
 
-    const endgameScreen = document.getElementById('endgameScreen');
-    const endgameCard = document.getElementById('endgameCard');
-    const endgameBadge = document.getElementById('endgameBadge');
-    const endgameIconHero = document.getElementById('endgameIconHero');
-    const endgameTitle = document.getElementById('endgameTitle');
-    const endgameSubtitle = document.getElementById('endgameSubtitle');
+      const avatarMap = { norway: '🧔🏻‍♂️', brazil: '👨🏽‍💼', iceland: '👨🏼‍💼', uk: '🤵🏼‍♂️', usa: '🏛️' };
+      const avatar = avatarMap[winner.nationId] || '👨‍💼';
+      const nationName = winner.nation ? winner.nation.name : 'Nação';
+      const nationFlag = winner.nation ? winner.nation.flag : '🌐';
+      const nationTagline = winner.nation ? winner.nation.tagline : '';
 
-    const championCrownLabel = document.getElementById('championCrownLabel');
-    const championFlag = document.getElementById('championFlag');
-    const championAvatarIcon = document.getElementById('championAvatarIcon');
-    const championName = document.getElementById('championName');
-    const championNationTitle = document.getElementById('championNationTitle');
+      const leaderboardRows = scoredPlayers.map((p, idx) => {
+        const medals = ['🥇', '🥈', '🥉'];
+        const badge = medals[idx] || `${idx + 1}º`;
+        const pFlag = p.nation ? p.nation.flag : '🌐';
+        const pNation = p.nation ? p.nation.name : '';
+        return `<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:${idx===0?'rgba(212,175,55,0.12)':'#111'};border:1px solid ${idx===0?'#d4af37':'#2a2a2a'};border-radius:4px;margin-bottom:6px;">
+          <span style="font-size:1.4rem;min-width:32px;text-align:center;">${badge}</span>
+          <span style="font-size:1.3rem;">${pFlag}</span>
+          <span style="flex:1;font-family:'Special Elite',monospace;color:#f4f0e6;">${p.name} (${pNation})</span>
+          <span style="font-family:'Cinzel',serif;color:#d4af37;font-weight:bold;">${p.resilienceScore} pts</span>
+        </div>`;
+      }).join('');
 
-    const champResilienceVal = document.getElementById('champResilienceVal');
-    const champTrustVal = document.getElementById('champTrustVal');
-    const champGdpVal = document.getElementById('champGdpVal');
+      const confettiHTML = Array.from({length: 30}, (_, i) => {
+        const shapes = ['🎉','✨','⚡','🍃','🌟','💰','🏆','📜'];
+        const shape = shapes[i % shapes.length];
+        const left = Math.random() * 95;
+        const delay = Math.random() * 3;
+        const dur = 3.2 + Math.random() * 2.8;
+        return `<div style="position:absolute;top:-20px;left:${left}%;font-size:1.4rem;animation:confettiFall ${dur}s ${delay}s linear infinite;">${shape}</div>`;
+      }).join('');
 
-    const leaderboardList = document.getElementById('leaderboardList');
+      const victoryHTML = `
+        <div id="victoryScreenFull" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99999;background:rgba(0,0,0,0.96);display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto;font-family:'Special Elite',monospace;color:#f4f0e6;animation:overlayFadeIn 0.5s ease-out;">
+          
+          <!-- Confetti -->
+          <div style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:1;">${confettiHTML}</div>
 
-    if (!endgameScreen || !endgameCard) return;
+          <!-- Main Card -->
+          <div style="position:relative;z-index:10;width:95%;max-width:1050px;background:#0d0d0d;border:3px solid #d4af37;border-radius:8px;box-shadow:0 0 60px rgba(212,175,55,0.4);padding:28px 36px;display:flex;flex-direction:column;gap:20px;animation:cardPopSpin 0.65s cubic-bezier(0.175,0.885,0.32,1.275);">
 
-    // Reset themes
-    endgameCard.className = 'endgame-card';
+            <!-- Header -->
+            <header style="text-align:center;border-bottom:1px dashed #4a453b;padding-bottom:16px;">
+              <span style="font-family:'Cinzel',serif;font-size:0.85rem;letter-spacing:3px;color:#d4af37;text-transform:uppercase;">RESULTADO FINAL • CÚPULA DE GENEBRA (1970 – 2019)</span>
+              <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin:8px 0;">
+                <span style="font-size:3rem;animation:bounceHero 1.5s infinite alternate;">🏆</span>
+                <h1 style="font-family:'Cinzel',serif;font-size:2.2rem;color:#f4f0e6;letter-spacing:3px;">VITÓRIA HISTÓRICA!</h1>
+              </div>
+              <p style="font-size:1rem;color:#a8a298;max-width:750px;margin:0 auto;">Parabéns ${winner.name}! Sua diplomacia liderou a maior transição energética da história — de 1970 a 2019!</p>
+            </header>
 
-    if (isHumanWinner) {
-      // Human Victory Theme
-      if (endgameBadge) endgameBadge.innerHTML = 'RESULTADO FINAL • CÚPULA DE GENEBRA (2020)';
-      if (endgameIconHero) endgameIconHero.innerHTML = '🏆';
-      if (endgameTitle) endgameTitle.innerHTML = 'VITÓRIA HISTÓRICA!';
-      if (endgameSubtitle) endgameSubtitle.innerHTML = `Parabéns ${winner.name}! Sua diplomacia e estratégia lideraram a transição energética mundial com maestria!`;
-      if (championCrownLabel) championCrownLabel.innerHTML = '👑 CAMPEÃO MUNDIAL';
-      spawnConfetti();
-    } else {
-      // AI Winner Theme / Human Runner-Up
-      if (endgameBadge) endgameBadge.innerHTML = 'RESULTADO FINAL • APURAÇÃO DA CÚPULA';
-      if (endgameIconHero) endgameIconHero.innerHTML = '📜';
-      if (endgameTitle) endgameTitle.innerHTML = 'CÚPULA CONCLUÍDA!';
-      if (endgameSubtitle) endgameSubtitle.innerHTML = `A nação ${winner.nation.name} alcançou o maior índice de resiliência energética global ao fim dos 50 anos.`;
-      if (championCrownLabel) championCrownLabel.innerHTML = '🥇 1º LUGAR NA CÚPULA';
-    }
+            <!-- Body grid -->
+            <div style="display:grid;grid-template-columns:1fr 1.25fr;gap:24px;">
 
-    // Populate Champion Card
-    if (championFlag) championFlag.innerHTML = winner.nation.flag;
-    let avatarIcon = '👨‍💼';
-    if (winner.nationId === 'norway') avatarIcon = '🧔🏻‍♂️';
-    if (winner.nationId === 'brazil') avatarIcon = '👨🏽‍💼';
-    if (winner.nationId === 'iceland') avatarIcon = '👨🏼‍💼';
-    if (winner.nationId === 'uk') avatarIcon = '🤵🏼‍♂️';
-    if (winner.nationId === 'usa') avatarIcon = '🇺🇸🏼';
-    if (championAvatarIcon) championAvatarIcon.innerHTML = avatarIcon;
+              <!-- Champion card -->
+              <div style="background:#141414;border:2px solid #d4af37;border-radius:6px;padding:20px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;box-shadow:inset 0 0 20px rgba(212,175,55,0.15);">
+                <div style="background:#d4af37;color:#000;font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:2px;padding:4px 12px;border-radius:2px;">👑 CAMPEÃO MUNDIAL</div>
+                <div style="display:flex;gap:12px;margin:8px 0;">
+                  <span style="font-size:2.8rem;">${nationFlag}</span>
+                  <span style="font-size:2.8rem;">${avatar}</span>
+                </div>
+                <h2 style="font-family:'Cinzel',serif;font-size:1.5rem;letter-spacing:2px;color:#f4f0e6;">${(winner.name || 'LÍDER').toUpperCase()}</h2>
+                <span style="font-size:0.78rem;color:#a8a298;letter-spacing:1px;">${nationName.toUpperCase()} • ${nationTagline}</span>
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px;width:100%;">
+                  <div style="background:#1a1a1a;border:1px solid #2a2a2a;border-radius:4px;padding:8px;text-align:center;">
+                    <div style="font-size:0.65rem;color:#a8a298;letter-spacing:1px;margin-bottom:4px;">RESILIÊNCIA</div>
+                    <div style="font-family:'Cinzel',serif;font-size:1.1rem;color:#d4af37;font-weight:bold;">${winner.resilienceScore} pts</div>
+                  </div>
+                  <div style="background:#1a1a1a;border:1px solid #2a2a2a;border-radius:4px;padding:8px;text-align:center;">
+                    <div style="font-size:0.65rem;color:#a8a298;letter-spacing:1px;margin-bottom:4px;">CONFIANÇA</div>
+                    <div style="font-family:'Cinzel',serif;font-size:1.1rem;color:#d4af37;font-weight:bold;">${Math.round(winner.trust || 0)}%</div>
+                  </div>
+                  <div style="background:#1a1a1a;border:1px solid #2a2a2a;border-radius:4px;padding:8px;text-align:center;">
+                    <div style="font-size:0.65rem;color:#a8a298;letter-spacing:1px;margin-bottom:4px;">PIB</div>
+                    <div style="font-family:'Cinzel',serif;font-size:1.1rem;color:#d4af37;font-weight:bold;">$${((winner.gdp || 500)/1000).toFixed(2)}T</div>
+                  </div>
+                </div>
+              </div>
 
-    if (championName) championName.innerHTML = winner.name.toUpperCase();
-    if (championNationTitle) championNationTitle.innerHTML = `${winner.nation.name.toUpperCase()} • ${winner.nation.tagline}`;
-    if (champResilienceVal) champResilienceVal.innerHTML = `${winner.resilienceScore} PTS`;
-    if (champTrustVal) champTrustVal.innerHTML = `${Math.round(winner.trust)}%`;
-    if (champGdpVal) champGdpVal.innerHTML = `$${(winner.gdp / 1000).toFixed(2)}T`;
+              <!-- Leaderboard -->
+              <div style="background:#0d0d0d;border:1px solid #2a2a2a;border-radius:6px;padding:20px;">
+                <h3 style="font-family:'Cinzel',serif;font-size:0.85rem;letter-spacing:3px;color:#d4af37;text-transform:uppercase;margin-bottom:14px;text-align:center;border-bottom:1px solid #2a2a2a;padding-bottom:10px;">CLASSIFICAÇÃO GERAL DE RESILIÊNCIA</h3>
+                ${leaderboardRows}
+              </div>
 
-    // Populate Full Leaderboard List
-    if (leaderboardList) {
-      leaderboardList.innerHTML = '';
-      scoredPlayers.forEach((p, idx) => {
-        const item = document.createElement('div');
-        item.className = `leader-rank-item ${idx === 0 ? 'is-winner' : ''}`;
-        
-        let posBadge = `${idx + 1}º`;
-        if (idx === 0) posBadge = '🥇';
-        if (idx === 1) posBadge = '🥈';
-        if (idx === 2) posBadge = '🥉';
+            </div>
 
-        item.innerHTML = `
-          <span class="rank-position-badge">${posBadge}</span>
-          <div class="rank-player-info">
-            <span class="rank-player-flag">${p.nation.flag}</span>
-            <span class="rank-player-name">${p.name} (${p.nation.name})</span>
+            <!-- Footer buttons -->
+            <footer style="display:flex;justify-content:center;gap:16px;margin-top:8px;">
+              <button id="victoryBtnCredits" style="display:inline-flex;align-items:center;gap:10px;padding:14px 28px;font-family:'Cinzel',serif;font-size:0.95rem;font-weight:700;letter-spacing:2px;cursor:pointer;border-radius:2px;background:#d4af37;color:#000;border:2px solid #d4af37;box-shadow:4px 4px 0 #000;transition:all 0.2s ease;">
+                <span>🎬</span><span>CRÉDITOS DE DESENVOLVIMENTO</span>
+              </button>
+              <button id="victoryBtnRestart" style="display:inline-flex;align-items:center;gap:10px;padding:14px 28px;font-family:'Cinzel',serif;font-size:0.95rem;font-weight:700;letter-spacing:2px;cursor:pointer;border-radius:2px;background:#1a1a1a;color:#f4f0e6;border:1px solid #4a453b;transition:all 0.2s ease;">
+                <span>🔄</span><span>REINICIAR CÚPULA ENERGÉTICA</span>
+              </button>
+            </footer>
+
           </div>
-          <span class="rank-score-badge">${p.resilienceScore} pts</span>
-        `;
-        leaderboardList.appendChild(item);
-      });
-    }
+        </div>`;
 
-    endgameScreen.classList.remove('hidden');
+      // Inject directly into body — bypasses all z-index/display conflicts
+      const container = document.createElement('div');
+      container.id = 'victoryInjected';
+      container.innerHTML = victoryHTML;
+      document.body.appendChild(container);
+
+      // Wire up buttons AFTER injection (avoids inline onclick issues)
+      const btnCredits = document.getElementById('victoryBtnCredits');
+      if (btnCredits) {
+        btnCredits.addEventListener('click', () => {
+          // Remove previous credits screen if any
+          const prev = document.getElementById('inlineCreditsScreen');
+          if (prev) prev.remove();
+
+          // Build a fully self-contained credits screen with its own keyframes
+          const creditsEl = document.createElement('div');
+          creditsEl.id = 'inlineCreditsScreen';
+          creditsEl.innerHTML = `
+            <style>
+              @keyframes inlineRollUp {
+                0%   { transform: translateY(100vh); }
+                100% { transform: translateY(-160%); }
+              }
+            </style>
+            <div style="
+              position: fixed; top: 0; left: 0;
+              width: 100vw; height: 100vh;
+              background: #000;
+              z-index: 999999;
+              overflow: hidden;
+            ">
+              <!-- toolbar -->
+              <div style="position:absolute;top:20px;right:28px;z-index:10;display:flex;gap:12px;">
+                <button id="inlineCreditsClose" style="padding:10px 20px;font-family:'Cinzel',serif;font-size:0.85rem;letter-spacing:2px;background:#f4f0e6;color:#000;border:none;cursor:pointer;border-radius:4px;">✖ FECHAR CRÉDITOS</button>
+              </div>
+
+              <!-- scrolling content: NO translateX, full width, text-align center -->
+              <div style="
+                position: absolute;
+                left: 0; width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 32px;
+                padding: 60px 20px 140px;
+                text-align: center;
+                font-family: 'Special Elite', monospace;
+                color: #f4f0e6;
+                animation: inlineRollUp 28s linear forwards;
+              ">
+                <div style="font-family:'Cinzel',serif;font-size:3.5rem;font-weight:900;letter-spacing:8px;color:#f4f0e6;text-shadow:0 0 20px rgba(255,255,255,0.4);">GEOPOWER</div>
+                <div style="font-family:'Cinzel',serif;font-size:1rem;letter-spacing:4px;color:#d4af37;">CÚPULA INTERNACIONAL DE ENERGIA (1970 – 2019)</div>
+                <div style="color:#d4af37;font-size:1.2rem;letter-spacing:8px;">✦ ✦ ✦</div>
+
+                <div style="width:100%;max-width:640px;">
+                  <h2 style="font-family:'Cinzel',serif;font-size:0.9rem;letter-spacing:3px;color:#d4af37;text-transform:uppercase;border-bottom:1px dashed #4a453b;padding-bottom:8px;margin-bottom:20px;">EQUIPE DE DESENVOLVIMENTO</h2>
+                  <div style="display:flex;flex-direction:column;gap:14px;">
+                    <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px dotted #333;padding-bottom:8px;"><span style="font-size:1.1rem;">Ana Clara Pantaleao Tirola</span><span style="font-family:'Cinzel',serif;color:#d4af37;font-size:0.8rem;">Nº 02</span></div>
+                    <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px dotted #333;padding-bottom:8px;"><span style="font-size:1.1rem;">Ana Laura Pessotto Camargo</span><span style="font-family:'Cinzel',serif;color:#d4af37;font-size:0.8rem;">Nº 03</span></div>
+                    <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px dotted #333;padding-bottom:8px;"><span style="font-size:1.1rem;">Lorena Santos Leme</span><span style="font-family:'Cinzel',serif;color:#d4af37;font-size:0.8rem;">Nº 23</span></div>
+                    <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px dotted #333;padding-bottom:8px;"><span style="font-size:1.1rem;">Maria Clara De Núncio Oliveira</span><span style="font-family:'Cinzel',serif;color:#d4af37;font-size:0.8rem;">Nº 25</span></div>
+                  </div>
+                </div>
+
+                <div style="color:#d4af37;font-size:1.2rem;letter-spacing:8px;">✦ ✦ ✦</div>
+
+                <div style="width:100%;max-width:640px;">
+                  <h2 style="font-family:'Cinzel',serif;font-size:0.9rem;letter-spacing:3px;color:#d4af37;text-transform:uppercase;border-bottom:1px dashed #4a453b;padding-bottom:8px;margin-bottom:14px;">DISCIPLINA & PROJETO</h2>
+                  <p style="color:#a8a298;line-height:1.9;">Projeto de Física Aplicada & Geopolítica Energética</p>
+                  <p style="color:#a8a298;line-height:1.9;">Matriz Elétrica, Estabilidade Social e Desenvolvimento Sustentável</p>
+                </div>
+
+                <div style="color:#d4af37;font-size:1.2rem;letter-spacing:8px;">✦ ✦ ✦</div>
+
+                <div style="width:100%;max-width:640px;">
+                  <h2 style="font-family:'Cinzel',serif;font-size:0.9rem;letter-spacing:3px;color:#d4af37;text-transform:uppercase;border-bottom:1px dashed #4a453b;padding-bottom:8px;margin-bottom:14px;">TECNOLOGIAS & ESTÉTICA</h2>
+                  <p style="color:#a8a298;line-height:1.9;">HTML5 • CSS3 • JavaScript Vanilla</p>
+                  <p style="color:#a8a298;line-height:1.9;">1970s Rubber Hose Cartoon Aesthetic</p>
+                  <p style="color:#a8a298;line-height:1.9;">Cinejornal Vintage & Síntese de Áudio Analógico</p>
+                  <p style="color:#a8a298;line-height:1.9;">Web Speech API • Canvas Confetti</p>
+                </div>
+
+                <div style="color:#d4af37;font-size:1.2rem;letter-spacing:8px;">✦ ✦ ✦</div>
+
+                <div style="margin-top:30px;">
+                  <div style="font-family:'Cinzel',serif;font-size:2.5rem;font-weight:900;letter-spacing:6px;color:#f4f0e6;">FIM DA CÚPULA</div>
+                  <div style="font-size:0.8rem;color:#555;letter-spacing:2px;margin-top:12px;">© 2026 GEOPOWER • TODOS OS DIREITOS RESERVADOS</div>
+                </div>
+              </div>
+            </div>
+          `;
+
+          document.body.appendChild(creditsEl);
+
+          // Wire close button
+          const closeBtn = document.getElementById('inlineCreditsClose');
+          if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+              creditsEl.remove();
+            });
+          }
+        });
+      }
+
+      const btnRestart = document.getElementById('victoryBtnRestart');
+      if (btnRestart) {
+        btnRestart.addEventListener('click', () => {
+          // Remove injected screens
+          ['victoryInjected', 'inlineCreditsScreen'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.remove();
+          });
+
+          // Hide everything else and show setup screen
+          ['retroNewspaperModal', 'gameTutorialModal', 'movieCreditsOverlay',
+           'gameStageScreen', 'retroIntroScreen', 'endgameScreen'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.classList.add('hidden');
+          });
+
+          const playerSetupScreen = document.getElementById('playerSetupScreen');
+          if (playerSetupScreen) playerSetupScreen.classList.remove('hidden');
+
+          try { renderPlayerSlots(); } catch (e) {}
+        });
+      }
+
+    } catch (err) {
+      console.error('Erro na vitória:', err);
+      // Absolute last resort fallback
+      document.body.innerHTML = `<div style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:#000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;font-family:monospace;color:#d4af37;font-size:2rem;z-index:99999;">
+        <div>🏆 CÚPULA CONCLUÍDA!</div>
+        <div style="font-size:1rem;color:#aaa;">Parabéns pela partida de 50 anos!</div>
+        <button onclick="location.reload()" style="padding:12px 24px;background:#d4af37;color:#000;border:none;cursor:pointer;font-size:1rem;font-family:'Cinzel',serif;">REINICIAR JOGO</button>
+      </div>`;
+    }
   }
 
   // State Collapse / Impeachment Defeat Screen (Trust = 0%)
@@ -1720,7 +1873,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (retroNewspaperModal) retroNewspaperModal.classList.add('hidden');
     const gameTutorialModal = document.getElementById('gameTutorialModal');
     if (gameTutorialModal) gameTutorialModal.classList.add('hidden');
+    const gameStageScreen = document.getElementById('gameStageScreen');
+    if (gameStageScreen) gameStageScreen.classList.add('hidden');
     const endgameScreen = document.getElementById('endgameScreen');
+    if (endgameScreen) endgameScreen.classList.remove('hidden');
     const endgameCard = document.getElementById('endgameCard');
     const endgameBadge = document.getElementById('endgameBadge');
     const endgameIconHero = document.getElementById('endgameIconHero');
@@ -1958,13 +2114,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Restart Handlers for Victory/Defeat Screen & Credits
   window.restartGameSetup = function() {
+    // Remove injected victory screen if present
+    const victoryInjected = document.getElementById('victoryInjected');
+    if (victoryInjected) victoryInjected.remove();
+
     const endgameScreen = document.getElementById('endgameScreen');
     const gameStageScreen = document.getElementById('gameStageScreen');
     const playerSetupScreen = document.getElementById('playerSetupScreen');
+    const retroIntroScreen = document.getElementById('retroIntroScreen');
 
     if (movieCreditsOverlay) movieCreditsOverlay.classList.add('hidden');
     if (endgameScreen) endgameScreen.classList.add('hidden');
     if (gameStageScreen) gameStageScreen.classList.add('hidden');
+    if (retroIntroScreen) retroIntroScreen.classList.add('hidden');
     if (playerSetupScreen) playerSetupScreen.classList.remove('hidden');
 
     try { renderPlayerSlots(); } catch (e) {}
@@ -1973,18 +2135,20 @@ document.addEventListener('DOMContentLoaded', () => {
   // Movie Credits Handlers (Estilo Rolagem de Cinema)
   window.showMovieCredits = function() {
     try { playClickSound(); } catch (e) {}
-    const movieCreditsOverlay = document.getElementById('movieCreditsOverlay');
-    const movieCreditsRoll = document.getElementById('movieCreditsRoll');
+    const overlay = document.getElementById('movieCreditsOverlay');
+    const roll = document.getElementById('movieCreditsRoll');
 
-    if (movieCreditsOverlay) {
-      movieCreditsOverlay.classList.remove('hidden');
+    if (overlay) {
+      overlay.classList.remove('hidden');
     }
 
-    if (movieCreditsRoll) {
-      // Reset animation to trigger seamless roll down/up from beginning with ZERO delay
-      movieCreditsRoll.style.animation = 'none';
-      void movieCreditsRoll.offsetHeight; // trigger reflow
-      movieCreditsRoll.style.animation = 'rollUpMovieCredits 22s linear forwards';
+    if (roll) {
+      // Reset to start position, then force reflow, then apply animation fresh
+      roll.style.animation = 'none';
+      roll.style.transform = 'translateY(75vh)';
+      void roll.offsetHeight; // force reflow
+      roll.style.transform = '';
+      roll.style.animation = 'rollUpMovieCredits 22s linear forwards';
     }
   };
 

@@ -2165,7 +2165,7 @@ html, body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 200;
+  z-index: 500000;
   background: #000000;
   overflow: hidden;
   display: flex;
@@ -2177,7 +2177,7 @@ html, body {
   position: absolute;
   top: 24px;
   right: 32px;
-  z-index: 210;
+  z-index: 500010;
   display: flex;
   gap: 12px;
 }
@@ -2236,7 +2236,8 @@ html, body {
   align-items: center;
   gap: 32px;
   padding: 40px 20px;
-  animation: rollUpMovieCredits 22s linear forwards;
+  /* animation controlled via JS to ensure fresh start every time */
+  transform: translateY(75vh);
 }
 
 @keyframes rollUpMovieCredits {
