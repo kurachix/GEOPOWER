@@ -680,150 +680,150 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. DÉCADA DE 1970 (1970 – 1979)
     if (year === 1970) {
       return {
-        title: "1970: A EXPLOSÃO DO CONSUMO INDUSTRIAL",
-        desc: `As indústrias operam em capacidade máxima na abertura da Cúpula de Genebra. Defina a prioridade de arranque da matriz de ${nationName}.`,
-        ticker: "1970 • Abertura da Cúpula de Genebra. Países aceleram investimentos em matrizes industriais de base.",
-        concept: "🔬 FÍSICA: Termodinâmica de Matrizes (Ciclos Térmicos Rankine) | 🌍 GEOGRAFIA: Industrialização de Base & Demografia",
+        title: "1970: CONSERVAÇÃO DA ENERGIA MECÂNICA & TRABALHO INDUSTRIAL",
+        desc: `As indústrias operam em capacidade máxima na abertura da Cúpula de Genebra. Pelo princípio de conservação, a energia mecânica total em sistemas conservativos é a soma da energia cinética com a potencial (Em = Ec + Ep). Defina a prioridade de arranque da matriz de ${nationName}.`,
+        ticker: "1970 • Abertura da Cúpula de Genebra: Países debatem a conversão de energia potencial e cinética para geração de trabalho útil.",
+        concept: "🔬 FÍSICA: Energia Mecânica (Em = Ec + Ep), Cinética (Ec = m·v²/2) e Gravitacional (Epg = m·g·h) | 🌍 GEOGRAFIA: Industrialização de Base & Demografia",
         options: [
-          { text: "💧 Hidrelétricas de Alta Queda (Bernoulli: P = η·ρ·g·Q·H | +40 MW | Custo: $35M)", cost: 35, effect: p => { p.capacity.hydro += 40; p.capital -= 35; } },
-          { text: "⛏️ Térmicas a Carvão (Rendimento Térmico η = W/Q_in | +50 MW | Custo: $25M)", cost: 25, effect: p => { p.capacity.thermal += 50; p.capital -= 25; globalFootprint += 18; } },
-          { text: "🔬 Subsidiar P&D de Eficiência Energética (+2 Patentes | Custo: $20M)", cost: 20, effect: p => { p.patents += 2; p.capital -= 20; } },
-          { text: "💰 Emissão de Títulos de Reserva Estatal (Receita: +$35M Capital)", cost: 0, effect: p => { p.capital += 35; } }
+          { text: "💧 Hidrelétricas de Alta Queda (Conversão de Epg = m·g·h em Ec nas turbinas | +40 MW | Custo: $35M)", cost: 35, effect: p => { p.capacity.hydro += 40; p.capital -= 35; } },
+          { text: "⛏️ Termelétricas a Carvão Mineral (Ciclos a vapor com queima fóssil | +50 MW | Custo: $25M)", cost: 25, effect: p => { p.capacity.thermal += 50; p.capital -= 25; globalFootprint += 18; } },
+          { text: "🔬 Pesquisa em Turbinas Hidráulicas e Geradores (+2 Patentes | Custo: $20M)", cost: 20, effect: p => { p.patents += 2; p.capital -= 20; } },
+          { text: "💰 Emissão de Títulos Públicos de Infraestrutura (Receita: +$35M Capital)", cost: 0, effect: p => { p.capital += 35; } }
         ]
       };
     }
 
     if (year === 1971) {
       return {
-        title: "1971: O ACORDO DE TEERÃ & COTAÇÃO FÓSSIL",
-        desc: `Países exportadores renegociam preços do barril de petróleo. Como ${nationName} protegerá sua matriz de combustíveis?`,
-        ticker: "1971 • Reunião em Teerã eleva preços globais dos combustíveis fósseis.",
-        concept: "🔬 FÍSICA: Densidade de Energia Específica (MJ/kg) | 🌍 GEOGRAFIA: Cartelização da OPEP e Geopolítica dos Estreitos",
+        title: "1971: CALOR, TEMPERATURA & CAPACIDADE TÉRMICA",
+        desc: `A termodinâmica industrial define que o calor é energia térmica em trânsito devido à diferença de temperatura. Para aquecer as caldeiras de ${nationName}, é consumida grande quantidade de calor sensível (Q = m·c·ΔT). Como sua nação otimizará seus ciclos térmicos?`,
+        ticker: "1971 • Termodinâmica Industrial: Debates em Genebra sobre calor sensível, calor específico e capacidade térmica na geração de vapor.",
+        concept: "🔬 FÍSICA: Energia Térmica, Calor Específico (Q = m·c·ΔT) e Capacidade Térmica (C = Q/ΔT) | 🌍 GEOGRAFIA: Disponibilidade de Recursos Térmicos e Combustíveis",
         options: [
-          { text: "🛢️ Contrato Fóssil de Longo Prazo (+35 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.thermal += 35; p.capital -= 30; globalFootprint += 12; } },
-          { text: "🌿 Biocombustíveis & Fotossíntese Sintética (+30 MW | Custo: $25M)", cost: 25, effect: p => { p.capacity.biofuels += 30; p.capital -= 25; } },
-          { text: "⚡ Reduzir Perda por Aquecimento em Subestações (+20 MW | Custo: $18M)", cost: 18, effect: p => { p.capacity.hydro += 20; p.capital -= 18; } },
-          { text: "🛡️ Fundo Nacional de Contingência (Gratuito | +6% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 6); } }
+          { text: "🛢️ Caldeiras a Petróleo com Trocadores de Calor de Alta Eficiência (+35 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.thermal += 35; p.capital -= 30; globalFootprint += 12; } },
+          { text: "🌿 Biomassa Florestal para Co-geração de Vapor e Eletricidade (+30 MW | Custo: $25M)", cost: 25, effect: p => { p.capacity.biofuels += 30; p.capital -= 25; } },
+          { text: "⚡ Otimização do Isolamento Térmico de Condutos e Turbinas (+25 MW | Custo: $20M)", cost: 20, effect: p => { p.capacity.hydro += 25; p.capital -= 20; } },
+          { text: "🛡️ Fundo Nacional de Eficiência e Contingência Térmica (Gratuito | +6% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 6); } }
         ]
       };
     }
 
     if (year === 1972) {
       return {
-        title: "1972: CONFERÊNCIA DE ESTOCOLMO (PRIMEIRO ALERTA AMBIENTAL)",
-        desc: `A ONU realiza a primeira conferência sobre o Meio Ambiente Humano. Pressão internacional surge contra a poluição descontrolada.`,
-        ticker: "1972 • Conferência de Estocolmo! Surgem os primeiros tratados de controle de emissões.",
-        concept: "🔬 FÍSICA: Física de Aerossóis & Efeito Albedo | 🌍 GEOGRAFIA: Biogeografia & Impactos Transfronteiriços",
+        title: "1972: CONFERÊNCIA DE ESTOCOLMO & MODOS DE PROPAGAÇÃO DO CALOR",
+        desc: `A ONU realiza a histórica Conferência de Estocolmo sobre o Meio Ambiente. A propagação do calor ocorre por Condução (agitação molecular), Convecção (movimento de fluidos aquecidos) e Radiação (ondas eletromagnéticas). Como ${nationName} agirá contra a poluição?`,
+        ticker: "1972 • Conferência de Estocolmo: Primeiro alerta ecológico global sobre emissões de usinas e dispersão térmica.",
+        concept: "🔬 FÍSICA: Propagação Térmica (Condução, Convecção e Radiação) | 🌍 GEOGRAFIA: Conferência de Estocolmo & Impactos Ambientais Globais",
         options: [
-          { text: "🌱 Subsidiar Fontes Geotérmicas/Eólicas (+30 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.wind += 30; p.capital -= 30; globalFootprint = Math.max(0, globalFootprint - 10); } },
-          { text: "⛏️ Manter Foco na Industrialização Fóssil (+45 MW | Custo: $20M)", cost: 20, effect: p => { p.capacity.thermal += 45; p.capital -= 20; globalFootprint += 22; } },
-          { text: "📜 Adquirir Patentes de Filtragem Industrial (+2 Patentes | Custo: $22M)", cost: 22, effect: p => { p.patents += 2; p.capital -= 22; } },
-          { text: "🏛️ Programa de Redução de Gastos Públicos (Receita: +$30M | -3% PIB)", cost: 0, effect: p => { p.capital += 30; p.gdp *= 0.97; } }
+          { text: "🌱 Fontes Renováveis Iniciais (Eólica e Geotermia Convectiva) (+30 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.wind += 30; p.capital -= 30; globalFootprint = Math.max(0, globalFootprint - 10); } },
+          { text: "⛏️ Manter Foco em Centrais Térmicas a Carvão de Baixo Custo (+45 MW | Custo: $20M)", cost: 20, effect: p => { p.capacity.thermal += 45; p.capital -= 20; globalFootprint += 22; } },
+          { text: "📜 Registrar Patentes de Isolamento Convectivo e Filtragem (+2 Patentes | Custo: $22M)", cost: 22, effect: p => { p.patents += 2; p.capital -= 22; } },
+          { text: "🏛️ Programa de Redução de Gastos e Austeridade Pública (Receita: +$30M | -3% PIB)", cost: 0, effect: p => { p.capital += 30; p.gdp *= 0.97; } }
         ]
       };
     }
 
     if (year === 1973) {
       return {
-        title: "1973: PRIMEIRO CHOQUE GLOBAL DO PETRÓLEO",
-        desc: `Embargos da OPEP disparam o preço do barril em 300%. Postos de combustíveis e termelétricas enfrentam desabastecimento agudo.`,
-        ticker: "1973 • CHOQUE DO PETRÓLEO! Embargo internacional gera racionamento nos transportes e térmicas.",
-        concept: "🔬 FÍSICA: Conservação de Energia & Balanço Térmico | 🌍 GEOGRAFIA: Geopolítica de Recursos & Estreito de Ormuz",
+        title: "1973: PRIMEIRO CHOQUE DO PETRÓLEO & ENERGIA QUÍMICA",
+        desc: `A OPEP decreta embargo e o preço do barril de petróleo dispara 300%. A energia química reside nas ligações covalentes dos hidrocarbonetos, liberada por combustão exotérmica (ΔH < 0). Como ${nationName} protegerá sua matriz?`,
+        ticker: "1973 • CHOQUE DO PETRÓLEO: Embargo da OPEP paralisa transportes e força a busca por fontes alternativas.",
+        concept: "🔬 FÍSICA/QUÍMICA: Energia Química em Ligações Covalentes, Reações Exotérmicas e Combustão | 🌍 GEOGRAFIA: Geopolítica do Petróleo & Cartel da OPEP",
         options: [
-          { text: "🌿 Programa de Biocombustíveis C4 (Cana/Milho) (+35 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.biofuels += 35; p.capital -= 28; } },
-          { text: "⛏️ Reativação Emergencial de Minas de Carvão (+45 MW | Custo: $22M)", cost: 22, effect: p => { p.capacity.thermal += 45; p.capital -= 22; globalFootprint += 25; } },
-          { text: "⚛️ Iniciar Reator Nuclear de Fissão U-235 (+30 MW | Custo: $40M)", cost: 40, effect: p => { p.capacity.nuclear += 30; p.capital -= 40; } },
-          { text: "🛡️ Racionamento Noturno de iluminação Publica (Gratuito | +8% Estabilidade)", cost: 0, effect: p => { p.stability = Math.min(100, p.stability + 8); } }
+          { text: "🌿 Programa de Biocombustíveis a partir da Fotossíntese da Cana e Milho (+35 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.biofuels += 35; p.capital -= 28; } },
+          { text: "⛏️ Reativação Emergencial de Minas de Carvão Mineral (+45 MW | Custo: $22M)", cost: 22, effect: p => { p.capacity.thermal += 45; p.capital -= 22; globalFootprint += 25; } },
+          { text: "⚛️ Iniciar Projeto de Usina Nuclear de Fissão U-235 (+30 MW | Custo: $40M)", cost: 40, effect: p => { p.capacity.nuclear += 30; p.capital -= 40; } },
+          { text: "🛡️ Racionamento Estratégico de Combustíveis nos Transportes (Gratuito | +8% Estabilidade)", cost: 0, effect: p => { p.stability = Math.min(100, p.stability + 8); } }
         ]
       };
     }
 
     if (year === 1974) {
       return {
-        title: "1974: A CORRIDA NUCLEAR COMERCIAL",
-        desc: `Com a alta do petróleo, a tecnologia nuclear surge como a grande promessa de independência energética massiva.`,
-        ticker: "1974 • Potências investem pesadamente em reatores nucleares comerciais de alta capacidade.",
-        concept: "🔬 FÍSICA: Fissão Nuclear & Equação de Einstein (E = Δm·c²) | 🌍 GEOGRAFIA: Geologia do Urânio & Soberania",
+        title: "1974: A FISSÃO NUCLEAR DO URÂNIO-235 (E = Δm·c²)",
+        desc: `A fissão do núcleo de Urânio-235 libera calor abundante pela equivalência massa-energia de Einstein (E = Δm·c²). O calor aquece o circuito primário de água a 320°C sob 157 atm para mover turbinas a vapor. Qual será o investimento de ${nationName}?`,
+        ticker: "1974 • Corrida Nuclear: Nações investem em centrais termonucleares com reatores de água pressurizada.",
+        concept: "🔬 FÍSICA: Fissão Nuclear do Urânio-235, E = Δm·c² e Circuitos Térmicos Pressurizados (157 atm) | 🌍 GEOGRAFIA: Geologia do Urânio & Soberania Energética",
         options: [
-          { text: "⚛️ Usina Nuclear de Fissão PWR (+50 MW | Custo: $45M)", cost: 45, effect: p => { p.capacity.nuclear += 50; p.capital -= 45; } },
-          { text: "💧 Barragens de Reservatório Pluviométrico (+35 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.hydro += 35; p.capital -= 30; } },
-          { text: "📜 Licenciamento Internacional de Reatores (+3 Patentes | Custo: $32M)", cost: 32, effect: p => { p.patents += 3; p.capital -= 32; } },
-          { text: "💰 Taxa Emergencial sobre Importações Fósseis (Receita: +$30M | -5% Confiança)", cost: 0, effect: p => { p.capital += 30; p.trust = Math.max(0, p.trust - 5); } }
+          { text: "⚛️ Usina Nuclear PWR com 3 Circuitos Independentes (+50 MW | Custo: $45M)", cost: 45, effect: p => { p.capacity.nuclear += 50; p.capital -= 45; } },
+          { text: "💧 Usinas Hidrelétricas em Rios Planálticos Caudalosos (+35 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.hydro += 35; p.capital -= 30; } },
+          { text: "📜 Licenciamento Internacional de Reatores e Combustível (+3 Patentes | Custo: $32M)", cost: 32, effect: p => { p.patents += 3; p.capital -= 32; } },
+          { text: "💰 Taxa Emergencial sobre Combustíveis Fósseis Importados (Receita: +$30M | -5% Confiança)", cost: 0, effect: p => { p.capital += 30; p.trust = Math.max(0, p.trust - 5); } }
         ]
       };
     }
 
     if (year === 1975) {
       return {
-        title: "1975: EXPANSÃO DE MALHAS DE TRANSMISSÃO (HVDC)",
-        desc: `Perdas por Efeito Joule na transmissão de eletricidade afetam as indústrias de ${nationName}. É preciso elevar a tensão para reduzir a corrente elétrica.`,
-        ticker: "1975 • Avanços em transmissão HVDC reduzem perdas por aquecimento Joule (P = R·I²).",
-        concept: "🔬 FÍSICA: Efeito Joule (P_perda = R·I²) & Transmissão HVDC | 🌍 GEOGRAFIA: Integração Regional de Redes",
+        title: "1975: O PROGRAMA PROÁLCOOL & ENERGIA DA BIOMASSA",
+        desc: `O Brasil cria o Proálcool em 1975 para mitigar a crise fóssil. A biomassa vegetal converte energia solar em energia química por fotossíntese (glicose), sendo fermentada por microrganismos em etanol combustível. Como ${nationName} aplicará a biomassa?`,
+        ticker: "1975 • Criação do Proálcool: Brasil lidera a produção de bioetanol a partir do bagaço e caldo da cana-de-açúcar.",
+        concept: "🔬 FÍSICA/QUÍMICA: Fotossíntese, Conversão Bioquímica (Fermentação) & Ciclo Neutro de Carbono | 🌍 GEOGRAFIA: Programa Proálcool no Brasil & Agroenergia",
         options: [
-          { text: "⚡ Linhas HVDC de Ultra-Alta Tensão (+30 MW | Custo: $25M)", cost: 25, effect: p => { p.capacity.hydro += 30; p.capital -= 25; } },
-          { text: "🌋 Geotermia Crustal em Rocha Vulcânica (+30 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.geothermal += 30; p.capital -= 28; } },
-          { text: "🛢️ Queimar Reservas Estratégicas de Óleo (+35 MW | Custo: $20M)", cost: 20, effect: p => { p.capacity.thermal += 35; p.capital -= 20; globalFootprint += 15; } },
-          { text: "🛡️ Otimização de Demanda Industrial (Gratuito | +5% Estabilidade)", cost: 0, effect: p => { p.stability = Math.min(100, p.stability + 5); } }
+          { text: "🌿 Destilarias de Etanol e Usinas Termelétricas a Bagaço (+35 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.biofuels += 35; p.capital -= 28; } },
+          { text: "⚡ Ampliação de Linhas de Alta Tensão Inter-regionais (+30 MW | Custo: $25M)", cost: 25, effect: p => { p.capacity.hydro += 30; p.capital -= 25; } },
+          { text: "🛢️ Refino de Petróleo para Gasolina e Óleo Diesel (+35 MW | Custo: $22M)", cost: 22, effect: p => { p.capacity.thermal += 35; p.capital -= 22; globalFootprint += 15; } },
+          { text: "🛡️ Incentivo Fiscal para Mistura Obrigatória de Biocombustíveis (Gratuito | +6% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 6); } }
         ]
       };
     }
 
     if (year === 1976) {
       return {
-        title: "1976: SURTO INFLACIONÁRIO DE INSUMOS",
-        desc: `Custo de turbinas, cobre e aço dispara no mercado mundial. Obras de infraestrutura de ${nationName} exigem mais caixa.`,
-        ticker: "1976 • Inflação industrial eleva custos de usinas geradoras em todo o mundo.",
-        concept: "🔬 FÍSICA: Resistividade de Condutores | 🌍 GEOGRAFIA: Cadeias Globais de Valor e Mineração",
+        title: "1976: TRANSMISSÃO EM ALTA TENSÃO & EFEITO JOULE",
+        desc: `O transporte de eletricidade por longas distâncias sofre perda de calor por Efeito Joule (P_perda = R·I²). Para minimizar a corrente (I), subestações elevatórias aumentam a tensão (V) nos cabos condutores. Como ${nationName} modernizará sua rede?`,
+        ticker: "1976 • Engenharia Elétrica: Transformadores elevadores de alta tensão minimizam perdas térmicas por efeito Joule.",
+        concept: "🔬 FÍSICA: Efeito Joule (P_perda = R·I²), Potência Elétrica (P = V·I) e Transformadores | 🌍 GEOGRAFIA: Redes Nacionais de Transmissão e Centros Consumidores",
         options: [
-          { text: "⚡ Obra Hidrelétrica Padronizada (+30 MW | Custo: $32M)", cost: 32, effect: p => { p.capacity.hydro += 30; p.capital -= 32; } },
-          { text: "⛏️ Geradores a Carvão de Baixo Custo (+35 MW | Custo: $20M)", cost: 20, effect: p => { p.capacity.thermal += 35; p.capital -= 20; globalFootprint += 18; } },
-          { text: "📜 Consórcio de Pesquisa de Materiais (+2 Patentes | Custo: $25M)", cost: 25, effect: p => { p.patents += 2; p.capital -= 25; } },
-          { text: "💰 Venda de Ativos Estatais Não-Estratégicos (Receita: +$40M | -4% PIB)", cost: 0, effect: p => { p.capital += 40; p.gdp *= 0.96; } }
+          { text: "⚡ Linhas de Transmissão de Alta Tensão e Subestações Elevatórias (+30 MW | Custo: $25M)", cost: 25, effect: p => { p.capacity.hydro += 30; p.capital -= 25; } },
+          { text: "⛏️ Termelétricas a Carvão Locais Próximas às Cidades (+35 MW | Custo: $20M)", cost: 20, effect: p => { p.capacity.thermal += 35; p.capital -= 20; globalFootprint += 18; } },
+          { text: "📜 Registro de Patentes de Condutores de Cobre de Baixa Resistividade (+2 Patentes | Custo: $22M)", cost: 22, effect: p => { p.patents += 2; p.capital -= 22; } },
+          { text: "💰 Venda de Ativos de Redes Secundárias (Receita: +$35M Capital)", cost: 0, effect: p => { p.capital += 35; } }
         ]
       };
     }
 
     if (year === 1977) {
       return {
-        title: "1977: O FENÔMENO DA CHUVA ÁCIDA CONTINENTAL",
-        desc: "Emissões térmicas geram chuvas ácidas que danificam lavouras e florestas. A opinião pública exige medidas sanitárias.",
-        ticker: "1977 • Alerta ecológico! Chuvas ácidas causam prejuízos à agricultura europeia e americana.",
-        concept: "🔬 FÍSICA: Química Atmosférica de Óxidos de Enxofre | 🌍 GEOGRAFIA: Precipitação Ácida Transfronteiriça",
+        title: "1977: CHUVA ÁCIDA & O ENXOFRE NO CARVÃO MINERAL",
+        desc: `A queima de carvão mineral rico em impurezas de enxofre libera dióxido de enxofre (SO2) e óxidos de nitrogênio (NOx), gerando chuvas ácidas que degradam solos e florestas. A opinião pública de ${nationName} exige providências imediatas.`,
+        ticker: "1977 • Alerta Ecológico: Chuva ácida provocada por usinas a carvão danifica ecossistemas na Europa e América do Norte.",
+        concept: "🔬 FÍSICA/QUÍMICA: Emissões de SO2/NOx, Reações Atmosféricas e Filtros Dessulfurizadores | 🌍 GEOGRAFIA: Precipitação Ácida Transfronteiriça & Bacias Carboníferas",
         options: [
-          { text: "🌱 Filtros Dessulfurizadores nas Térmicas (+20 MW | Custo: $22M)", cost: 22, effect: p => { p.capacity.thermal += 20; p.capital -= 22; globalFootprint = Math.max(0, globalFootprint - 12); } },
-          { text: "🌬️ Substituir Carvão por Energia Eólica Experimental (+25 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.wind += 25; p.capital -= 28; } },
-          { text: "💧 Expandir Usinas Hidroelétricas de Cabeceira (+30 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.hydro += 30; p.capital -= 30; } },
-          { text: "🛡️ Campanha de Proteção Florestal (Gratuito | +7% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 7); } }
+          { text: "🌱 Instalação de Filtros Dessulfurizadores nas Termelétricas (+20 MW | Custo: $22M)", cost: 22, effect: p => { p.capacity.thermal += 20; p.capital -= 22; globalFootprint = Math.max(0, globalFootprint - 12); } },
+          { text: "🌬️ Substituir Carvão Poluente por Energia Eólica Costeira (+28 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.wind += 28; p.capital -= 28; } },
+          { text: "💧 Expansão de Usinas Hidroelétricas de Cabeceira (+30 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.hydro += 30; p.capital -= 30; } },
+          { text: "🛡️ Legislação de Proteção Florestal e Controle de Emissões (Gratuito | +7% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 7); } }
         ]
       };
     }
 
     if (year === 1978) {
       return {
-        title: "1978: TRANSIÇÃO PARA GÁS NATURAL",
-        desc: "Gasodutos transcontinentais tornam o gás natural uma alternativa mais limpa ao carvão mineral.",
-        ticker: "1978 • Expansão de gasodutos impulsiona térmicas a gás de ciclo simples.",
-        concept: "🔬 FÍSICA: Termodinâmica de Ciclo Brayton a Gás | 🌍 GEOGRAFIA: Redes Transcontinentais de Gasodutos",
+        title: "1978: GÁS NATURAL, GASODUTOS & METANO (CH4)",
+        desc: `O gás natural é um combustível fóssil composto essencialmente por metano (CH4), etano e propano. Inodoro e altamente inflamável, recebe compostos odorantes para segurança e é transportado por gasodutos com poder calorífico de até 10.000 kcal/m³.`,
+        ticker: "1978 • Gás Natural: Expansão de gasodutos conecta jazidas subterrâneas a termelétricas urbanas.",
+        concept: "🔬 FÍSICA/QUÍMICA: Hidrocarbonetos Gasosos (CH4, C2H6, C3H8), Poder Calorífico (8.000-10.000 kcal/m³) | 🌍 GEOGRAFIA: Redes Transcontinentais de Gasodutos e Bacias Sedimentares",
         options: [
-          { text: "🛢️ Usinas Térmicas a Gás Natural (+40 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.thermal += 40; p.capital -= 28; globalFootprint += 10; } },
-          { text: "⚛️ Ampliação de Módulos Nucleares (+35 MW | Custo: $38M)", cost: 38, effect: p => { p.capacity.nuclear += 35; p.capital -= 38; } },
-          { text: "🌿 Expansão de Usinas de Biomassa (+25 MW | Custo: $22M)", cost: 22, effect: p => { p.capacity.biofuels += 25; p.capital -= 22; } },
-          { text: "💰 Reajuste Tarifário Residencial (Receita: +$35M | -6% Confiança)", cost: 0, effect: p => { p.capital += 35; p.trust = Math.max(0, p.trust - 6); } }
+          { text: "🛢️ Termelétricas a Gás Natural de Alta Produtividade (+40 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.thermal += 40; p.capital -= 28; globalFootprint += 10; } },
+          { text: "⚛️ Ampliação de Reator Nuclear de Água Pressurizada (+35 MW | Custo: $38M)", cost: 38, effect: p => { p.capacity.nuclear += 35; p.capital -= 38; } },
+          { text: "🌿 Usinas de Gaseificação de Biomassa para Gás de Síntese (+25 MW | Custo: $22M)", cost: 22, effect: p => { p.capacity.biofuels += 25; p.capital -= 22; } },
+          { text: "💰 Reajuste Tarifário na Distribuição de Gás Urbano (Receita: +$35M | -5% Confiança)", cost: 0, effect: p => { p.capital += 35; p.trust = Math.max(0, p.trust - 5); } }
         ]
       };
     }
 
     if (year === 1979) {
       return {
-        title: "1979: SEGUNDO CHOQUE DO PETRÓLEO & SECA SEVERA",
-        desc: "A Revolução no Oriente Médio paralisa exportações de óleo, coincidindo com uma seca histórica nas bacias hidrográficas.",
-        ticker: "1979 • SEGUNDO CHOQUE DO PETRÓLEO! Secas severas reduzem geração de barragens mundiais.",
-        concept: "🔬 FÍSICA: Balanço de Entalpia & Evapotranspiração | 🌍 GEOGRAFIA: Escassez Hídrica Regional",
+        title: "1979: SEGUNDO CHOQUE DO PETRÓLEO & THREE MILE ISLAND",
+        desc: `A Revolução Iraniana gera o segundo choque do petróleo, enquanto a usina de Three Mile Island (EUA) sofre um acidente nuclear com vazamento de água radioativa controlada. O trabalho de forças dissipativas de atrito converte energia mecânica em calor (W = Fatrito·d). Como agir?`,
+        ticker: "1979 • 2º Choque do Petróleo & Incidente em Three Mile Island: Países buscam diversificação urgente.",
+        concept: "🔬 FÍSICA: Trabalho de Forças Dissipativas (W = Fatrito·d = μc·Fres·d) e Segurança Nuclear | 🌍 GEOGRAFIA: Crise de Suprimento no Golfo Pérsico & Geopolítica",
         options: [
-          { text: "🌋 Investir em Geotérmica / Térmica Emergencial (+35 MW | Custo: $32M)", cost: 32, effect: p => { p.capacity.geothermal += 35; p.capital -= 32; } },
-          { text: "🛢️ Importação Emergencial de Fósseis (+30 MW | Custo: $25M)", cost: 25, effect: p => { p.capacity.thermal += 30; p.capital -= 25; globalFootprint += 15; } },
-          { text: "⚡ Manutenção Preventiva de Emergência (+20 MW | Custo: $18M)", cost: 18, effect: p => { p.capacity.hydro += 20; p.capital -= 18; } },
-          { text: "🛡️ Plano de Contingência Social de Crise (Gratuito | +8% Estabilidade)", cost: 0, effect: p => { p.stability = Math.min(100, p.stability + 8); } }
+          { text: "🌋 Perfuração Geotérmica e Usinas Hidrelétricas de Reserva (+35 MW | Custo: $32M)", cost: 32, effect: p => { p.capacity.geothermal += 35; p.capital -= 32; } },
+          { text: "🛢️ Importação Emergencial de Fósseis para Térmicas (+30 MW | Custo: $25M)", cost: 25, effect: p => { p.capacity.thermal += 30; p.capital -= 25; globalFootprint += 14; } },
+          { text: "⚡ Manutenção de Geradores e Mancais para Reduzir Perdas por Atrito (+20 MW | Custo: $18M)", cost: 18, effect: p => { p.capacity.hydro += 20; p.capital -= 18; } },
+          { text: "🛡️ Plano de Contingência Social e Racionamento Preventivo (Gratuito | +8% Estabilidade)", cost: 0, effect: p => { p.stability = Math.min(100, p.stability + 8); } }
         ]
       };
     }
@@ -831,90 +831,150 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. DÉCADA DE 1980 (1980 – 1989)
     if (year === 1980) {
       return {
-        title: "1980: JUROS ALTOS E RESTRIÇÃO DE CRÉDITO",
-        desc: "A taxa de juros mundial atinge picos históricos. O custo de financiamento de megaprojetos duplica no mercado.",
-        ticker: "1980 • Choque de Juros Globais! Financiamentos internacionais de infraestrutura desaceleram.",
-        concept: "🔬 FÍSICA: Termodinâmica & Perdas de Carnot | 🌍 GEOGRAFIA: Geopolítica do Crédito & Dívidas Externas",
+        title: "1980: OS RANKS DO CARVÃO MINERAL (TURFA, LINHITO, HULHA, ANTRACITO)",
+        desc: `O carvão mineral é uma rocha sedimentar formada na Era Paleozóica (Período Carbonífero). Seus estágios de maturação (rank) variam pelo teor de carbono: Turfa (55-60%), Linhito (67-78%), Hulha/Betuminoso (80-90%) e Antracito (96%). Qual estágio ${nationName} explorará?`,
+        ticker: "1980 • Mineração Energética: Indústrias classificam carvões de alto poder calorífico (Hulha e Antracito).",
+        concept: "🔬 FÍSICA/QUÍMICA: Ranks de Carbonificação, Teor de Carbono e Poder Calorífico (kcal/kg) | 🌍 GEOGRAFIA: Jazidas da Bacia Carbonífera do Sul do Brasil (99,97%) e Mundo",
         options: [
-          { text: "⚡ Otimizar Redes Existentes de Transmissão (+25 MW | Custo: $20M)", cost: 20, effect: p => { p.capacity.hydro += 25; p.capital -= 20; } },
-          { text: "⛏️ Usina a Carvão de Baixa Complexidade (+35 MW | Custo: $22M)", cost: 22, effect: p => { p.capacity.thermal += 35; p.capital -= 22; globalFootprint += 16; } },
-          { text: "📜 P&D de Microgeração Descentralizada (+2 Patentes | Custo: $24M)", cost: 24, effect: p => { p.patents += 2; p.capital -= 24; } },
-          { text: "💰 Empréstimo Emergencial com Fundo Monetário (Receita: +$40M | -4% PIB)", cost: 0, effect: p => { p.capital += 40; p.gdp *= 0.96; } }
+          { text: "⛏️ Usina Térmica a Carvão Betuminoso / Hulha de Alto Poder Calorífico (+45 MW | Custo: $26M)", cost: 26, effect: p => { p.capacity.thermal += 45; p.capital -= 26; globalFootprint += 20; } },
+          { text: "⚡ Otimizar Eficiência de Turbinas Hidráulicas Existentes (+25 MW | Custo: $20M)", cost: 20, effect: p => { p.capacity.hydro += 25; p.capital -= 20; } },
+          { text: "📜 P&D de Métodos de Lavagem e Desulfurização de Carvão (+2 Patentes | Custo: $22M)", cost: 22, effect: p => { p.patents += 2; p.capital -= 22; } },
+          { text: "💰 Empréstimo Estatal para Mineração de Carvão (Receita: +$35M | -4% Confiança)", cost: 0, effect: p => { p.capital += 35; p.trust = Math.max(0, p.trust - 4); } }
+        ]
+      };
+    }
+
+    if (year === 1981) {
+      return {
+        title: "1981: ENERGIA POTENCIAL ELÁSTICA (Epe = k·x²/2) & VOLANTES DE INÉRCIA",
+        desc: `A energia potencial elástica é armazenada por deformação em corpos elásticos como molas (Epe = k·x²/2). Sistemas industriais começam a utilizar volantes de inércia para acumular energia cinética rotacional (Ec = 1/2·I·ω²) para estabilizar picos de consumo em ${nationName}.`,
+        ticker: "1981 • Mecânica Aplicada: Armazenamento cinético por volantes de inércia e sistemas elásticos auxiliam malhas industriais.",
+        concept: "🔬 FÍSICA: Energia Potencial Elástica (Epe = k·x²/2) e Energia Cinética Rotacional (Ec = 1/2·I·ω²) | 🌍 GEOGRAFIA: Armazenamento Mecânico de Energia em Polos Fabris",
+        options: [
+          { text: "⚙️ Baterias de Volante de Inércia para Estabilização da Rede (+30 MW | Custo: $26M)", cost: 26, effect: p => { p.capacity.hydro += 30; p.capital -= 26; } },
+          { text: "🛢️ Geradores Térmicos a Óleo Combustível de Partida Rápida (+35 MW | Custo: $22M)", cost: 22, effect: p => { p.capacity.thermal += 35; p.capital -= 22; globalFootprint += 14; } },
+          { text: "📜 Patentes de Molas de Aço-Liga e Rotores de Alta Inércia (+2 Patentes | Custo: $24M)", cost: 24, effect: p => { p.patents += 2; p.capital -= 24; } },
+          { text: "🛡️ Otimização de Demanda nos Horários de Ponta (Gratuito | +6% Estabilidade)", cost: 0, effect: p => { p.stability = Math.min(100, p.stability + 6); } }
         ]
       };
     }
 
     if (year === 1982) {
       return {
-        title: "1982: A CRISE DA DÍVIDA & HIDRODIPLOMACIA",
-        desc: `Crises cambiais afetam o financiamento de grandes barragens binacionais. Como ${nationName} protegerá suas obras de grande porte?`,
-        ticker: "1982 • Crise da Dívida! Projetos de mega-hidrelétricas exigem acordos bilaterais.",
-        concept: "🔬 FÍSICA: Potência Hidráulica Efetiva (P = η·ρ·g·Q·H) | 🌍 GEOGRAFIA: Bacias Hidrográficas Binacionais & Fronteiras",
+        title: "1982: A USINA BINACIONAL DE ITAIPU & RIOS DE PLANALTO",
+        desc: `O Brasil e o Paraguai concluem a barragem de Itaipu no Rio Paraná. Rios de planalto proporcionam grandes desníveis (quedas d'água H) e alta vazão (Q), gerando potência colossal (P = η·ρ·g·Q·H). Como ${nationName} desenvolverá seu potencial hidráulico?`,
+        ticker: "1982 • Itaipu Binacional: A maior geradora hidrelétrica do mundo no Rio Paraná inicia testes operacionais.",
+        concept: "🔬 FÍSICA: Potência Hidráulica Efetiva (P = η·ρ·g·Q·H) e Transformação Epg -> Ec -> Elétrica | 🌍 GEOGRAFIA: Rios de Planalto, Bacia do Rio Paraná e Hidrodiplomacia",
         options: [
-          { text: "💧 Empreendimento Hidrelétrico Binacional (+40 MW | Custo: $35M)", cost: 35, effect: p => { p.capacity.hydro += 40; p.capital -= 35; } },
-          { text: "🛢️ Térmicas Locais de Rápida Operação (+35 MW | Custo: $22M)", cost: 22, effect: p => { p.capacity.thermal += 35; p.capital -= 22; globalFootprint += 14; } },
-          { text: "📜 Adquirir Patentes de Turbinas Francis de Alta Vazão (+2 Patentes | Custo: $24M)", cost: 24, effect: p => { p.patents += 2; p.capital -= 24; } },
-          { text: "🛡️ Acordo Diplomático Bilateral de Energia (Gratuito | +7% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 7); } }
+          { text: "💧 Megaprojeto Hidrelétrico Binacional em Rio de Planalto (+45 MW | Custo: $38M)", cost: 38, effect: p => { p.capacity.hydro += 45; p.capital -= 38; } },
+          { text: "⛏️ Termelétricas Fósseis Modulares de Complementação (+35 MW | Custo: $22M)", cost: 22, effect: p => { p.capacity.thermal += 35; p.capital -= 22; globalFootprint += 14; } },
+          { text: "📜 Patentes de Turbinas Francis de Alto Rendimento Hidráulico (+3 Patentes | Custo: $30M)", cost: 30, effect: p => { p.patents += 3; p.capital -= 30; } },
+          { text: "🛡️ Acordo Diplomático Bilateral de Partilha de Energia (Gratuito | +8% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 8); } }
+        ]
+      };
+    }
+
+    if (year === 1983) {
+      return {
+        title: "1983: ENERGIA GEOTÉRMICA & LIMITES DE PLACAS TECTÔNICAS",
+        desc: `A energia geotérmica aproveita o calor do interior da Terra em áreas vulcânicas e de borda de placas tectônicas (como na Islândia e Filipinas). No Brasil, o potencial é limitado por estar no centro estável da placa sul-americana. Qual estratégia ${nationName} adotará?`,
+        ticker: "1983 • Geotermia: Países em zonas vulcânicas aproveitam vapor subterrâneo estável para mover turbinas.",
+        concept: "🔬 FÍSICA: Termodinâmica de Fluidos Geotermais e Vaporização | 🌍 GEOGRAFIA: Tectônica de Placas, Zonas Vulcânicas vs Centro de Placas Estáveis",
+        options: [
+          { text: "🌋 Centrais Geotérmicas de Vapor Profundo de Carga Básica (+35 MW | Custo: $32M)", cost: 32, effect: p => { p.capacity.geothermal += 35; p.capital -= 32; } },
+          { text: "🌿 Expansão de Caldeiras a Biomassa e Resíduos Agrícolas (+30 MW | Custo: $25M)", cost: 25, effect: p => { p.capacity.biofuels += 30; p.capital -= 25; } },
+          { text: "📜 Pesquisa em Prospecção Geotérmica e Sondagem (+2 Patentes | Custo: $24M)", cost: 24, effect: p => { p.patents += 2; p.capital -= 24; } },
+          { text: "💰 Linha de Financiamento para Obras Geológicas (Receita: +$35M Capital)", cost: 0, effect: p => { p.capital += 35; } }
         ]
       };
     }
 
     if (year === 1984) {
       return {
-        title: "1984: A REVOLUÇÃO DO PETRÓLEO EM ÁGUAS PROFUNDAS",
-        desc: `Avanços na engenharia de plataformas offshore permitem perfurar sob altíssima pressão hidrostática no oceano.`,
-        ticker: "1984 • Perfuração Offshore! Novas tecnologias exploram reservas no assoalho marinho.",
-        concept: "🔬 FÍSICA: Pressão Hidrostática (P = ρ·g·h) & Resistência de Materiais | 🌍 GEOGRAFIA: Geologia da Margem Continental",
+        title: "1984: HIDRELÉTRICA DE TUCURUÍ NO RIO TOCANTINS & IMPACTOS NA AMAZÔNIA",
+        desc: `Entra em operação a Usina Hidrelétrica de Tucuruí (Rio Tocantins, PA), com capacidade para mais de 8.000 MW. Grandes reservatórios em rios de planície amazônica exigem extensas áreas alagadas, impactando comunidades indígenas e a biodiversidade local.`,
+        ticker: "1984 • Usina de Tucuruí: Megaprojeto hidrelétrico no Rio Tocantins impulsiona a mineração e a indústria amazônica.",
+        concept: "🔬 FÍSICA: Conservação de Energia Hidráulica e Vazão Volumétrica (Q = A·v) | 🌍 GEOGRAFIA: Bacia do Tocantins-Araguaia, Alagamento de Florestas e Populações Tradicionais",
         options: [
-          { text: "🛢️ Plataforma Offshore de Águas Profundas (+45 MW | Custo: $38M)", cost: 38, effect: p => { p.capacity.thermal += 45; p.capital -= 38; globalFootprint += 18; } },
-          { text: "🌊 Energia Maremotriz & Das Ondas (+25 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.wind += 25; p.capital -= 28; } },
-          { text: "📜 Licenciamento de Sondagem Submarina (+3 Patentes | Custo: $30M)", cost: 30, effect: p => { p.patents += 3; p.capital -= 30; } },
-          { text: "💰 Concessão de Blocos Marítimos a Empresas (Receita: +$35M Capital)", cost: 0, effect: p => { p.capital += 35; } }
+          { text: "💧 Expansão de Geradores Hidráulicos em Bacias Amazônicas (+45 MW | Custo: $36M)", cost: 36, effect: p => { p.capacity.hydro += 45; p.capital -= 36; } },
+          { text: "🛢️ Plataformas Offshore de Óleo e Gás na Margem Continental (+40 MW | Custo: $32M)", cost: 32, effect: p => { p.capacity.thermal += 40; p.capital -= 32; globalFootprint += 16; } },
+          { text: "📜 Patentes de Monitoramento de Assoreamento e Eclusas Fluviais (+2 Patentes | Custo: $24M)", cost: 24, effect: p => { p.patents += 2; p.capital -= 24; } },
+          { text: "🛡️ Programa de Mitigação Socioambiental e Realocação Criteriosa (Gratuito | +7% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 7); } }
+        ]
+      };
+    }
+
+    if (year === 1985) {
+      return {
+        title: "1985: INAUGURAÇÃO DE ANGRA 1 NO BRASIL & REFRIGERAÇÃO COSTEIRA",
+        desc: `A primeira usina nuclear do Brasil, Angra 1 (Angra dos Reis, RJ), entra em operação comercial. Utilizando reatores de água pressurizada e 3 circuitos independentes refrigerados por água do mar, fornece energia de base sem emissão de gases do efeito estufa.`,
+        ticker: "1985 • Angra 1 em Operação: Brasil integra energia nuclear à matriz elétrica da Região Sudeste.",
+        concept: "🔬 FÍSICA: Fissão Controlada de Urânio, Circuito Secundário a Vapor (1800 rpm) e Condensador Costeiro | 🌍 GEOGRAFIA: Programa Nuclear Brasileiro & Localização Litorânea em Angra dos Reis",
+        options: [
+          { text: "⚛️ Consolidação da Central Nuclear de Base em Área Costeira (+40 MW | Custo: $40M)", cost: 40, effect: p => { p.capacity.nuclear += 40; p.capital -= 40; } },
+          { text: "🌿 Expansão do Plantio de Cana-de-Açúcar e Eucalipto para Bioenergia (+30 MW | Custo: $26M)", cost: 26, effect: p => { p.capacity.biofuels += 30; p.capital -= 26; } },
+          { text: "📜 Certificação de Segurança e Gestão de Rejeitos Radioativos (+2 Patentes | Custo: $25M)", cost: 25, effect: p => { p.patents += 2; p.capital -= 25; } },
+          { text: "💰 Concessão de Linhas de Transmissão para o Sudeste (Receita: +$35M Capital)", cost: 0, effect: p => { p.capital += 35; } }
         ]
       };
     }
 
     if (year === 1986) {
       return {
-        title: "1986: REVISÃO DE SEGURANÇA INDUSTRIAL E NUCLEAR",
-        desc: "O acidente de Chernobyl paralisa o setor nuclear mundial e exige auditorias de segurança rigorosas em todas as usinas.",
-        ticker: "1986 • Alerta Nuclear em Chernobyl! Auditoria de segurança paralisante é exigida no setor.",
-        concept: "🔬 FÍSICA: Fissão de Urânio-235 (E=mc²) & Contenção de Radiação | 🌍 GEOGRAFIA: Dispersão Atmosférica Transfronteiriça",
+        title: "1986: O DESASTRE DE CHERNOBYL & SEGURANÇA NUCLEAR REDUNDANTE",
+        desc: `A explosão do reator 4 na Usina de Chernobyl (Ucrânia) dispersa radiação por toda a Europa. O acidente expõe os riscos do descarte irregular de lixo atômico e exige sistemas de segurança redundantes e independentes em todas as centrais nucleares do planeta.`,
+        ticker: "1986 • TRAGÉDIA EM CHERNOBYL: Acidente nuclear catastrófico paralisa obras e redefine padrões internacionais de segurança.",
+        concept: "🔬 FÍSICA: Fissão Nuclear em Cadeia Descontrolada, Radiação Ionizante e Contenção Térmica | 🌍 GEOGRAFIA: Dispersão Atmosférica Transfronteiriça e Zonas de Exclusão",
         options: [
-          { text: "⚛️ Modernização Completa dos Reatores Nucleares (+35 MW | Custo: $40M)", cost: 40, effect: p => { p.capacity.nuclear += 35; p.capital -= 40; } },
-          { text: "🌬️ Migração Apressada para Parques Eólicos (+30 MW | Custo: $32M)", cost: 32, effect: p => { p.capacity.wind += 30; p.capital -= 32; } },
-          { text: "💧 Expansão de PCHs (Pequenas Central Hidrelétricas) (+30 MW | Custo: $26M)", cost: 26, effect: p => { p.capacity.hydro += 30; p.capital -= 26; } },
-          { text: "📋 Manutenção e Inspeção Padronizada (Custo: $15M | +10% Estabilidade)", cost: 15, effect: p => { p.capital -= 15; p.stability = Math.min(100, p.stability + 10); } }
+          { text: "⚛️ Modernização Completa de Segurança e Vasos de Contenção Nuclear (+30 MW | Custo: $42M)", cost: 42, effect: p => { p.capacity.nuclear += 30; p.capital -= 42; } },
+          { text: "🌬️ Migração Apressada para Parques Eólicos e Pequenas Centrais Hidrelétricas (+32 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.wind += 32; p.capital -= 30; } },
+          { text: "💧 Modernização de Turbinas em Usinas Hidroelétricas de Planalto (+30 MW | Custo: $26M)", cost: 26, effect: p => { p.capacity.hydro += 30; p.capital -= 26; } },
+          { text: "📋 Protocolo de Auditoria e Inspeção Rigorosa nas Usinas (Custo: $15M | +10% Estabilidade)", cost: 15, effect: p => { p.capital -= 15; p.stability = Math.min(100, p.stability + 10); } }
+        ]
+      };
+    }
+
+    if (year === 1987) {
+      return {
+        title: "1987: HISTÓRIA DA ENERGIA EÓLICA & AEROGERADORES MODERNOS",
+        desc: `No centenário da primeira turbina elétrica de James Blyth (1887), a moderna indústria eólica projeta aerogeradores com pás aerodinâmicas conectadas a rotores e naceles que multiplicam rotações (10 a 25 rpm) para gerar eletricidade limpa a partir do vento.`,
+        ticker: "1987 • Tecnologia Eólica: Aerogeradores modernos provam viabilidade econômica como Mecanismo de Desenvolvimento Limpo.",
+        concept: "🔬 FÍSICA: Energia Cinética do Vento (Ec = m·v²/2), Rotação Mecânica e Indução Eletromagnética no Gerador | 🌍 GEOGRAFIA: Mapeamento Global do Potencial Eólico e Parques Costeiros",
+        options: [
+          { text: "🌬️ Construção de Parque Eólico com Aerogeradores de Alta Eficiência (+35 MW | Custo: $32M)", cost: 32, effect: p => { p.capacity.wind += 35; p.capital -= 32; } },
+          { text: "⛏️ Termelétricas a Carvão Mineral com Lavagem Física de Cinzas (+40 MW | Custo: $22M)", cost: 22, effect: p => { p.capacity.thermal += 40; p.capital -= 22; globalFootprint += 18; } },
+          { text: "📜 Registro de Patentes de Pás Aerodinâmicas e Rotores Eólicos (+2 Patentes | Custo: $24M)", cost: 24, effect: p => { p.patents += 2; p.capital -= 24; } },
+          { text: "🛡️ Isenção Tributária para Componentes de Energia Eólica (Gratuito | +6% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 6); } }
         ]
       };
     }
 
     if (year === 1988) {
       return {
-        title: "1988: CRIAÇÃO DO IPCC & PAINEL CLIMÁTICO DA ONU",
-        desc: "A ONU e a WMO fundam o IPCC para monitorar as emissões de gases estufa e o aquecimento global.",
-        ticker: "1988 • Fundação do IPCC! Cientistas unem dados atmosféricos para mapear o clima mundial.",
-        concept: "🔬 FÍSICA: Forçante Radiativa (ΔF em W/m²) & Absorção Infravermelha | 🌍 GEOGRAFIA: Climatologia Global & Biomas",
+        title: "1988: CRIAÇÃO DO IPCC & 1ª LEI DA TERMODINÂMICA (ΔU = Q - W)",
+        desc: `A ONU cria o Painel Intergovernamental sobre Mudanças Climáticas (IPCC). Pela 1ª Lei da Termodinâmica, a variação da energia interna de um sistema é dada por ΔU = Q - W. O acúmulo de calor retido na atmosfera por gases estufa desequilibra o clima global.`,
+        ticker: "1988 • Criação do IPCC: Cientistas unem dados atmosféricos para combater o aquecimento global.",
+        concept: "🔬 FÍSICA: 1ª Lei da Termodinâmica (ΔU = Q - W) e Balanço Radiativo Planetário | 🌍 GEOGRAFIA: Criação do IPCC & Vulnerabilidade dos Biomas Terrestres",
         options: [
-          { text: "🌱 Substituir Fósseis por Parque Eólico/Solar (+35 MW | Custo: $35M)", cost: 35, effect: p => { p.capacity.wind += 35; p.capital -= 35; globalFootprint = Math.max(0, globalFootprint - 15); } },
-          { text: "🌿 Expansão de Reflorestamento e Biocombustíveis (+30 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.biofuels += 30; p.capital -= 28; } },
-          { text: "📜 Investir em Sensores Atmosféricos (+2 Patentes | Custo: $24M)", cost: 24, effect: p => { p.patents += 2; p.capital -= 24; } },
-          { text: "🛡️ Declaração de Compromisso Ecológico (Gratuito | +7% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 7); } }
+          { text: "🌱 Substituir Centrais Fósseis por Parques Eólicos e Solares (+35 MW | Custo: $35M)", cost: 35, effect: p => { p.capacity.wind += 35; p.capital -= 35; globalFootprint = Math.max(0, globalFootprint - 15); } },
+          { text: "🌿 Reflorestamento e Biocombustíveis com Absorção Fotossintética de CO2 (+30 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.biofuels += 30; p.capital -= 28; } },
+          { text: "📜 Sensores Meteorológicos e Patentes de Balanço Térmico (+2 Patentes | Custo: $24M)", cost: 24, effect: p => { p.patents += 2; p.capital -= 24; } },
+          { text: "🛡️ Declaração Governamental de Metas Ecológicas da ONU (Gratuito | +7% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 7); } }
         ]
       };
     }
 
     if (year === 1989) {
       return {
-        title: "1989: DESASTRE AMBIENTAL & REGULAMENTAÇÃO MARÍTIMA",
-        desc: "O vazamento do petroleiro Exxon Valdez mancha o oceano e desencadeia protestos globais por regras ambientais severas.",
-        ticker: "1989 • Vazamento do Exxon Valdez! Governos aprovam leis severas de responsabilidade ambiental.",
-        concept: "🔬 FÍSICA: Tensão Superficial e Dispersão de Fluidos | 🌍 GEOGRAFIA: Biogeografia Marinha e Preservação de Costas",
+        title: "1989: O DESASTRE DO EXXON VALDEZ & REFINO FRACIONADO DO PETRÓLEO",
+        desc: `O vazamento de 40 milhões de litros de petróleo cru pelo navio Exxon Valdez devasta o ecossistema marinho do Alasca. O petróleo necessita de refino fracionado nas refinarias para gerar gasolina, diesel, querosene e GLP. Como ${nationName} enfrentará a regulação marítima?`,
+        ticker: "1989 • Tragédia do Exxon Valdez: Vazamento de petróleo no Alasca gera revolta e leis marítimas rigorosas.",
+        concept: "🔬 FÍSICA/QUÍMICA: Separação Fracionada por Pontos de Ebulição, Densidade de Hidrocarbonetos e Tensão Superficial | 🌍 GEOGRAFIA: Rotas de Petroleiros, Derramamentos Marítimos & Degradação Costeira",
         options: [
-          { text: "🌱 Subsidiar Matriz Solar / Biomassa (+35 MW | Custo: $34M)", cost: 34, effect: p => { p.capacity.biofuels += 35; p.capital -= 34; globalFootprint = Math.max(0, globalFootprint - 15); } },
-          { text: "🛢️ Duplicação de Cascos de Petroleiros e Térmicas (+35 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.thermal += 35; p.capital -= 28; } },
-          { text: "📜 Registro de Patentes de Contenção de Danos (+2 Patentes | Custo: $22M)", cost: 22, effect: p => { p.patents += 2; p.capital -= 22; } },
-          { text: "🛡️ Fundo Emergencial de Resposta a Desastres (Gratuito | +8% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 8); } }
+          { text: "🌱 Subsidiar Matriz Solar Fotovoltaica e Usinas de Biomassa (+35 MW | Custo: $34M)", cost: 34, effect: p => { p.capacity.biofuels += 35; p.capital -= 34; globalFootprint = Math.max(0, globalFootprint - 15); } },
+          { text: "🛢️ Refinarias com Torres Fracionadas Modernas e Casco Duplo (+35 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.thermal += 35; p.capital -= 28; } },
+          { text: "📜 Registro de Patentes de Contenção de Vazamentos Marítimos (+2 Patentes | Custo: $22M)", cost: 22, effect: p => { p.patents += 2; p.capital -= 22; } },
+          { text: "🛡️ Fundo Nacional de Emergência para Proteção Costeira (Gratuito | +8% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 8); } }
         ]
       };
     }
@@ -922,298 +982,484 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. DÉCADA DE 1990 (1990 – 1999)
     if (year === 1990) {
       return {
-        title: "1990: A GUERRA DO GOLFO & INCÊNDIO DOS POÇOS",
-        desc: "Conflitos geopolíticos no Kuwait incendiam poços de petróleo, gerando fuligem atmosférica e disparada na cotação do barril.",
-        ticker: "1990 • GUERRA DO GOLFO! Incêndio em poços de petróleo gera nuvem tóxica e choque de preços.",
-        concept: "🔬 FÍSICA: Combustão Incompleta & Aerossóis Absorventes de Luz | 🌍 GEOGRAFIA: Geopolítica do Oriente Médio",
+        title: "1990: A GUERRA DO GOLFO & COMBUSTÃO INCOMPLETA DE POÇOS",
+        desc: `A Guerra do Golfo provoca o incêndio de mais de 600 poços de petróleo no Kuwait. A queima incompleta libera nuvens de fuligem e monóxido de carbono (CO), bloqueando a radiação solar e disparando a cotação mundial dos combustíveis fósseis.`,
+        ticker: "1990 • GUERRA DO GOLFO: Incêndio de centenas de poços de petróleo cobre céus de fuligem tóxica e abala o mercado.",
+        concept: "🔬 FÍSICA/QUÍMICA: Combustão Incompleta, Formação de Fuligem/Aerossóis e Absorção de Radiação Solar | 🌍 GEOGRAFIA: Geopolítica do Oriente Médio, Bacia do Golfo Pérsico & Vulnerabilidade Petrolífera",
         options: [
-          { text: "🌿 Programa Emergencial de Biocombustíveis Nacionais (+35 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.biofuels += 35; p.capital -= 30; } },
-          { text: "⚡ Expansão de Hidrelétricas de Reserva (+35 MW | Custo: $32M)", cost: 32, effect: p => { p.capacity.hydro += 35; p.capital -= 32; } },
-          { text: "⛏️ Manter Térmicas a Carvão de Estoque (+40 MW | Custo: $22M)", cost: 22, effect: p => { p.capacity.thermal += 40; p.capital -= 22; globalFootprint += 20; } },
-          { text: "🛡️ Racionamento Estratégico de Combustíveis (Gratuito | +8% Estabilidade)", cost: 0, effect: p => { p.stability = Math.min(100, p.stability + 8); } }
+          { text: "🌿 Programa Emergencial de Biocombustíveis Nacionais (Etanol e Biodiesel) (+35 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.biofuels += 35; p.capital -= 30; } },
+          { text: "⚡ Expansão de Hidrelétricas com Reservatórios de Acumulação (+35 MW | Custo: $32M)", cost: 32, effect: p => { p.capacity.hydro += 35; p.capital -= 32; } },
+          { text: "⛏️ Manter Termelétricas a Carvão de Estoque Estratégico (+40 MW | Custo: $22M)", cost: 22, effect: p => { p.capacity.thermal += 40; p.capital -= 22; globalFootprint += 20; } },
+          { text: "🛡️ Racionamento Noturno de Combustíveis e Apoio Social (Gratuito | +8% Estabilidade)", cost: 0, effect: p => { p.stability = Math.min(100, p.stability + 8); } }
+        ]
+      };
+    }
+
+    if (year === 1991) {
+      return {
+        title: "1991: ENERGIA QUÍMICA DOS ALIMENTOS & HIDRÓLISE DO ATP",
+        desc: `Nos seres vivos, a energia química contida em carboidratos, gorduras e proteínas é degradada no catabolismo celular. A principal molécula de transferência é o ATP; sua hidrólise em ADP libera 7,3 kcal/mol, convertida em contração muscular e trabalho mecânico.`,
+        ticker: "1991 • Bioquímica Energética: Estudos destacam a eficiência na conversão de ATP em trabalho muscular humano.",
+        concept: "🔬 FÍSICA/BIOLOGIA: Catabolismo, Respiração Celular, Síntese e Hidrólise de ATP (7,3 kcal/mol) -> Trabalho Mecânico | 🌍 GEOGRAFIA: Segurança Alimentar & Força de Trabalho Industrial",
+        options: [
+          { text: "🌾 Agroindústria Sustentável e Cogeração por Resíduos Orgânicos (+32 MW | Custo: $26M)", cost: 26, effect: p => { p.capacity.biofuels += 32; p.capital -= 26; } },
+          { text: "⚡ Linhas de Distribuição para Automação de Cidades e Indústrias (+28 MW | Custo: $22M)", cost: 22, effect: p => { p.capacity.hydro += 28; p.capital -= 22; } },
+          { text: "📜 Patentes de Biotecnologia de Enzimas e Fermentação (+2 Patentes | Custo: $24M)", cost: 24, effect: p => { p.patents += 2; p.capital -= 24; } },
+          { text: "🛡️ Programa Nacional de Alimentação e Saúde do Trabalhador (Gratuito | +7% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 7); } }
         ]
       };
     }
 
     if (year === 1992) {
       return {
-        title: "1992: CÚPULA DA TERRA (ECO-92 NO RIO DE JANEIRO)",
-        desc: "Líderes mundiais assinam a Agenda 21 na Cúpula do Rio. O conceito de desenvolvimento sustentável vira pauta prioritária.",
-        ticker: "1992 • Eco-92 no Rio! Líderes estabelecem a Agenda 21 para a sustentabilidade do planeta.",
-        concept: "🔬 FÍSICA: Termodinâmica Ecológica & Reciclagem de Energia | 🌍 GEOGRAFIA: Agenda 21 e Desenvolvimento Sustentável",
+        title: "1992: CÚPULA DA TERRA (ECO-92 NO RIO) & MATRIZ ELÉTRICA BRASILEIRA",
+        desc: `Líderes de 170 países assinam a Agenda 21 no Rio de Janeiro. A matriz elétrica brasileira destaca-se no cenário mundial por ser amplamente renovável (>80% hidrelétrica), em forte contraste com a matriz mundial, onde carvão e petróleo somam mais de 80% das fontes.`,
+        ticker: "1992 • Eco-92 no Rio: Líderes globais consagram o conceito de desenvolvimento sustentável e matrizes limpas.",
+        concept: "🔬 FÍSICA: Balanço de Emissões de CO2 por MWh Gerado | 🌍 GEOGRAFIA: Conferência Rio-92, Agenda 21 e Comparação das Matrizes Brasileira e Mundial",
         options: [
-          { text: "🌱 Programa Nacional de Fontes Renováveis (+40 MW | Custo: $38M)", cost: 38, effect: p => { p.capacity.wind += 40; p.capital -= 38; globalFootprint = Math.max(0, globalFootprint - 18); } },
-          { text: "💧 Repaginamento de Grandes Usinas Hidrelétricas (+35 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.hydro += 35; p.capital -= 30; } },
-          { text: "📜 Transferência Tecnológica de Patentes Limpas (+3 Patentes | Custo: $30M)", cost: 30, effect: p => { p.patents += 3; p.capital -= 30; } },
-          { text: "💰 Subvenção Estatal via Títulos Verdes (Receita: +$35M Capital)", cost: 0, effect: p => { p.capital += 35; } }
+          { text: "🌱 Programa Nacional de Fontes Renováveis (Eólica, Solar e Biomassa) (+40 MW | Custo: $38M)", cost: 38, effect: p => { p.capacity.wind += 40; p.capital -= 38; globalFootprint = Math.max(0, globalFootprint - 18); } },
+          { text: "💧 Repotenciação de Grandes Usinas Hidrelétricas em Rios de Planalto (+35 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.hydro += 35; p.capital -= 30; } },
+          { text: "📜 Transferência Tecnológica e Registro de Patentes Verdes (+3 Patentes | Custo: $30M)", cost: 30, effect: p => { p.patents += 3; p.capital -= 30; } },
+          { text: "💰 Emissão de Títulos Verdes Governamentais (Receita: +$35M Capital)", cost: 0, effect: p => { p.capital += 35; } }
+        ]
+      };
+    }
+
+    if (year === 1993) {
+      return {
+        title: "1993: ENERGIA SONORA & INTENSIDADE ACÚSTICA (I = P/A)",
+        desc: `O som é uma onda mecânica longitudinal causada por vibrações em matéria (sólidos, líquidos ou gases) e não se propaga no vácuo. Sua intensidade sonora é a taxa de energia por área (I = P/A = ΔE / (A·Δt) em W/m²). Populações vizinhas a aerogeradores exigem isolamento acústico.`,
+        ticker: "1993 • Acústica Aplicada: Engenheiros desenvolvem pás eólicas de baixo ruído para mitigar poluição sonora.",
+        concept: "🔬 FÍSICA: Energia Sonora, Ondas Mecânicas, Propagação em Meios Materiais e Intensidade Sonora (I = P/A em W/m²) | 🌍 GEOGRAFIA: Poluição Sonora Urbana e Licenciamento Ambiental de Parques Eólicos",
+        options: [
+          { text: "🌬️ Aerogeradores com Pás Silenciosas e Barreiras Acústicas (+35 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.wind += 35; p.capital -= 30; } },
+          { text: "⛏️ Termelétricas com Enclausuramento Acústico de Turbinas a Vapor (+35 MW | Custo: $22M)", cost: 22, effect: p => { p.capacity.thermal += 35; p.capital -= 22; globalFootprint += 15; } },
+          { text: "📜 Patentes de Amortecimento de Vibrações e Materiais Fonoabsorventes (+2 Patentes | Custo: $22M)", cost: 22, effect: p => { p.patents += 2; p.capital -= 22; } },
+          { text: "🛡️ Zoneamento Acústico e Consulta Pública Comunitária (Gratuito | +7% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 7); } }
         ]
       };
     }
 
     if (year === 1994) {
       return {
-        title: "1994: A CONVENÇÃO-QUADRO DAS NAÇÕES UNIDAS (UNFCCC)",
-        desc: "Entra em vigor o tratado da ONU para estabilizar as concentrações de gases de efeito estufa na atmosfera.",
-        ticker: "1994 • UNFCCC em vigor! Tratado internacional estabelece base para diplomacia climática.",
-        concept: "🔬 FÍSICA: Espectroscopia de Absorção Infravermelha do CO₂ | 🌍 GEOGRAFIA: Diplomacia Climatológica Norte-Sul",
+        title: "1994: ENERGIA LUMINOSA: INCANDESCÊNCIA vs LUMINESCÊNCIA",
+        desc: `A energia luminosa compreende ondas eletromagnéticas no espectro visível. Divide-se em Incandescente (emissão por altas temperaturas, como no filamento da lâmpada e no Sol) e Luminescente (a baixas temperaturas: fluorescência instantânea e fosforescência retardada com estados metaestáveis).`,
+        ticker: "1994 • Óptica e Iluminação: Lâmpadas fluorescentes de gás ionizado substituem lâmpadas incandescentes ineficientes.",
+        concept: "🔬 FÍSICA: Espectro Visível, Incandescência Térmica vs Luminescência (Fluorescência e Fosforescência) | 🌍 GEOGRAFIA: Eficiência Energética na Iluminação Pública e Residencial",
         options: [
-          { text: "🌱 Parque Eólico de Alta Capacidade (+40 MW | Custo: $38M)", cost: 38, effect: p => { p.capacity.wind += 40; p.capital -= 38; globalFootprint = Math.max(0, globalFootprint - 15); } },
-          { text: "📜 Registrar Patentes de Filtros Industriais (+3 Patentes | Custo: $30M)", cost: 30, effect: p => { p.patents += 3; p.capital -= 30; } },
-          { text: "🛢️ Expansão de Térmicas a Gás de Ciclo Combinado (+40 MW | Custo: $26M)", cost: 26, effect: p => { p.capacity.thermal += 40; p.capital -= 26; globalFootprint += 10; } },
-          { text: "💰 Venda de Créditos Nacionais de Preservação (Receita: +$35M Capital)", cost: 0, effect: p => { p.capital += 35; } }
+          { text: "💡 Substituição Massiva por Lâmpadas Fluorescentes Eficientes (+30 MW | Custo: $24M)", cost: 24, effect: p => { p.capacity.hydro += 30; p.capital -= 24; } },
+          { text: "🌞 Pesquisa em Células Solares Fotovoltaicas de Silício (+25 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.wind += 25; p.capital -= 28; } },
+          { text: "📜 Registro de Patentes de Materiais Fosforescentes e Luminescentes (+2 Patentes | Custo: $22M)", cost: 22, effect: p => { p.patents += 2; p.capital -= 22; } },
+          { text: "💰 Programa de Eficiência de Iluminação Comercial (Receita: +$30M | +5% Confiança)", cost: 0, effect: p => { p.capital += 30; p.trust = Math.min(100, p.trust + 5); } }
+        ]
+      };
+    }
+
+    if (year === 1995) {
+      return {
+        title: "1995: PROCESSOS TERMOQUÍMICOS DA BIOMASSA (PIRÓLISE E GASEIFICAÇÃO)",
+        desc: `A biomassa pode ser convertida por processos termoquímicos: Pirólise (decomposição térmica em ausência de oxigênio gerando bio-óleo, biochar e gases), Gaseificação (produção de gás de síntese CO + H2) e Co-combustão (queima combinada de biomassa com carvão mineral em usinas).`,
+        ticker: "1995 • Termoquímica Verde: Co-combustão de biomassa com carvão reduz emissões em usinas termelétricas.",
+        concept: "🔬 FÍSICA/QUÍMICA: Pirólise, Gaseificação (Gás de Síntese CO+H2) e Co-combustão Termelétrica | 🌍 GEOGRAFIA: Aproveitamento de Resíduos Agroflorestais e Indústria Madeireira",
+        options: [
+          { text: "🌿 Usinas Termelétricas de Pirólise Rápida e Gás de Síntese (+35 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.biofuels += 35; p.capital -= 28; } },
+          { text: "⛏️ Co-combustão de Bagaço de Cana e Madeira com Carvão Mineral (+40 MW | Custo: $24M)", cost: 24, effect: p => { p.capacity.thermal += 40; p.capital -= 24; globalFootprint += 8; } },
+          { text: "📜 Patentes de Reatores de Pirólise e Bio-óleo Combustível (+2 Patentes | Custo: $24M)", cost: 24, effect: p => { p.patents += 2; p.capital -= 24; } },
+          { text: "🛡️ Subsídios a Cooperativas Agrícolas de Resíduos Orgânicos (Gratuito | +6% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 6); } }
+        ]
+      };
+    }
+
+    if (year === 1996) {
+      return {
+        title: "1996: BIODIGESTÃO ANAERÓBICA & PRODUÇÃO DE BIOGÁS (METANO)",
+        desc: `A conversão bioquímica por biodigestão anaeróbica decompõe matéria orgânica de dejetos suínos, bovinos e esgoto em ausência de oxigênio. Produz biogás rico em metano (CH4) e dióxido de carbono, gerando eletricidade e biofertilizantes em ${nationName}.`,
+        ticker: "1996 • Biogás Rural: Biodigestores anaeróbicos transformam dejetos agropecuários em eletricidade e calor.",
+        concept: "🔬 FÍSICA/BIOLOGIA: Digestão Anaeróbica por Microrganismos, Síntese de Metano (CH4) e Energia Bioquímica | 🌍 GEOGRAFIA: Saneamento Rural, Suinocultura e Avicultura Sustentável",
+        options: [
+          { text: "🌿 Centrais de Biogás e Biometano em Distritos Agropecuários (+35 MW | Custo: $26M)", cost: 26, effect: p => { p.capacity.biofuels += 35; p.capital -= 26; } },
+          { text: "💧 Pequenas Centrais Hidrelétricas (PCHs) de Baixo Impacto Hídrico (+30 MW | Custo: $25M)", cost: 25, effect: p => { p.capacity.hydro += 30; p.capital -= 25; } },
+          { text: "📜 Patentes de Biodigestores Herméticos e Purificação de Biometano (+2 Patentes | Custo: $22M)", cost: 22, effect: p => { p.patents += 2; p.capital -= 22; } },
+          { text: "🛡️ Programa de Crédito Rural para Saneamento e Bioenergia (Gratuito | +7% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 7); } }
         ]
       };
     }
 
     if (year === 1997) {
       return {
-        title: "1997: PROTOCOLO DE QUIOTO & METAS DE CARBONO",
-        desc: "O primeiro tratado internacional vinculante com metas de redução de emissões é assinado na Cúpula do Japão.",
-        ticker: "1997 • PROTOCOLO DE QUIOTO! Nações ricas aceitam metas compulsórias de redução de CO2.",
-        concept: "🔬 FÍSICA: Balanço de Radiação Global | 🌍 GEOGRAFIA: Mercado de Carbono & Protocolo de Quioto",
+        title: "1997: PROTOCOLO DE QUIOTO & MECANISMO DE DESENVOLVIMENTO LIMPO (MDL)",
+        desc: `O Protocolo de Quioto é assinado no Japão com metas vinculantes de redução de gases estufa. A ONU classifica a energia eólica e a biomassa como Mecanismo de Desenvolvimento Limpo (MDL), incentivando créditos de carbono para nações que descarbonizam suas matrizes.`,
+        ticker: "1997 • PROTOCOLO DE QUIOTO: Nações industrializadas assumem compromisso legal de corte de emissões de CO2.",
+        concept: "🔬 FÍSICA: Balanço Global de Carbono e Mitigação de Forçante Radiativa | 🌍 GEOGRAFIA: Protocolo de Quioto, Mecanismo de Desenvolvimento Limpo (MDL) e Créditos de Carbono",
         options: [
-          { text: "🌱 Substituição Massiva de Carvão por Eólica (+40 MW | Custo: $38M)", cost: 38, effect: p => { p.capacity.wind += 40; p.capital -= 38; globalFootprint = Math.max(0, globalFootprint - 20); } },
-          { text: "📜 Compra de Créditos de Carbono Globais (+3 Patentes | Custo: $32M)", cost: 32, effect: p => { p.patents += 3; p.capital -= 32; } },
-          { text: "🏭 Manter Produção Térmica Existente (+45 MW | Custo: $18M)", cost: 18, effect: p => { p.capacity.thermal += 45; p.capital -= 18; globalFootprint += 25; } },
-          { text: "🛡️ Acordo de Eficiência com a Indústria (Gratuito | +6% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 6); } }
+          { text: "🌱 Substituição Massiva de Térmicas a Carvão por Parques Eólicos (+40 MW | Custo: $38M)", cost: 38, effect: p => { p.capacity.wind += 40; p.capital -= 38; globalFootprint = Math.max(0, globalFootprint - 20); } },
+          { text: "📜 Compra e Registro de Patentes de Créditos de Carbono Globais (+3 Patentes | Custo: $32M)", cost: 32, effect: p => { p.patents += 3; p.capital -= 32; } },
+          { text: "🏭 Manter Produção Térmica Fóssil Existente (+45 MW | Custo: $18M)", cost: 18, effect: p => { p.capacity.thermal += 45; p.capital -= 18; globalFootprint += 25; } },
+          { text: "🛡️ Acordo de Eficiência Energética com o Setor Industrial (Gratuito | +6% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 6); } }
+        ]
+      };
+    }
+
+    if (year === 1998) {
+      return {
+        title: "1998: ENERGIA SOLAR HELIOTÉRMICA & CONCENTRAÇÃO POR ESPELHOS",
+        desc: `O sistema solar heliotérmico utiliza espelhos refletores (helióstatos) para concentrar a radiação solar em um ponto receptor com fluido térmico, aquecendo a água até a ebulição para que o vapor acione turbinas e geradores elétricos em regiões de alta insolação.`,
+        ticker: "1998 • Solar Concentrada: Usinas heliotérmicas utilizam espelhos parabólicos para gerar vapor em áreas ensolaradas.",
+        concept: "🔬 FÍSICA: Reflexão Óptica da Radiação Solar, Aquecimento Térmico e Ciclos de Vapor | 🌍 GEOGRAFIA: Áreas Semiáridas, Insolação Direta e Potencial do Nordeste Brasileiro",
+        options: [
+          { text: "🌞 Usina Solar Heliotérmica com Torre de Concentração e Turbina a Vapor (+35 MW | Custo: $34M)", cost: 34, effect: p => { p.capacity.wind += 35; p.capital -= 34; } },
+          { text: "🛢️ Expansão de Térmicas a Gás Natural de Ciclo Simples (+35 MW | Custo: $24M)", cost: 24, effect: p => { p.capacity.thermal += 35; p.capital -= 24; globalFootprint += 12; } },
+          { text: "📜 Registro de Patentes de Espelhos Helióstatos e Fluidos Térmicos (+2 Patentes | Custo: $25M)", cost: 25, effect: p => { p.patents += 2; p.capital -= 25; } },
+          { text: "💰 Financiamento de Pesquisa em Regiões Semiáridas (Receita: +$35M Capital)", cost: 0, effect: p => { p.capital += 35; } }
+        ]
+      };
+    }
+
+    if (year === 1999) {
+      return {
+        title: "1999: ENERGIA DAS MARÉS E OCEANOS (MAREMOTRIZ)",
+        desc: `A energia maremotriz aproveita o movimento de subida e descida das marés e das correntes oceânicas. Diques costeiros com comportas e turbinas submersas bidirecionais convertem a energia cinética e potencial das massas de água do mar em eletricidade limpa.`,
+        ticker: "1999 • Energias Oceânicas: Centrais maremotrizes em estuários e baías aproveitam o ciclo lunar das marés.",
+        concept: "🔬 FÍSICA: Energia Cinética e Potencial Gravitacional das Marés Oceânicas | 🌍 GEOGRAFIA: Zonas Costeiras de Alta Amplitude de Maré (Reino Unido, França, Brasil)",
+        options: [
+          { text: "🌊 Usina Maremotriz Costeira com Turbinas Submersas Bidirecionais (+30 MW | Custo: $32M)", cost: 32, effect: p => { p.capacity.wind += 30; p.capital -= 32; } },
+          { text: "💧 Repotenciação de Usinas Hidroelétricas de Médio Porte (+30 MW | Custo: $24M)", cost: 24, effect: p => { p.capacity.hydro += 30; p.capital -= 24; } },
+          { text: "📜 Patentes de Turbinas Hidráulicas Resistentes à Corrosão Marinha (+2 Patentes | Custo: $24M)", cost: 24, effect: p => { p.patents += 2; p.capital -= 24; } },
+          { text: "🛡️ Acordo de Cooperação em Tecnologias Marinhas (Gratuito | +7% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 7); } }
         ]
       };
     }
 
     // 4. DÉCADA DE 2000 (2000 – 2009)
+    if (year === 2000) {
+      return {
+        title: "2000: ENTRADA EM OPERAÇÃO DE ANGRA 2 NO RIO DE JANEIRO",
+        desc: `A Usina Nuclear de Angra 2 (1.350 MW) inicia suas operações no litoral de Angra dos Reis (RJ). Atendendo a demanda de base da Região Sudeste com estabilidade contínua, complementa o sistema hidrelétrico sem oscilar com secas ou variações meteorológicas.`,
+        ticker: "2000 • Angra 2: Nova unidade termonuclear entra no Sistema Interligado Nacional fortalecendo o Sudeste.",
+        concept: "🔬 FÍSICA: Fissão Termonuclear de Alta Potência, Estabilidade de Frequência e 3 Circuitos Independentes | 🌍 GEOGRAFIA: Matriz Energética do Rio de Janeiro e Centralização no Sudeste",
+        options: [
+          { text: "⚛️ Conexão de Grande Reator Nuclear de Base à Malha Nacional (+45 MW | Custo: $42M)", cost: 42, effect: p => { p.capacity.nuclear += 45; p.capital -= 42; } },
+          { text: "🌿 Co-geração a partir do Bagaço de Cana no Setor Sucroalcooleiro (+35 MW | Custo: $26M)", cost: 26, effect: p => { p.capacity.biofuels += 35; p.capital -= 26; } },
+          { text: "📜 Patentes de Sistemas Digitais de Controle e Proteção Nuclear (+2 Patentes | Custo: $26M)", cost: 26, effect: p => { p.patents += 2; p.capital -= 26; } },
+          { text: "💰 Emissão de Debêntures para Expansão Elétrica (Receita: +$35M Capital)", cost: 0, effect: p => { p.capital += 35; } }
+        ]
+      };
+    }
+
     if (year === 2001) {
       return {
-        title: "2001: RACIONAMENTO & SECA DOS RESERVATÓRIOS",
-        desc: `Falta de chuvas e escassez de planejamento provocam surto de racionamento elétrico. O governo de ${nationName} enfrenta crise de aprovação.`,
-        ticker: "2001 • RACIONAMENTO ELÉTRICO! Secas severas e baixo nível dos reservatórios exigem corte de consumo.",
-        concept: "🔬 FÍSICA: Energia Potencial Gravitacional (E_p = m·g·h) | 🌍 GEOGRAFIA: Regimes Pluviométricos & Bacias Hidrográficas",
+        title: "2001: A CRISE DO APAGÃO NO BRASIL & ENERGIA POTENCIAL GRAVITACIONAL",
+        desc: `Secas severas esvaziam os reservatórios hidrelétricos, reduzindo drasticamente a energia potencial gravitacional (Epg = m·g·h) e forçando um racionamento elétrico nacional. O governo de ${nationName} precisa diversificar as fontes para não paralisar o PIB.`,
+        ticker: "2001 • CRISE DO APAGÃO: Estiagem nas bacias hidrográficas impõe racionamento de 20% no consumo nacional.",
+        concept: "🔬 FÍSICA: Energia Potencial Gravitacional (Epg = m·g·h) e Risco Hidrológico em Reservatórios | 🌍 GEOGRAFIA: Regimes Pluviométricos, Bacias do Sudeste/Centro-Oeste & Racionamento Elétrico",
         options: [
-          { text: "🌋 Expansão de Geotérmica / Biomassa de Emergência (+35 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.geothermal += 35; p.capital -= 30; } },
-          { text: "🛢️ Contratação Apressada de Usinas Térmicas (+40 MW | Custo: $26M)", cost: 26, effect: p => { p.capacity.thermal += 40; p.capital -= 26; globalFootprint += 18; } },
-          { text: "📜 Licenciar Tecnologia de Gestão de Carga (+2 Patentes | Custo: $22M)", cost: 22, effect: p => { p.patents += 2; p.capital -= 22; } },
-          { text: "🛡️ Campanha de Conscientização de Consumo (Gratuito | +8% Estabilidade)", cost: 0, effect: p => { p.stability = Math.min(100, p.stability + 8); } }
+          { text: "🛢️ Contratação Emergencial de Usinas Termelétricas a Gás Natural (+40 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.thermal += 40; p.capital -= 28; globalFootprint += 16; } },
+          { text: "🌿 Expansão Acelerada de Biomassa de Cana e Eucalipto (+35 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.biofuels += 35; p.capital -= 28; } },
+          { text: "📜 Patentes de Gestão de Carga e Software de Despacho Hidrotérmico (+2 Patentes | Custo: $22M)", cost: 22, effect: p => { p.patents += 2; p.capital -= 22; } },
+          { text: "🛡️ Campanha de Redução de Consumo e Metas Residencias (Gratuito | +8% Estabilidade)", cost: 0, effect: p => { p.stability = Math.min(100, p.stability + 8); } }
+        ]
+      };
+    }
+
+    if (year === 2002) {
+      return {
+        title: "2002: CÁLCULO DO CONSUMO ELÉTRICO RESIDENCIAL (E = P·Δt)",
+        desc: `O consumo de eletricidade é calculado pelo produto da potência pelo tempo de uso (E = P·Δt, com medição em kWh: K = P·T/1000). Chuveiros elétricos de 5.000 W e condicionadores de ar respondem pelos picos de demanda nas residências de ${nationName}.`,
+        ticker: "2002 • Eficiência Energética: Selos de conservação e medidores digitais reduzem o consumo em kWh nos lares.",
+        concept: "🔬 FÍSICA: Consumo de Energia Elétrica (E = P·Δt), Potência em Watts e Medição em Quilowatts-hora (kWh) | 🌍 GEOGRAFIA: Demanda Residencial, Comercial e Industrial de Eletricidade",
+        options: [
+          { text: "💡 Programa de Eficiência de Chuveiros, Motores e Eletrodomésticos (+30 MW | Custo: $22M)", cost: 22, effect: p => { p.capacity.hydro += 30; p.capital -= 22; } },
+          { text: "🌬️ Instalação de Turbinas Eólicas no Litoral Nordestino (+30 MW | Custo: $26M)", cost: 26, effect: p => { p.capacity.wind += 30; p.capital -= 26; } },
+          { text: "📜 Patentes de Medidores Inteligentes e Inversores de Frequência (+2 Patentes | Custo: $22M)", cost: 22, effect: p => { p.patents += 2; p.capital -= 22; } },
+          { text: "💰 Programa de Tarifação por Faixa de Consumo Horário (Receita: +$35M | +5% Confiança)", cost: 0, effect: p => { p.capital += 35; p.trust = Math.min(100, p.trust + 5); } }
         ]
       };
     }
 
     if (year === 2003) {
       return {
-        title: "2003: O GRANDE APAGÃO DA AMÉRICA DO NORTE & EUROPA",
-        desc: "Efeito dominó por falha de chaveamento deixa 50 milhões de pessoas no escuro. A automação da malha vira emergência nacional.",
-        ticker: "2003 • Grande Apagão Continental! Falha em malhas interconectadas paralisa grandes metrópoles.",
-        concept: "🔬 FÍSICA: Leis de Kirchhoff & Ressonância em Malhas Elétricas | 🌍 GEOGRAFIA: Megalópoles & Vulnerabilidade Urbana",
+        title: "2003: O GRANDE APAGÃO CONTINENTAL & TRANSFORMADORES DE DISTRIBUIÇÃO",
+        desc: `Uma falha de chaveamento em subestações provoca um apagão em cascata que deixa 50 milhões de pessoas sem luz na América do Norte e Europa. A 4ª etapa do transporte elétrico depende de transformadores de distribuição em postes para entregar 127V/220V com segurança.`,
+        ticker: "2003 • GRANDE APAGÃO: Efeito dominó desliga redes interconectadas e paralisa megalópoles mundiais.",
+        concept: "🔬 FÍSICA: Transformadores (Vp/Vs = Np/Ns), Linhas de Alta Tensão e Estabilidade de Frequência | 🌍 GEOGRAFIA: Redes Elétricas Interconectadas, Vulnerabilidade das Megalópoles & Automação",
         options: [
-          { text: "⚡ Modernização Digital de Subestações (+35 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.hydro += 35; p.capital -= 30; } },
-          { text: "⚛️ Adicionar Reator Nuclear Modular (+35 MW | Custo: $38M)", cost: 38, effect: p => { p.capacity.nuclear += 35; p.capital -= 38; } },
-          { text: "📜 Patentes de Software de Gestão de Carga (+2 Patentes | Custo: $24M)", cost: 24, effect: p => { p.patents += 2; p.capital -= 24; } },
-          { text: "🛡️ Manutenção de Emergência da Malha (Custo: $12M | +10% Estabilidade)", cost: 12, effect: p => { p.capital -= 12; p.stability = Math.min(100, p.stability + 10); } }
+          { text: "⚡ Modernização Digital de Subestações e Transformadores de Distribuição (+35 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.hydro += 35; p.capital -= 30; } },
+          { text: "⚛️ Reator Nuclear Modular Adicional para Segurança de Base (+35 MW | Custo: $38M)", cost: 38, effect: p => { p.capacity.nuclear += 35; p.capital -= 38; } },
+          { text: "📜 Patentes de Relés Digitais e Chaveamento Automático de Carga (+2 Patentes | Custo: $24M)", cost: 24, effect: p => { p.patents += 2; p.capital -= 24; } },
+          { text: "🛡️ Plano de Manutenção Preventiva e Inspeção da Malha (Custo: $12M | +10% Estabilidade)", cost: 12, effect: p => { p.capital -= 12; p.stability = Math.min(100, p.stability + 10); } }
+        ]
+      };
+    }
+
+    if (year === 2004) {
+      return {
+        title: "2004: ARMAZENAMENTO ELETROQUÍMICO: BATERIAS DE ÍONS DE LÍTIO",
+        desc: `Baterias eletroquímicas (como de íons de lítio e ácido-chumbo) utilizam reações reversíveis de oxirredução para armazenar energia química e liberá-la como corrente elétrica contínua. Elas viabilizam a autonomia de eletrônicos e a integração de fontes renováveis intermitentes.`,
+        ticker: "2004 • Eletroquímica: Baterias de íons de lítio avançam na indústria automobilística e em sistemas de backup.",
+        concept: "🔬 FÍSICA/QUÍMICA: Eletroquímica, Reações de Oxirredução Reversíveis e Armazenamento Químico | 🌍 GEOGRAFIA: Mineração de Lítio, Eletrificação Veicular & Transição Energética",
+        options: [
+          { text: "🔋 Instalação de Bancos de Baterias de Lítio para Backup da Rede (+35 MW | Custo: $32M)", cost: 32, effect: p => { p.capacity.wind += 35; p.capital -= 32; } },
+          { text: "🌿 Expansão de Usinas de Biodiesel a partir de Óleos Vegetais (+30 MW | Custo: $25M)", cost: 25, effect: p => { p.capacity.biofuels += 30; p.capital -= 25; } },
+          { text: "📜 Patentes de Células de Lítio-Polímero e Eletrólitos Sólidos (+2 Patentes | Custo: $25M)", cost: 25, effect: p => { p.patents += 2; p.capital -= 25; } },
+          { text: "💰 Incentivos Fiscais para Eletrificação e Armazenamento Local (Receita: +$30M | +5% Confiança)", cost: 0, effect: p => { p.capital += 30; p.trust = Math.min(100, p.trust + 5); } }
         ]
       };
     }
 
     if (year === 2005) {
       return {
-        title: "2005: MERCADO DE EMISSÕES DA UE (EU ETS)",
-        desc: "Entra em operação o maior mercado de carbono do mundo. Poluir ganha preço financeiro direto por tonelada de CO₂e.",
-        ticker: "2005 • Lançado o Mercado de Emissões da UE! Tonelada de CO2 ganha cotação em bolsa de valores.",
-        concept: "🔬 FÍSICA: Valoração de Carbono Equivalente (CO₂e) | 🌍 GEOGRAFIA: Comércio Transfronteiriço de Licenças",
+        title: "2005: MERCADO DE CARBONO (EU ETS) & EQUIPARTIÇÃO DE ENERGIA EM GASES",
+        desc: `A União Europeia inaugura o mercado de emissões (EU ETS), precificando a tonelada de CO2e. O teorema da equipartição e a equação de Clapeyron (PV = nRT) modelam a energia interna de gases ideais (U = 3/2·nRT = 3/2·PV) nas turbinas térmicas de ciclo combinado de ${nationName}.`,
+        ticker: "2005 • Mercado de Carbono: Lançado o EU ETS, precificando emissões industriais na bolsa de valores.",
+        concept: "🔬 FÍSICA: Energia Interna de Gases Ideais (U = 3/2·nRT = 3/2·PV) e Ciclos Térmicos Brayton-Rankine | 🌍 GEOGRAFIA: Mercado Europeu de Emissões (EU ETS) & Comércio de Licenças de CO2",
         options: [
-          { text: "🌱 Migração Total para Parques Eólicos/Solares (+45 MW | Custo: $40M)", cost: 40, effect: p => { p.capacity.wind += 45; p.capital -= 40; globalFootprint = Math.max(0, globalFootprint - 20); } },
-          { text: "📜 Comercialização Global de Licenças Verdes (+3 Patentes | Custo: $30M)", cost: 30, effect: p => { p.patents += 3; p.capital -= 30; } },
-          { text: "🏭 Pagar Taxa de Poluição e Manter Térmicas (+40 MW | Custo: $20M)", cost: 20, effect: p => { p.capacity.thermal += 40; p.capital -= 20; globalFootprint += 22; } },
-          { text: "💰 Subvenção Fiscais a Empresas de Baixa Emissão (Receita: +$35M Capital)", cost: 0, effect: p => { p.capital += 35; } }
+          { text: "🌱 Migração Total de Térmicas Poluentes para Parques Eólicos e Solares (+45 MW | Custo: $40M)", cost: 40, effect: p => { p.capacity.wind += 45; p.capital -= 40; globalFootprint = Math.max(0, globalFootprint - 20); } },
+          { text: "📜 Comercialização de Licenças de Carbono e Patentes de Alta Eficiência (+3 Patentes | Custo: $30M)", cost: 30, effect: p => { p.patents += 3; p.capital -= 30; } },
+          { text: "🏭 Pagar Taxa de Poluição e Manter Centrais Térmicas a Carvão (+40 MW | Custo: $20M)", cost: 20, effect: p => { p.capacity.thermal += 40; p.capital -= 20; globalFootprint += 22; } },
+          { text: "💰 Subvenções Fiscais a Indústrias Descarbonizadas (Receita: +$35M Capital)", cost: 0, effect: p => { p.capital += 35; } }
+        ]
+      };
+    }
+
+    if (year === 2006) {
+      return {
+        title: "2006: DESCOBERTA DO PRÉ-SAL & CAMPO DE TUPI NA BACIA DE SANTOS",
+        desc: `A Petrobras descobre jazidas gigantes de petróleo e gás natural sob espessa camada de sal no Campo de Tupi (Bacia de Santos, RJ). A extração a mais de 5.000 metros de profundidade enfrenta altíssima pressão hidrostática (P = ρ·g·h) e gera mais de 85% do gás nacional em plataformas offshore.`,
+        ticker: "2006 • Descoberta do Pré-Sal: Brasil descobre megacampos de petróleo e gás natural associado na Bacia de Santos.",
+        concept: "🔬 FÍSICA: Pressão Hidrostática em Águas Profundas (P = ρ·g·h) e Gás Natural Associado | 🌍 GEOGRAFIA: Bacia de Santos (Campo de Tupi, RJ), Plataformas Continentais Offshore & Soberania",
+        options: [
+          { text: "🛢️ Plataformas Flutuantes Offshore de Petróleo e Gás Natural (+50 MW | Custo: $38M)", cost: 38, effect: p => { p.capacity.thermal += 50; p.capital -= 38; globalFootprint += 16; } },
+          { text: "🌿 Cogeração a Partir da Cana e Biocombustíveis de Alta Escala (+35 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.biofuels += 35; p.capital -= 28; } },
+          { text: "📜 Patentes de Perfuração Submarina em Águas Ultraprofundas (+3 Patentes | Custo: $30M)", cost: 30, effect: p => { p.patents += 3; p.capital -= 30; } },
+          { text: "💰 Royalties do Petróleo e Gás Destinados ao Fundo Soberano (Receita: +$40M Capital)", cost: 0, effect: p => { p.capital += 40; } }
+        ]
+      };
+    }
+
+    if (year === 2007) {
+      return {
+        title: "2007: ENERGIA SOLAR FOTOVOLTAICA: SILÍCIO & EFEITO FOTOVOLTAICO",
+        desc: `As células solares fotovoltaicas utilizam semicondutores de silício abundante para converter diretamente a radiação eletromagnética do Sol em eletricidade por meio do efeito fotovoltaico. O sistema gera corrente contínua (CC), que é convertida por um inversor solar em corrente alternada (CA).`,
+        ticker: "2007 • Fotovoltaica: Inversores solares e células de silício tornam a microgeração residencial uma realidade viável.",
+        concept: "🔬 FÍSICA: Efeito Fotovoltaico em Semicondutores de Silício, Corrente Contínua (CC) e Inversor Solar (CC -> CA) | 🌍 GEOGRAFIA: Radiação Solar no Cinturão Tropical Brasileiro e Geração Distribuída",
+        options: [
+          { text: "🌞 Instalação de Parques Solares Fotovoltaicos e Inversores de Rede (+40 MW | Custo: $34M)", cost: 34, effect: p => { p.capacity.wind += 40; p.capital -= 34; globalFootprint = Math.max(0, globalFootprint - 14); } },
+          { text: "💧 Usinas Hidroelétricas a Fio d'Água com Menor Superfície Inundada (+35 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.hydro += 35; p.capital -= 28; } },
+          { text: "📜 Registro de Patentes de Células de Silício Monocristalino (+2 Patentes | Custo: $24M)", cost: 24, effect: p => { p.patents += 2; p.capital -= 24; } },
+          { text: "🛡️ Linha de Crédito para Instalação de Painéis Solares em Telhados (Gratuito | +7% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 7); } }
         ]
       };
     }
 
     if (year === 2008) {
       return {
-        title: "2008: CRISE FINANCEIRA GLOBAL & ESCASSEZ DE CRÉDITO",
-        desc: "O colapso dos grandes bancos norte-americanos paralisa o financiamento de obras energéticas em todo o planeta.",
-        ticker: "2008 • CRISE FINANCEIRA GLOBAL! Falência de bancos paralisa obras de infraestrutura.",
-        concept: "🔬 FÍSICA: Escala de Eficiência Energética de Instalações | 🌍 GEOGRAFIA: Globalização Financeira & Mercados",
+        title: "2008: CRISE FINANCEIRA GLOBAL & MODULARIDADE ENERGÉTICA",
+        desc: `A quebra de grandes bancos nos EUA desencadeia recessão mundial e paralisa linhas de crédito para megaprojetos de infraestrutura. Projetos de energia eólica e biomassa destacam-se por sua instalação rápida (menos de 6 meses) e rápida recuperação do capital investido.`,
+        ticker: "2008 • CRISE FINANCEIRA GLOBAL: Escassez de crédito internacional favorece obras energéticas modulares e de rápido retorno.",
+        concept: "🔬 FÍSICA: Escala de Eficiência e Tempo de Instalação de Turbinas Geradoras | 🌍 GEOGRAFIA: Globalização Financeira, Restrição de Crédito e Investimentos em Infraestrutura",
         options: [
-          { text: "⚡ Otimizar Eficiência de Redes Existentes (+20 MW | Custo: $15M)", cost: 15, effect: p => { p.capacity.hydro += 20; p.capital -= 15; } },
-          { text: "🏛️ Injeção de Capital Estatal na Economia (Receita: +$45M | -4% PIB)", cost: 0, effect: p => { p.capital += 45; p.gdp *= 0.96; } },
-          { text: "🌿 Projetos Renováveis Descentralizados (+25 MW | Custo: $22M)", cost: 22, effect: p => { p.capacity.wind += 25; p.capital -= 22; } },
-          { text: "🛡️ Pacote de Socorro às Concessionárias (Gratuito | +8% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 8); } }
+          { text: "🌬️ Parques Eólicos Modulares de Rápida Montagem e Baixo Custo Operacional (+35 MW | Custo: $26M)", cost: 26, effect: p => { p.capacity.wind += 35; p.capital -= 26; } },
+          { text: "⚡ Otimizar Eficiência de Linhas e Transformadores Existentes (+20 MW | Custo: $16M)", cost: 16, effect: p => { p.capacity.hydro += 20; p.capital -= 16; } },
+          { text: "🏛️ Injeção de Liquidez Estatal na Economia Nacional (Receita: +$45M | -4% PIB)", cost: 0, effect: p => { p.capital += 45; p.gdp *= 0.96; } },
+          { text: "🛡️ Pacote de Socorro e Garantias Financeiras às Concessionárias (Gratuito | +8% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 8); } }
+        ]
+      };
+    }
+
+    if (year === 2009) {
+      return {
+        title: "2009: OS VENTOS ALÍSIOS DO NORDESTE BRASILEIRO & RECORDE EÓLICO",
+        desc: `O Nordeste brasileiro destaca-se mundialmente pela força e constância dos Ventos Alísios (que sopram de leste para oeste em direção ao Equador). No segundo semestre, quando os reservatórios hidrelétricos sofrem com estiagem, os ventos tornam-se mais intensos, compensando o desequilíbrio na geração.`,
+        ticker: "2009 • Ventos do Nordeste: Parques eólicos na Bahia, RN e Ceará compensam a redução das chuvas nas hidrelétricas.",
+        concept: "🔬 FÍSICA: Convecção Térmica Atmosférica, Força de Coriolis e Energia Cinética dos Ventos Alísios | 🌍 GEOGRAFIA: Sub-regiões do Nordeste (Litoral, Sertão, Agreste) & Complementaridade Hidro-Eólica",
+        options: [
+          { text: "🌬️ Megaparques Eólicos no Rio Grande do Norte, Bahia e Ceará (+45 MW | Custo: $36M)", cost: 36, effect: p => { p.capacity.wind += 45; p.capital -= 36; globalFootprint = Math.max(0, globalFootprint - 12); } },
+          { text: "🌿 Expansão de Usinas a Bagaço de Cana e Casca de Coco Verde (+30 MW | Custo: $24M)", cost: 24, effect: p => { p.capacity.biofuels += 30; p.capital -= 24; } },
+          { text: "📜 Patentes de Mapeamento Anemométrico e Controle de Rotação (+2 Patentes | Custo: $24M)", cost: 24, effect: p => { p.patents += 2; p.capital -= 24; } },
+          { text: "💰 Leilão de Energia de Reserva para o Sistema Interligado (Receita: +$35M Capital)", cost: 0, effect: p => { p.capital += 35; } }
         ]
       };
     }
 
     // 5. DÉCADA DE 2010 A 2020 (2010 – 2020)
+    if (year === 2010) {
+      return {
+        title: "2010: PARQUES EÓLICOS ONSHORE vs OFFSHORE NO BRASIL E NO MUNDO",
+        desc: `A capacidade eólica mundial atinge marcos históricos com liderança da China, EUA e Alemanha. A tecnologia divide-se em Onshore (em terra, com pás menores) e Offshore (no mar, com ventos constantes e sem barreiras físicas, porém exigindo materiais resistentes à corrosão salina).`,
+        ticker: "2010 • Eólica Global: China lidera a produção mundial enquanto o Brasil atinge a 7ª posição em capacidade instalada.",
+        concept: "🔬 FÍSICA: Rugosidade Superficial, Velocidade do Vento Marinho e Resistência dos Materiais à Corrosão | 🌍 GEOGRAFIA: Instalações Onshore no Litoral vs Parques Eólicos Offshore no Mar",
+        options: [
+          { text: "🌬️ Complexo Eólico Offshore com Turbinas de Grande Porte (+50 MW | Custo: $42M)", cost: 42, effect: p => { p.capacity.wind += 50; p.capital -= 42; } },
+          { text: "💧 Repotenciação de Usinas no Complexo de Paulo Afonso (Rio São Francisco) (+35 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.hydro += 35; p.capital -= 28; } },
+          { text: "📜 Patentes de Ligas Metálicas Anticorrosivas para Meio Marinho (+2 Patentes | Custo: $25M)", cost: 25, effect: p => { p.patents += 2; p.capital -= 25; } },
+          { text: "🛡️ Medidas de Proteção para Evitar Colisão de Aves e Morcegos Migratórios (Gratuito | +7% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 7); } }
+        ]
+      };
+    }
+
     if (year === 2011) {
       return {
-        title: "2011: FUKUSHIMA & A PARALISAÇÃO NUCLEAR GLOBAL",
-        desc: "O tsunami no Japão provoca colapso na usina de Fukushima. Países reavaliam ou desligam reatores nucleares.",
-        ticker: "2011 • Tsunami em Fukushima! Desastre nuclear força o desligamento de reatores em vários países.",
-        concept: "🔬 FÍSICA: Resfriamento Convectivo de Reatores & Vaporização | 🌍 GEOGRAFIA: Tectônica de Placas & Tsunamis",
+        title: "2011: O ACIDENTE DE FUKUSHIMA DAIICHI & RESFRIAMENTO CONVECTIVO",
+        desc: `Um terremoto seguido de tsunami no Japão inunda os geradores a diesel da Usina de Fukushima Daiichi, paralisando as bombas de resfriamento. Sem água para retirar o calor do núcleo do reator, o superaquecimento gera vapor e fusão parcial, forçando a evacuação de milhares de pessoas.`,
+        ticker: "2011 • TRAGÉDIA EM FUKUSHIMA: Tsunami provoca colapso de reatores no Japão e revisão mundial da matriz nuclear.",
+        concept: "🔬 FÍSICA: Transferência de Calor por Convecção Forçada, Vaporização sob Pressão e Reações Nucleares Residual | 🌍 GEOGRAFIA: Tectônica de Placas no Círculo de Fogo do Pacífico, Tsunamis & Gestão de Riscos",
         options: [
-          { text: "🌞 Substituição Massiva por Parque Solar/Eólico (+45 MW | Custo: $40M)", cost: 40, effect: p => { p.capacity.wind += 45; p.capital -= 40; globalFootprint = Math.max(0, globalFootprint - 15); } },
-          { text: "🛢️ Queimar Gás Natural em Térmicas Emergenciais (+40 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.thermal += 40; p.capital -= 28; globalFootprint += 14; } },
-          { text: "⚛️ Reestruturação Extrema de Segurança Nuclear (+30 MW | Custo: $35M)", cost: 35, effect: p => { p.capacity.nuclear += 30; p.capital -= 35; } },
-          { text: "🛡️ Descomissionamento Gradual e Auditoria (Gratuito | +7% Estabilidade)", cost: 0, effect: p => { p.stability = Math.min(100, p.stability + 7); } }
+          { text: "🌞 Substituição Massiva de Nuclear por Parques Solares Fotovoltaicos (+45 MW | Custo: $40M)", cost: 40, effect: p => { p.capacity.wind += 45; p.capital -= 40; globalFootprint = Math.max(0, globalFootprint - 15); } },
+          { text: "🛢️ Termelétricas a Gás Natural para Garantir a Segurança de Base (+40 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.thermal += 40; p.capital -= 28; globalFootprint += 14; } },
+          { text: "⚛️ Reestruturação Extrema com Geradores Subterrâneos à Prova de Inundação (+30 MW | Custo: $35M)", cost: 35, effect: p => { p.capacity.nuclear += 30; p.capital -= 35; } },
+          { text: "🛡️ Descomissionamento Gradual de Centrais Antigas e Auditoria Externa (Gratuito | +7% Estabilidade)", cost: 0, effect: p => { p.stability = Math.min(100, p.stability + 7); } }
         ]
       };
     }
 
     if (year === 2012) {
       return {
-        title: "2012: REVOLUÇÃO DO GÁS DE XISTO (SHALE GAS)",
-        desc: "Técnicas de fraturamento hidráulico (fracking) disparam a produção de gás natural e barateiam a energia fóssil.",
-        ticker: "2012 • Boom do Gás de Xisto! Fraturamento hidráulico transforma o mercado global de combustíveis.",
-        concept: "🔬 FÍSICA: Porosidade & Permeabilidade de Rochas Folhelho | 🌍 GEOGRAFIA: Geologia Sedimentar & Recursos Não-Renováveis",
+        title: "2012: FRATURAMENTO HIDRÁULICO & GÁS DE XISTO (SHALE GAS)",
+        desc: `A técnica de fraturamento hidráulico (fracking) em rochas sedimentares porosas de folhelho (shale) revoluciona a produção de gás natural e petróleo nos EUA. O aumento da oferta de metano barateia a energia, mas gera preocupações sobre contaminação de aquíferos subterrâneos.`,
+        ticker: "2012 • Revolução do Gás de Xisto: O fracking barateia combustíveis fósseis nos EUA e altera a geopolítica mundial.",
+        concept: "🔬 FÍSICA: Porosidade, Permeabilidade e Mecânica de Fraturamento em Rochas Folhelho | 🌍 GEOGRAFIA: Geologia Sedimentar, Aquíferos Subterrâneos & Recursos Não-Renováveis",
         options: [
-          { text: "🛢️ Usinas Térmicas a Gás de Xisto (+50 MW | Custo: $32M)", cost: 32, effect: p => { p.capacity.thermal += 50; p.capital -= 32; globalFootprint += 14; } },
-          { text: "🌞 Expansão de Parques Solares Fotovoltaicos (+40 MW | Custo: $36M)", cost: 36, effect: p => { p.capacity.wind += 40; p.capital -= 36; globalFootprint = Math.max(0, globalFootprint - 10); } },
-          { text: "📜 Patentes de Fraturamento Ecológico (+2 Patentes | Custo: $25M)", cost: 25, effect: p => { p.patents += 2; p.capital -= 25; } },
-          { text: "🛡️ Isenção Fiscal para Indústrias Eletrointensivas (Gratuito | +6% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 6); } }
+          { text: "🛢️ Usinas Termelétricas a Gás de Xisto de Baixo Custo (+50 MW | Custo: $32M)", cost: 32, effect: p => { p.capacity.thermal += 50; p.capital -= 32; globalFootprint += 14; } },
+          { text: "🌞 Expansão de Parques Solares Fotovoltaicos de Silício (+40 MW | Custo: $36M)", cost: 36, effect: p => { p.capacity.wind += 40; p.capital -= 36; globalFootprint = Math.max(0, globalFootprint - 10); } },
+          { text: "📜 Patentes de Fluidos de Fraturamento com Menor Impacto Ambiental (+2 Patentes | Custo: $25M)", cost: 25, effect: p => { p.patents += 2; p.capital -= 25; } },
+          { text: "🛡️ Isenção Fiscal para Indústrias Eletrointensivas Nacionais (Gratuito | +6% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 6); } }
+        ]
+      };
+    }
+
+    if (year === 2013) {
+      return {
+        title: "2013: BIOMASSA DE EUCALIPTO & COGERAÇÃO NO SETOR SUCROALCOOLEIRO",
+        desc: `No Brasil, o cultivo planejado de eucalipto produz cerca de 25 toneladas de biomassa por hectare ao ano com ciclo de 15 anos. Junto ao bagaço e palha de cana-de-açúcar, alimenta caldeiras de cogeração que geram calor e eletricidade para o Sistema Interligado Nacional (SIN).`,
+        ticker: "2013 • Bioenergia: A queima de bagaço e madeira de reflorestamento consolida a biomassa como a 3ª maior fonte elétrica do Brasil.",
+        concept: "🔬 FÍSICA/QUÍMICA: Poder Calorífico da Biomassa Sólida, Torrefação e Cogeração Termoelétrica | 🌍 GEOGRAFIA: Silvicultura de Eucalipto, Agronegócio Canavieiro & Economia Circular",
+        options: [
+          { text: "🌿 Complexos de Cogeração Bioelétrica a Bagaço e Eucalipto (+40 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.biofuels += 40; p.capital -= 30; } },
+          { text: "⚡ Linhas de Transmissão Integrando Usinas de Biomassa ao SIN (+30 MW | Custo: $24M)", cost: 24, effect: p => { p.capacity.hydro += 30; p.capital -= 24; } },
+          { text: "📜 Patentes de Briquetagem, Pallets de Alta Densidade e Torrefação (+2 Patentes | Custo: $24M)", cost: 24, effect: p => { p.patents += 2; p.capital -= 24; } },
+          { text: "💰 Incentivo Fiscal para Aproveitamento de Resíduos Florestais (Receita: +$35M Capital)", cost: 0, effect: p => { p.capital += 35; } }
+        ]
+      };
+    }
+
+    if (year === 2014) {
+      return {
+        title: "2014: PROJETO SMILE & ENERGIA SOLAR HELIOTÉRMICA NO SEMIÁRIDO",
+        desc: `O Ministério de Minas e Energia desenvolve o projeto SMILE e pesquisas em Petrolina (PE) para implantar usinas solares híbridas com microturbinas no semiárido brasileiro. A tecnologia usa espelhos helióstatos para gerar vapor e calor industrial com alta eficiência.`,
+        ticker: "2014 • Projeto SMILE: Plataformas de pesquisa testam cogeração heliotérmica na agroindústria do Nordeste.",
+        concept: "🔬 FÍSICA: Foco Óptico, Termodinâmica de Fluidos Caloportadores e Microturbinas a Vapor | 🌍 GEOGRAFIA: Semiárido Nordestino, Bacia do São Francisco (Petrolina) & Agroindústria Irrigada",
+        options: [
+          { text: "🌞 Usinas Solares Híbridas com Cogeração Térmica Agroindustrial (+35 MW | Custo: $32M)", cost: 32, effect: p => { p.capacity.wind += 35; p.capital -= 32; } },
+          { text: "💧 Otimização de Vazão nas Usinas de Xingó e Paulo Afonso (+30 MW | Custo: $24M)", cost: 24, effect: p => { p.capacity.hydro += 30; p.capital -= 24; } },
+          { text: "📜 Patentes de Microturbinas Solares e Coletores Espelhados (+2 Patentes | Custo: $25M)", cost: 25, effect: p => { p.patents += 2; p.capital -= 25; } },
+          { text: "🛡️ Acordo de Integração Energética para o Vale do São Francisco (Gratuito | +7% Confiança)", cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 7); } }
         ]
       };
     }
 
     if (year === 2015) {
       return {
-        title: "2015: HISTÓRICO ACORDO DE PARIS (COP 21)",
-        desc: "195 nações assinam o acordo para limitar o aquecimento global a 1,5°C. A descarbonização torna-se lei internacional.",
-        ticker: "2015 • ACORDO DE PARIS! Compromisso histórico para manter o aquecimento global abaixo de 1.5°C.",
-        concept: "🔬 FÍSICA: Balanço Térmico Planetário & Emissividades | 🌍 GEOGRAFIA: Acordo Clima de Paris & Descarbonização",
+        title: "2015: HISTÓRICO ACORDO DE PARIS (COP 21) & DESCARBONIZAÇÃO",
+        desc: `195 nações assinam o Acordo de Paris para limitar o aquecimento global a 1,5°C. O setor elétrico brasileiro destaca-se com baixas emissões (cerca de 59,9 kg de CO2/MWh, representando 23% da média europeia e 9% da chinesa), acelerando a transição global.`,
+        ticker: "2015 • ACORDO DE PARIS: Tratado mundial histórico estabelece metas obrigatórias para conter a temperatura global em 1.5°C.",
+        concept: "🔬 FÍSICA: Intensidade de Carbono por MWh Gerado (kg CO2/MWh) e Efeito Estufa | 🌍 GEOGRAFIA: Acordo de Paris (COP 21), Metas Nacionais (NDCs) & Matriz Elétrica Brasileira Limpa",
         options: [
-          { text: "🌞 Megaprojeto Solar & Eólico Offshore (+55 MW | Custo: $45M)", cost: 45, effect: p => { p.capacity.wind += 55; p.capital -= 45; globalFootprint = Math.max(0, globalFootprint - 25); } },
-          { text: "🌿 Expansão de Biocombustíveis de 2ª Geração (+40 MW | Custo: $35M)", cost: 35, effect: p => { p.capacity.biofuels += 40; p.capital -= 35; } },
-          { text: "⚛️ Reatores de Pequena Escala (SMR) (+45 MW | Custo: $40M)", cost: 40, effect: p => { p.capacity.nuclear += 45; p.capital -= 40; } },
-          { text: "📜 Fundo de Inovação e Licenciamento (+3 Patentes | Custo: $30M)", cost: 30, effect: p => { p.patents += 3; p.capital -= 30; } }
+          { text: "🌞 Megaprojeto Solar Fotovoltaico e Parques Eólicos Offshore (+55 MW | Custo: $45M)", cost: 45, effect: p => { p.capacity.wind += 55; p.capital -= 45; globalFootprint = Math.max(0, globalFootprint - 25); } },
+          { text: "🌿 Expansão de Biocombustíveis Avançados e Política RenovaBio (+40 MW | Custo: $35M)", cost: 35, effect: p => { p.capacity.biofuels += 40; p.capital -= 35; } },
+          { text: "⚛️ Reatores Nucleares Modulares de Pequena Escala (SMR) (+45 MW | Custo: $40M)", cost: 40, effect: p => { p.capacity.nuclear += 45; p.capital -= 40; } },
+          { text: "📜 Fundo Multilateral de Inovação e Licenciamento Limpo (+3 Patentes | Custo: $30M)", cost: 30, effect: p => { p.patents += 3; p.capital -= 30; } }
         ]
       };
     }
 
     if (year === 2016) {
       return {
-        title: "2016: PARIDADE DE REDE DA ENERGIA SOLAR",
-        desc: "O custo das células fotovoltaicas despenca. Gerar energia solar torna-se mais barato do que construir térmicas a carvão.",
-        ticker: "2016 • Paridade de Rede Solar! Energia fotovoltaica atinge o menor custo histórico de instalação.",
-        concept: "🔬 FÍSICA: Rendimento Quântico de Semicondutores p-n (E = h·ν) | 🌍 GEOGRAFIA: Insolação Solar & Cintura de Radiação",
+        title: "2016: PARIDADE DE REDE FOTOVOLTAICA & GERAÇÃO DISTRIBUÍDA",
+        desc: `O preço do watt solar fotovoltaico despenca de US$ 76 (na década de 1970) para cerca de US$ 0,30. Gerar eletricidade a partir da luz solar em telhados de residências e comércios (geração distribuída) torna-se mais barato do que comprar da rede concessionária.`,
+        ticker: "2016 • Paridade de Rede Solar: Custo da energia fotovoltaica cai 99% em quatro décadas e democratiza a microgeração.",
+        concept: "🔬 FÍSICA: Rendimento Quântico de Semicondutores de Silício e Eficiência Energética de Inversores | 🌍 GEOGRAFIA: Geração Distribuída em Telhados (MG, RS, SP) e Compensação de Créditos pela ANEEL",
         options: [
-          { text: "🌞 Megafazenda Solar Fotovoltaica (+55 MW | Custo: $38M)", cost: 38, effect: p => { p.capacity.wind += 55; p.capital -= 38; globalFootprint = Math.max(0, globalFootprint - 22); } },
-          { text: "🌿 Usina Bioelétrica de Co-geração (+40 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.biofuels += 40; p.capital -= 30; } },
-          { text: "📜 Registrar Patentes de Células de Perovskita (+3 Patentes | Custo: $28M)", cost: 28, effect: p => { p.patents += 3; p.capital -= 28; } },
-          { text: "💰 Linha de Crédito Verde a Cidadãos (Receita: +$35M Capital)", cost: 0, effect: p => { p.capital += 35; } }
+          { text: "🌞 Megafazendas Solares e Financiamento Popular de Telhados Fotovoltaicos (+55 MW | Custo: $38M)", cost: 38, effect: p => { p.capacity.wind += 55; p.capital -= 38; globalFootprint = Math.max(0, globalFootprint - 22); } },
+          { text: "🌿 Usina Bioelétrica de Cogeração com Bagaço e Resíduos Agrícolas (+40 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.biofuels += 40; p.capital -= 30; } },
+          { text: "📜 Registrar Patentes de Células Fotovoltaicas de Alta Eficiência (+3 Patentes | Custo: $28M)", cost: 28, effect: p => { p.patents += 3; p.capital -= 28; } },
+          { text: "💰 Linha de Crédito Verde para Consumidores Residenciais (Receita: +$35M Capital)", cost: 0, effect: p => { p.capital += 35; } }
+        ]
+      };
+    }
+
+    if (year === 2017) {
+      return {
+        title: "2017: HIDROGÊNIO VERDE POR ELETRÓLISE DA ÁGUA (2 H2O -> 2 H2 + O2)",
+        desc: `O Hidrogênio Verde é produzido por meio da separação das moléculas de água em hidrogênio e oxigênio (2 H2O -> 2 H2 + O2) em eletrolisadores alimentados por fontes 100% renováveis (solar e eólica). É a solução promissora para descarbonizar indústrias de aço e transportes pesados.`,
+        ticker: "2017 • Hidrogênio Verde: Estudos apontam o litoral brasileiro e potências solares como futuros exportadores de H2 verde.",
+        concept: "🔬 FÍSICA/QUÍMICA: Eletrólise da Água (2 H2O -> 2 H2 + O2), Densidade de Energia do H2 e Vetor Energético Limpo | 🌍 GEOGRAFIA: Hubs Portuários de Hidrogênio Verde (Pecém/Ceará, Suape) e Descarbonização Industrial",
+        options: [
+          { text: "💧 Central de Eletrólise de Hidrogênio Verde Conectada a Parques Eólicos (+40 MW | Custo: $36M)", cost: 36, effect: p => { p.capacity.wind += 40; p.capital -= 36; globalFootprint = Math.max(0, globalFootprint - 18); } },
+          { text: "🌿 Biocombustíveis de 2ª Geração e BTL (Biomass-to-liquids) (+35 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.biofuels += 35; p.capital -= 28; } },
+          { text: "📜 Patentes de Membranas Eletrolíticas e Armazenamento Criogênico de H2 (+3 Patentes | Custo: $30M)", cost: 30, effect: p => { p.patents += 3; p.capital -= 30; } },
+          { text: "💰 Acordo Comercial Internacional para Exportação de Vetores Limpos (Receita: +$35M Capital)", cost: 0, effect: p => { p.capital += 35; } }
         ]
       };
     }
 
     if (year === 2018) {
       return {
-        title: "2018: REDES ELÉTRICAS INTELIGENTES & IA (SMART GRIDS)",
-        desc: "Algoritmos de inteligência artificial otimizam a distribuição de carga em tempo real, evitando desperdícios industriais.",
-        ticker: "2018 • Automação com Inteligência Artificial otimiza o fluxo de eletricidade nas malhas urbanas.",
-        concept: "🔬 FÍSICA: Teoria dos Redes & Fluxo de Potência Ótimo | 🌍 GEOGRAFIA: Cidades Inteligentes & Redes Urbanas",
+        title: "2018: REDES ELÉTRICAS INTELIGENTES (SMART GRIDS) & FLUXO ÓTIMO",
+        desc: `Algoritmos de inteligência artificial e sensores inteligentes monitoram o Sistema Interligado Nacional em tempo real. A automação reduz perdas de transmissão, prevê a intermitência dos ventos e da radiação solar e equilibra o despacho de água nos reservatórios hidrelétricos.`,
+        ticker: "2018 • Smart Grids: Redes inteligentes com automação digital otimizam o fluxo de eletricidade urbana.",
+        concept: "🔬 FÍSICA: Teoria de Redes Elétricas, Fluxo de Potência Ótimo e Redução de Perdas Joule | 🌍 GEOGRAFIA: Cidades Inteligentes, TIC no Setor Elétrico & Automação de Malhas",
         options: [
-          { text: "🤖 Implementar IA em Toda a Malha Nacional (+35 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.hydro += 35; p.capital -= 30; } },
-          { text: "🔋 Megabaterias para Armazenar Eólica/Solar (+35 MW | Custo: $35M)", cost: 35, effect: p => { p.capacity.wind += 35; p.capital -= 35; } },
-          { text: "📜 Patentes Nacionais de Algoritmos Elétricos (+3 Patentes | Custo: $28M)", cost: 28, effect: p => { p.patents += 3; p.capital -= 28; } },
-          { text: "💰 Incentivos Fiscais para Consumo Eficiente (Receita: +$35M Capital)", cost: 0, effect: p => { p.capital += 35; } }
+          { text: "🤖 Implementação de Smart Grids e IA em Toda a Malha de Transmissão (+35 MW | Custo: $30M)", cost: 30, effect: p => { p.capacity.hydro += 35; p.capital -= 30; } },
+          { text: "🔋 Bancos de Megabaterias para Armazenar Excedente Solar e Eólico (+35 MW | Custo: $35M)", cost: 35, effect: p => { p.capacity.wind += 35; p.capital -= 35; } },
+          { text: "📜 Patentes Nacionais de Algoritmos de Despacho Hidrotérmico (+3 Patentes | Custo: $28M)", cost: 28, effect: p => { p.patents += 3; p.capital -= 28; } },
+          { text: "💰 Incentivos Fiscais para Eficiência em Redes Urbanas e Prédios Inteligentes (Receita: +$35M Capital)", cost: 0, effect: p => { p.capital += 35; } }
         ]
       };
     }
 
     if (year === 2019) {
       return {
-        title: "2019: INCÊNDIOS EXTREMOS & RESILIÊNCIA DA REDE",
-        desc: "Ondas de calor e incêndios florestais ameaçam desarmar grandes linhas de transmissão. Redes exigem sensores inteligentes.",
-        ticker: "2019 • Ondas de Calor Globais! Incêndios florestais ameaçam malhas elétricas continentais.",
-        concept: "🔬 FÍSICA: Ionização do Air & Dilatação Térmica de Cabos | 🌍 GEOGRAFIA: Eventos Climáticos Extremos & Vulnerabilidade",
+        title: "2019: MEGABATERIAS DE ARMAZENAMENTO & VOLANTES DE INÉRCIA ROTACIONAIS",
+        desc: `Grandes sistemas de armazenamento combinam baterias de íons de lítio e volantes de inércia em alta rotação (Ec = 1/2·I·ω²). Eles absorvem picos de produção solar diurna e eólica noturna, injetando energia nos horários de ponta e substituindo geradores a diesel caros e poluentes.`,
+        ticker: "2019 • Armazenamento em Escala: Megabaterias e volantes de inércia estabilizam a rede nos horários de pico.",
+        concept: "🔬 FÍSICA: Energia Cinética Rotacional (Ec = 1/2·I·ω²), Eletroquímica de Íons de Lítio e Resposta em Frequência | 🌍 GEOGRAFIA: Descarbonização de Horários de Ponta e Segurança Energética Urbana",
         options: [
-          { text: "🤖 Automatizar Linhas com Sensores Térmicos (+35 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.hydro += 35; p.capital -= 28; } },
-          { text: "🔋 Baterias Gigawatt de Armazenamento (+35 MW | Custo: $32M)", cost: 32, effect: p => { p.capacity.wind += 35; p.capital -= 32; } },
-          { text: "📜 Patentes de Isolamento Contra Incêndios (+2 Patentes | Custo: $24M)", cost: 24, effect: p => { p.patents += 2; p.capital -= 24; } },
-          { text: "🛡️ Plano de Manejo Florestal de Emergência (Gratuito | +8% Estabilidade)", cost: 0, effect: p => { p.stability = Math.min(100, p.stability + 8); } }
+          { text: "🔋 Instalação de Complexos de Armazenamento Gigawatt com Baterias de Lítio (+40 MW | Custo: $35M)", cost: 35, effect: p => { p.capacity.wind += 40; p.capital -= 35; globalFootprint = Math.max(0, globalFootprint - 15); } },
+          { text: "⚙️ Instalação de Volantes de Inércia Industriais de Alta Rotação (+35 MW | Custo: $28M)", cost: 28, effect: p => { p.capacity.hydro += 35; p.capital -= 28; } },
+          { text: "📜 Patentes de Software de Gestão de Carga em Baterias de Grande Porte (+2 Patentes | Custo: $24M)", cost: 24, effect: p => { p.patents += 2; p.capital -= 24; } },
+          { text: "🛡️ Plano Nacional de Resiliência para Horários de Pico (Gratuito | +8% Estabilidade)", cost: 0, effect: p => { p.stability = Math.min(100, p.stability + 8); } }
         ]
       };
     }
 
-    if (year === 2020) {
+    if (year >= 2020) {
       return {
-        title: "2020: A RODADA FINAL PELA RESILIÊNCIA MUNDIAL",
-        desc: `Último ano da corrida energética de 50 anos! Tome a decisão final para consolidar o Score de Resiliência de ${nationName}.`,
-        ticker: "2020 • RODADA FINAL DA CÚPULA INTERNACIONAL! Apuração da Nação Campeã.",
-        concept: "🔬 FÍSICA: Síntese de Energia & Fusão Nuclear Inicial | 🌍 GEOGRAFIA: Resiliência Planetária & Futuro Global",
+        title: "2020: A RODADA FINAL PELA RESILIÊNCIA PLANETÁRIA & MATRIZ BRASILEIRA vs MUNDIAL",
+        desc: `Último ano da corrida energética de 50 anos! Enquanto o mundo ainda depende em mais de 80% de combustíveis fósseis, a matriz elétrica brasileira atinge cerca de 88% de fontes renováveis (hidro, eólica, solar, biomassa). Tome a decisão final para consagrar a resiliência de ${nationName}!`,
+        ticker: "2020 • RODADA FINAL DA CÚPULA INTERNACIONAL: Apuração da nação campeã em sustentabilidade e resiliência!",
+        concept: "🔬 FÍSICA: Síntese de Conservação de Energia, Eficiência Termodinâmica & Fusão Nuclear Futura | 🌍 GEOGRAFIA: Comparação Final das Matrizes Energéticas e Elétricas, Descarbonização & Futuro Planetário",
         options: [
-          { text: "🏆 Pacote Final de Sustentabilidade (+12% Estabilidade | Custo: $20M)", cost: 20, effect: p => { p.stability = Math.min(100, p.stability + 12); p.capital -= 20; } },
-          { text: "⚡ Expansão de Geração Emergencial (+45 MW | Custo: $25M)", cost: 25, effect: p => { p.capacity.hydro += 45; p.capital -= 25; } },
-          { text: "📜 Registro Final de Patentes Verdes (+3 Patentes | Custo: $22M)", cost: 22, effect: p => { p.patents += 3; p.capital -= 22; } },
-          { text: "🛡️ Fundo Soberano de Reserva Final (Receita: +$40M | +5% Confiança)", cost: 0, effect: p => { p.capital += 40; p.trust = Math.min(100, p.trust + 5); } }
+          { text: "🏆 Pacote Integrado de Sustentabilidade Renovável (+12% Estabilidade | Custo: $20M)", cost: 20, effect: p => { p.stability = Math.min(100, p.stability + 12); p.capital -= 20; } },
+          { text: "⚡ Expansão de Geração Limpa de Alta Potência (+50 MW | Custo: $25M)", cost: 25, effect: p => { p.capacity.hydro += 50; p.capital -= 25; } },
+          { text: "📜 Registro Final de Patentes Verdes Internacionais (+3 Patentes | Custo: $22M)", cost: 22, effect: p => { p.patents += 3; p.capital -= 22; } },
+          { text: "🛡️ Fundo Soberano de Reserva e Soberania Energética (Receita: +$40M | +6% Confiança)", cost: 0, effect: p => { p.capital += 40; p.trust = Math.min(100, p.trust + 6); } }
         ]
       };
     }
 
-    // 6. PROCEDURAL RANDOM EVENT DILEMMAS (Intermediary Years)
-    const cycle = turnNum % 5;
-    if (cycle === 1) {
-      return {
-        title: `${year}: EXPANSÃO DE CAPACIDADE INDUSTRIAL`,
-        desc: `A demanda por eletricidade na nação ${nationName} expande no ano de ${year}. Defina o plano estratégico de ampliação.`,
-        ticker: `${year} • Cúpula de Genebra analisa projetos de infraestrutura elétrica nacional.`,
-        concept: "🔬 FÍSICA: Trabalho Térmico & Eficiência | 🌍 GEOGRAFIA: Expansão de Zonas Industriais",
-        options: [
-          { text: `💧 Ampliar Usinas Hidroelétricas (+32 MW | Custo: $28M)`, cost: 28, effect: p => { p.capacity.hydro += 32; p.capital -= 28; } },
-          { text: `⛏️ Adicionar Térmica a Carvão/Gás (+40 MW | Custo: $20M)`, cost: 20, effect: p => { p.capacity.thermal += 40; p.capital -= 20; globalFootprint += 12; } },
-          { text: `🔬 Financiar Laboratórios Nacionais (+2 Patentes | Custo: $22M)`, cost: 22, effect: p => { p.patents += 2; p.capital -= 22; } },
-          { text: `💰 Emissão de Títulos de Infraestrutura (Receita: +$35M Capital)`, cost: 0, effect: p => { p.capital += 35; } }
-        ]
-      };
-    } else if (cycle === 2) {
-      return {
-        title: `${year}: FLUTUAÇÃO DE PREÇOS NO MERCADO DE COMMODITIES`,
-        desc: `As cotações mundiais de combustíveis oscilam em ${year}. Como ${nationName} protegerá suas reservas econômicas?`,
-        ticker: `${year} • Mercados internacionais negociam contratos de combustíveis.`,
-        concept: "🔬 FÍSICA: Balanço Energético de Queima | 🌍 GEOGRAFIA: Cotação de Commodities Elétricas",
-        options: [
-          { text: `🛢️ Importação Garantida de Fósseis (+35 MW | Custo: $24M)`, cost: 24, effect: p => { p.capacity.thermal += 35; p.capital -= 24; globalFootprint += 10; } },
-          { text: `🌬️ Subsidiar Parques Eólicos/Solares (+28 MW | Custo: $26M)`, cost: 26, effect: p => { p.capacity.wind += 28; p.capital -= 26; } },
-          { text: `🌋 Expandir Usinas Geotérmicas (+30 MW | Custo: $28M)`, cost: 28, effect: p => { p.capacity.geothermal += 30; p.capital -= 28; } },
-          { text: `🛡️ Contingenciamento Financeiro (Gratuito | +6% Estabilidade)`, cost: 0, effect: p => { p.stability = Math.min(100, p.stability + 6); } }
-        ]
-      };
-    } else if (cycle === 3) {
-      return {
-        title: `${year}: CALIBRAÇÃO DE ESTABILIDADE DA REDE ELÉTRICA`,
-        desc: `A malha de distribuição de ${nationName} necessita de reparos e modernização no ano de ${year}.`,
-        ticker: `${year} • Relatório internacional de estabilidade e eficiência em transmissão.`,
-        concept: "🔬 FÍSICA: Estabilidade de Frequência & Impedância de Malha | 🌍 GEOGRAFIA: Redes Elétricas Nacionais",
-        options: [
-          { text: `⚡ Subestações de Alta Tensão (+28 MW | Custo: $22M)`, cost: 22, effect: p => { p.capacity.hydro += 28; p.capital -= 22; } },
-          { text: `🌿 Expansão de Biocombustíveis (+30 MW | Custo: $25M)`, cost: 25, effect: p => { p.capacity.biofuels += 30; p.capital -= 25; } },
-          { text: `⚛️ Modernizar Reatores Nucleares (+32 MW | Custo: $32M)`, cost: 32, effect: p => { p.capacity.nuclear += 32; p.capital -= 32; } },
-        ]
-      };
-    } else if (cycle === 4) {
-      return {
-        title: `${year}: INOVAÇÃO TECNOLÓGICA & TRANSIÇÃO`,
-        desc: `Novos avanços na física aplicada surgem em ${year}. Qual tecnologia trará maior resiliência a ${nationName}?`,
-        ticker: `${year} • Pesquisa em automação e física aplicada em destaque.`,
-        concept: "🔬 FÍSICA: Física de Semicondutores | 🌍 GEOGRAFIA: Polos de Inovação & P&D",
-        options: [
-          { text: `⚛️ Tecnologia Nuclear Avançada (+35 MW | Custo: $35M)`, cost: 35, effect: p => { p.capacity.nuclear += 35; p.capital -= 35; } },
-          { text: `🌬️ Parques Verdes de Segunda Geração (+30 MW | Custo: $28M)`, cost: 28, effect: p => { p.capacity.wind += 30; p.capital -= 28; globalFootprint = Math.max(0, globalFootprint - 6); } },
-          { text: `📜 Registro de Patentes de Automação (+2 Patentes | Custo: $22M)`, cost: 22, effect: p => { p.patents += 2; p.capital -= 22; } },
-          { text: `🛡️ Programa de Capacitação Técnica (Gratuito | +6% Confiança)`, cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 6); } }
-        ]
-      };
-    } else {
-      return {
-        title: `${year}: PLANEJAMENTO ECOLÓGICO REGIONAL`,
-        desc: `Comunidades locais exigem redução de impactos socioambientais nas obras energéticas de ${nationName} em ${year}.`,
-        ticker: `${year} • Movimentos sociais debatem impactos de usinas em territórios regionais.`,
-        concept: "🔬 FÍSICA: Conservação de Energia & Impacto | 🌍 GEOGRAFIA: Planejamento Territorial & Biomas",
-        options: [
-          { text: `🌱 Parques Solares e Eólicos Comunitários (+30 MW | Custo: $28M)`, cost: 28, effect: p => { p.capacity.wind += 30; p.capital -= 28; globalFootprint = Math.max(0, globalFootprint - 8); } },
-          { text: `💧 Otimizar Turbinas em Barragens Existentes (+25 MW | Custo: $20M)`, cost: 20, effect: p => { p.capacity.hydro += 25; p.capital -= 20; } },
-          { text: `⛏️ Gerador Térmico de Suporte (+35 MW | Custo: $22M)`, cost: 22, effect: p => { p.capacity.thermal += 35; p.capital -= 22; globalFootprint += 12; } },
-          { text: `🛡️ Diálogo Diplomático e Consulta Popular (Gratuito | +7% Confiança)`, cost: 0, effect: p => { p.trust = Math.min(100, p.trust + 7); } }
-        ]
-      };
-    }
+    // Fallback procedural para anos não previstos
+    return {
+      title: `${year}: DILEMA DE EXPANSÃO ENERGÉTICA`,
+      desc: `A nação ${nationName} analisa seus planos de expansão e modernização da matriz energética no ano de ${year}.`,
+      ticker: `${year} • Cúpula de Genebra debate investimentos estratégicos em infraestrutura de energia.`,
+      concept: "🔬 FÍSICA: Conservação e Transformação de Energia | 🌍 GEOGRAFIA: Planejamento Territorial & Matriz Elétrica",
+      options: [
+        { text: `💧 Usina Hidroelétrica em Rio de Planalto (+35 MW | Custo: $28M)`, cost: 28, effect: p => { p.capacity.hydro += 35; p.capital -= 28; } },
+        { text: `🌬️ Parque Solar e Eólico Renovável (+35 MW | Custo: $30M)`, cost: 30, effect: p => { p.capacity.wind += 35; p.capital -= 30; globalFootprint = Math.max(0, globalFootprint - 10); } },
+        { text: `🔬 Laboratórios de P&D e Patentes (+2 Patentes | Custo: $22M)`, cost: 22, effect: p => { p.patents += 2; p.capital -= 22; } },
+        { text: `💰 Emissão de Títulos de Reserva (Receita: +$35M Capital)`, cost: 0, effect: p => { p.capital += 35; } }
+      ]
+    };
   }
 
   window.initMainGame = function() {
