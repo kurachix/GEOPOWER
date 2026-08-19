@@ -162,3 +162,5 @@ Cada jogador assume o comando de uma superpotência ou nação estratégica (**B
 
 ---
 
+#   G E O P O W E R  
+ 
